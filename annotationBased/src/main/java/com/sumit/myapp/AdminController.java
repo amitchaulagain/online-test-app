@@ -306,6 +306,10 @@ public class AdminController {
 	public void setTestRequestsStatus( @RequestBody TestRequestDTO dto) {
 		 testService.setTestRequestStatusCompletedOrRejected(dto);
 	}
+	@RequestMapping(value = "/testRequests", method = RequestMethod.GET)
+	public String viewTestRequests() {
+		 return "test-requests";
+	}
 
 	@RequestMapping(value = "/testRequests", method = RequestMethod.POST)
 	@ResponseBody
