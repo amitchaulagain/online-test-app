@@ -31,6 +31,7 @@ import com.sumit.model.QuestionAnswer;
 import com.sumit.model.QuestionDTO;
 import com.sumit.model.QuestionJSONDTO;
 import com.sumit.model.QuestionType;
+import com.sumit.model.TestDTO;
 import com.sumit.model.TestRequestDTO;
 import com.sumit.model.TestRequestRejectDTO;
 import com.sumit.model.TestRequestStatus;
@@ -296,31 +297,42 @@ public class AdminController {
 
 	@RequestMapping(value = "/testRequests/{status}", method = RequestMethod.GET)
 	@ResponseBody
-	public List<TestRequestDTO> viewTestRequests( String status) {
+	public List<TestRequestDTO> viewTestRequests( @PathVariable String status) {
 		List<TestRequestDTO> testRequestDTOs= new ArrayList<TestRequestDTO>();
 			testRequestDTOs=testService.getAllTestRequestsAccordingToTheirStatus(status);
 		 
 		return testRequestDTOs;
 	}
-	@RequestMapping(value = "/testRequests/setStatus", method = RequestMethod.GET)
-	public void setTestRequestsStatus( @RequestBody TestRequestDTO dto) {
+	@RequestMapping(value = "/testRequest/{testRequestId}", method = RequestMethod.GET)
+	@ResponseBody
+	public   TestRequestDTO viewTestRequestById( @PathVariable int testRequestId) {
+		 TestRequestDTO dto = new TestRequestDTO();
+		 dto=testService.findTestRequestById(testRequestId);
+		 return dto;
+	}
+	@RequestMapping(value = "/testRequests/setStatus", method = RequestMethod.POST)
+	@ResponseBody public String setTestRequestsStatus( @RequestBody TestRequestDTO dto) throws JsonProcessingException {
 		 testService.setTestRequestStatusCompletedOrRejected(dto);
+		 ObjectMapper mapper =new ObjectMapper();
+			String val = mapper.writeValueAsString("DOne");
+			return val;
 	}
 	@RequestMapping(value = "/testRequests", method = RequestMethod.GET)
 	public String viewTestRequests() {
 		 return "test-requests";
 	}
 
-	@RequestMapping(value = "/testRequests", method = RequestMethod.POST)
-	@ResponseBody
-	public void getTestRequest(TestRequestDTO testRequestDTO) {
-		testService.createTestRequest(testRequestDTO);
-	}
-
 	@RequestMapping(value = "/testResults", method = RequestMethod.GET)
 	public String viewTestResult() {
 
 		return "testResults";
+	}
+	@RequestMapping(value = "/allTests", method = RequestMethod.GET)
+	public @ResponseBody List<TestDTO> getAllTestInJSON(){
+		List<TestDTO> allTests = questionService.getAllTests();
+
+		return allTests;
+
 	}
 
 }

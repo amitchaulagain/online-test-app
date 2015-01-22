@@ -20,6 +20,7 @@ import com.sumit.model.TestRequestDTO;
 import com.sumit.model.TestRequestStatus;
 import com.sumit.model.TestSet;
 import com.sumit.repository.QuestionRepository;
+import com.sumit.repository.TestRequestRepository;
 import com.sumit.repository.TestRipository;
 
 @Service
@@ -31,6 +32,9 @@ public class TestServiceImpl implements TestService {
 
 	@Resource
 	TestRipository testRipo;
+	
+	@Resource
+	TestRequestRepository testRequestRipo;
 
 	@Resource
 	QuestionRepository questionRipo;
@@ -115,8 +119,8 @@ public class TestServiceImpl implements TestService {
 
 	@Transactional
 	@Override
-	public void createTestRequest(TestRequestDTO dto) {
-		testApi.createTestRequest(dto);
+	public void createTestRequest(int testId) {
+		testApi.createTestRequest(testId);
 
 	}
 
@@ -126,13 +130,13 @@ public class TestServiceImpl implements TestService {
 
 		List<TestRequest> testRequests = new ArrayList<TestRequest>();
 
-		if (status == TestRequestStatus.PENDING.toString()) {
+		if (status.equalsIgnoreCase(TestRequestStatus.PENDING.toString())) {
 			testRequests = testApi.findTestRequestAccordingToStatus(TestRequestStatus.PENDING);
 
-		} else if (status == TestRequestStatus.REJECTED.toString()) {
+		} else if (status.equalsIgnoreCase(TestRequestStatus.REJECTED.toString())) {
 			testRequests = testApi.findTestRequestAccordingToStatus(TestRequestStatus.REJECTED);
 
-		} else if (status == TestRequestStatus.COMPLETED.toString()) {
+		} else if (status.equalsIgnoreCase(TestRequestStatus.COMPLETED.toString())) {
 			testRequests = testApi.findTestRequestAccordingToStatus(TestRequestStatus.COMPLETED);
 
 		}
@@ -142,6 +146,12 @@ public class TestServiceImpl implements TestService {
 	@Override
 	public void setTestRequestStatusCompletedOrRejected(TestRequestDTO dto) {
 		testApi.setStausOfTestRequest(dto);
+	}
+
+	@Override
+	public TestRequestDTO findTestRequestById(int testRequestId) {
+		 
+		return ConvertUtils.convertToTestRequestDTO(testRequestRipo.findOne(testRequestId));
 	}
 
 }

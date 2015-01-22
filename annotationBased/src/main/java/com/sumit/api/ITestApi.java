@@ -28,5 +28,7 @@ public interface ITestApi {
 
 	public void setStausOfTestRequest(TestRequestDTO dto);
 
+	public void createTestRequest(int testId);
+
 
 }

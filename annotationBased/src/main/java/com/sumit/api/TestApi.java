@@ -80,4 +80,16 @@ public class TestApi implements ITestApi {
 		testRequestRepository.save(tr);
 	}
 
+	@Override
+	public void createTestRequest(int testId) {
+		TestRequest tr = new TestRequest();
+		tr.setTestRequestStatus(TestRequestStatus.PENDING);
+		tr.setInitiatedBy(AuthenticationUtil.getCurrentUser());
+		tr.setRequestedDate(new Date());
+		tr.setTest(testRipo.findOne(testId));
+		testRequestRepository.save(tr);
+
+		
+	}
+
 }

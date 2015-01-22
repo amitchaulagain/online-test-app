@@ -17,6 +17,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "test")
 public class TestSet implements Serializable {
@@ -33,27 +35,11 @@ public class TestSet implements Serializable {
 	String duration;
 	Date createDate = new Date();
 	Date testDate;
-	boolean isNegativeMarking;
-	boolean negativeMarkingValue;
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "test")
 	List<TestRequest> testRequests = new ArrayList<TestRequest>();
 
-	public boolean isNegativeMarkingValue() {
-		return negativeMarkingValue;
-	}
-
-	public void setNegativeMarkingValue(boolean negativeMarkingValue) {
-		this.negativeMarkingValue = negativeMarkingValue;
-	}
-
-	public boolean isNegativeMarking() {
-		return isNegativeMarking;
-	}
-
-	public void setNegativeMarking(boolean isNegativeMarking) {
-		this.isNegativeMarking = isNegativeMarking;
-	}
-
+	 
 	public int getFullmark() {
 		return fullmark;
 	}
@@ -94,7 +80,7 @@ public class TestSet implements Serializable {
 		this.testDate = testDate;
 	}
 
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(cascade =CascadeType.ALL )
 	@JoinTable(name = "test_question", joinColumns = { @JoinColumn(name = "test_id") }, inverseJoinColumns = { @JoinColumn(name = "mainquestion_id") })
 	public List<MainQuestion> questionInTest;
 
@@ -121,7 +107,7 @@ public class TestSet implements Serializable {
 	public void setQuestionInTest(List<MainQuestion> questionInTest) {
 		this.questionInTest = questionInTest;
 	}
-
+	@JsonIgnore
 	public List<TestRequest> getTestRequests() {
 		return testRequests;
 	}
