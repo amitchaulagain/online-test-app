@@ -13,7 +13,17 @@ public class TestRequestDTO {
 	private TestRequestStatus status;
 	private String testName;
 	Date testDate;
+	private Integer id;
+	private String testRequestStatus;
 
+
+	public String getTestRequestStatus() {
+		return testRequestStatus;
+	}
+
+	public void setTestRequestStatus(String testRequestStatus) {
+		this.testRequestStatus = testRequestStatus;
+	}
 
 	public Date getTestDate() {
 		return testDate;
@@ -92,6 +102,14 @@ public class TestRequestDTO {
 	
 	public void setTestName(String testName) {
 		this.testName = testName;
+	}
+
+	public void setId(Integer id) {
+		this.id=id;
+		
+	}
+	public int getId(){
+		return this.id;
 	}
 
 }

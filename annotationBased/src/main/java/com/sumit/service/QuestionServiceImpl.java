@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sumit.api.IQuestionApi;
+import com.sumit.convert.ConvertUtils;
 import com.sumit.model.MainQuestion;
 import com.sumit.model.Options;
 import com.sumit.model.QuestionAnswer;
 import com.sumit.model.QuestionJSONDTO;
 import com.sumit.model.QuestionType;
+import com.sumit.model.TestDTO;
 import com.sumit.repository.AnsRepository;
 import com.sumit.repository.OptionsRepository;
 import com.sumit.repository.QuestionRepository;
@@ -108,7 +110,6 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public Page<MainQuestion> getDeploymentLogs(Integer pageNumber) {
-		// TODO Auto-generated method stub
 		return questionApi.getDeploymentLog(pageNumber);
 	}
 	@Override
@@ -116,6 +117,11 @@ public class QuestionServiceImpl implements QuestionService {
 		
 		
 		return questionApi.findInQuestion(parameter);
+	}
+
+	@Override
+	public List<TestDTO> getAllTests() {
+		return ConvertUtils.convertToTestDTOs(testRipo.findAll());
 	}
 
 }

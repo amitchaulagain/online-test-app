@@ -9,6 +9,8 @@ import com.sumit.model.Options;
 import com.sumit.model.QuestionAnswer;
 import com.sumit.model.QuestionDTO;
 import com.sumit.model.QuestionJSONDTO;
+import com.sumit.model.TestDTO;
+import com.sumit.model.TestSet;
 
 public interface QuestionService {
 
@@ -25,4 +27,6 @@ public interface QuestionService {
 	void save_Question_Option_Answer(QuestionJSONDTO questionJSONDto);
 
 	public List<MainQuestion> findInQuestions(String parameter);
+
+	public List<TestDTO> getAllTests();
 }
