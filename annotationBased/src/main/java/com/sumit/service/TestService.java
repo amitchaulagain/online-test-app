@@ -18,14 +18,14 @@ public interface TestService {
 
 	public void delete(int id);
 
-	
-
 	int countNumberOfDatas();
-
-	void createTestRequest(TestRequestDTO dto);
 
 	public List<TestRequestDTO> getAllTestRequestsAccordingToTheirStatus(String status);
 
 	public void setTestRequestStatusCompletedOrRejected(TestRequestDTO dto);
+
+	void createTestRequest(int testId);
+
+	public TestRequestDTO findTestRequestById(int testRequestId);
 
 }

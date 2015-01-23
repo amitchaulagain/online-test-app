@@ -138,9 +138,6 @@
                         </div><!--//section-content-->
                     </section>
 				</div>
-
-
-
 			</div>
 
 			<div class="row contianer-fluid  ">
