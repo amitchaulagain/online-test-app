@@ -17,7 +17,11 @@ $(function() {
 $('.navbar-collapse ul li a').click(function() {
 	$('.navbar-toggle:visible').click();
 });
-
+$('#registerHere').click(function () {
+	
+	$('#registerContainer').show();
+	
+})
 // ----------admin page---------------
 
 $(document).ready(function () {
@@ -27,11 +31,17 @@ $(document).ready(function () {
 	
 	$('#roption-box ').hide();
 	
-
-		
-	
+$('#registerContainer').hide();
 		
 
+	//$(".date-picker").datepicker();
+
+/*	$(".date-picker").on("change", function () {
+	    var id = $(this).attr("id");
+	    var val = $("label[for='" + id + "']").text();
+	    $("#msg").text(val + " changed");
+	});
+*/
 	
 	
 	

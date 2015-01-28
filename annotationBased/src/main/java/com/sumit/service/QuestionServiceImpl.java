@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sumit.api.IQuestionApi;
+import com.sumit.dto.QuestionJSONDTO;
 import com.sumit.model.MainQuestion;
 import com.sumit.model.Options;
 import com.sumit.model.QuestionAnswer;
-import com.sumit.model.QuestionJSONDTO;
 import com.sumit.model.QuestionType;
 import com.sumit.repository.AnsRepository;
 import com.sumit.repository.OptionsRepository;

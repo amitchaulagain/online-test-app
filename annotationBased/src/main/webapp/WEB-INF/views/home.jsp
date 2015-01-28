@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link href="<c:url value="/resources/css/library/bootstrap.min.css" />"/>
+<link rel="stylesheet" href="<c:url value="/resources/css/library/bootstrap.min.css" />"/>
 
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/custom/agency.css"/>" type='text/css'>
@@ -112,7 +112,7 @@
 						<input type="submit" class="btn btn-primary btn-block "
 							value="Login" id="login-btn" />
 						<p>
-							<a id=registerHere onclick="showRegisterUserView();" href="#">Not
+							<a id=registerHere  href="#">Not
 								a user yet !!!!! register here</a>
 					</div>
 				</form>

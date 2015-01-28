@@ -81,7 +81,7 @@ public class TestServiceImpl implements TestService {
 
 		}
 
-		test.setQuestionInTest(questionsInThisTest);
+	//	test.setQuestionInTest(questionsInThisTest);
 		testApi.create(test);
 		return null;
 	}

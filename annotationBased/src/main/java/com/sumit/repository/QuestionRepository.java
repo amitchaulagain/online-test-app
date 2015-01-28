@@ -10,15 +10,10 @@ import org.springframework.data.repository.query.Param;
 import com.sumit.model.MainQuestion;
 import com.sumit.model.TestSet;
 
-public interface QuestionRepository extends  JpaRepository<MainQuestion, Integer> {
-@Query("SELECT q FROM MainQuestion q JOIN  q.questiontests t WHERE t IN (?1)")
-	
+public interface QuestionRepository extends
+		JpaRepository<MainQuestion, Integer> {
 
+	@Query("SELECT q FROM MainQuestion q  WHERE q.name LIKE CONCAT('%',:searchString,'%')")
+	List<MainQuestion> findInQuestion(@Param("searchString") String searchString);
 
-	List<MainQuestion> FindQuestionInTest(TestSet t);
-@Query("SELECT q FROM MainQuestion q  WHERE q.name LIKE CONCAT('%',:searchString,'%')")
-List<MainQuestion> findInQuestion( @Param("searchString")String searchString);
-
-
-	
 }

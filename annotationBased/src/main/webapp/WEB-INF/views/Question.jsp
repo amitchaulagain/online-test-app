@@ -55,7 +55,7 @@
 
 										</select>
 									</div>
-									
+
 									<ul class="list-group" style="margin: 0">
 
 										<li class="list-group-item">
@@ -67,7 +67,8 @@
 										</li>
 									</ul>
 									<!--   -->
-									<div class="row" id="option-box" clss="checkBox"style="margin: 0">
+									<div class="row" id="option-box" clss="checkBox"
+										style="margin: 0">
 										<ul class="list-group">
 
 											<li class="list-group-item" style="margin: 0">
@@ -88,8 +89,9 @@
 											</li>
 										</ul>
 									</div>
-									
-									<div class="row" id="roption-box" clss="radiokBox"style="margin: 0">
+
+									<div class="row" id="roption-box" clss="radiokBox"
+										style="margin: 0">
 										<ul class="list-group">
 
 											<li class="list-group-item" style="margin: 0">
@@ -129,14 +131,26 @@
 
 				<div class=" col-md-3 side-bar" style="margin-top: 50px">
 					<section class="links">
-                        <h1 class="section-heading text-highlight"><span class="line">Quick Links</span></h1>
-                        <div class="section-content">
-                            <p><a href="#"><i class="fa fa-caret-right"></i>E-learning Portal</a></p>
-                            <p><a href="#"><i class="fa fa-caret-right"></i>Gallery</a></p>
-                            <p><a href="#"><i class="fa fa-caret-right"></i>Job Vacancies</a></p>
-                            <p><a href="#"><i class="fa fa-caret-right"></i>Contact</a></p>
-                        </div><!--//section-content-->
-                    </section>
+						<h1 class="section-heading text-highlight">
+							<span class="line">Quick Links</span>
+						</h1>
+						<div class="section-content">
+							<p>
+								<a href="#"><i class="fa fa-caret-right"></i>E-learning
+									Portal</a>
+							</p>
+							<p>
+								<a href="#"><i class="fa fa-caret-right"></i>Gallery</a>
+							</p>
+							<p>
+								<a href="#"><i class="fa fa-caret-right"></i>Job Vacancies</a>
+							</p>
+							<p>
+								<a href="#"><i class="fa fa-caret-right"></i>Contact</a>
+							</p>
+						</div>
+						<!--//section-content-->
+					</section>
 				</div>
 
 
@@ -144,8 +158,8 @@
 			</div>
 
 			<div class="row contianer-fluid  ">
-				<div class="col-md-2"></div>
-				<div class="col-md-6">
+
+				<div class="col-md-11">
 					<div class="row" id="search-and-pageSize">
 						<div class=" col-md-2">
 							<div class="form-group">
@@ -163,67 +177,68 @@
 							<div class="row" id="msg"></div>
 						</div>
 						<div class=" col-md-6" align="right">
-						<div class="form-group">
-							<div class="input-group" style="margin-top: 25px">
-								<input type="text" class="form-control" placeholder="Search" id="search"
-									name="q" >
-								<div class="input-group-btn" >
-									<a href="#" class="btn btn-primary "  style=" height: 34;" onclick="searchQuestions()"><i class="fa fa-search" ></i> 
-									</a>
+							<div class="form-group">
+								<div class="input-group" style="margin-top: 25px">
+									<input type="text" class="form-control" placeholder="Search"
+										id="search" name="q">
+									<div class="input-group-btn">
+										<a href="#" class="btn btn-primary " style="height: 34;"
+											onclick="searchQuestions()"><i class="fa fa-search"></i>
+										</a>
 
+									</div>
 								</div>
-							</div>
 
-						</div>
-					</div>
-
-					<table id="dataTable" class="table table-bordered"
-						style="margin: 0">
-						<thead>
-							<tr>
-								<th style="width: 20px">id</th>
-								<th>name</th>
-								<th style="width: 50px">Type</th>
-																<th>Date</th>
-								
-								<th style="width: 150px">action</th>
-							</tr>
-						</thead>
-						<tbody id="dataTable"></tbody>
-						<tfoot>
-							<tr>
-								<th>id</th>
-								<th>name</th>
-								<th>Type</th>
-								<th>Date</th>
-								<th>action</th>
-
-							</tr>
-						</tfoot>
-					</table>
-
-					<div id="pagination"></div>
-				</div>
-				<div class="col-md-4">
-					<div class="row" style="margin-left: 20px;">
-						<div class="row" id="clickquestion" style="padding-top: 100px">
-
-							<div class="row" id="ques"></div>
-							<!--col-md-4  -->
-							<div class="col-md-4" id="ques">
-								<ul id="showquestion" style="color: yellow"></ul>
 							</div>
 						</div>
-					</div>
-					<div></div>
-				</div>
 
-			</div>
+						<table id="dataTables" class="table table-bordered"
+							style="margin: 0">
+							<thead>
+								<tr>
+									<th style="width: 20px">id</th>
+									<th>name</th>
+									<th style="width: 50px">Type</th>
+									<th>Date</th>
+
+									<th style="width: 150px">action</th>
+								</tr>
+							</thead>
+							<tbody id="dataTable"></tbody>
+							<tfoot>
+								<tr>
+									<th>id</th>
+									<th>name</th>
+									<th>Type</th>
+									<th>Date</th>
+									<th>action</th>
+
+								</tr>
+							</tfoot>
+						</table>
+
+						<div id="pagination"></div>
+					</div>
+					<div class="col-md-4">
+						<div class="row" style="margin-left: 20px;">
+							<div class="row" id="clickquestion" style="padding-top: 100px">
+
+							</div>
+						</div>
+						<div></div>
+					</div>
+
+					<div class="row" id="ques"></div>
+					<!--col-md-4  -->
+					<div class="col-md-4" id="ques">
+						<ul id="showquestion" style="color: yellow"></ul>
+					</div>
+				</div>
 		</body>
 
 		<script type="text/javascript"
 			src="<c:url value="/resources/js/custom/question.js"/>"></script>
-			<script type="text/javascript"
+		<script type="text/javascript"
 			src="<c:url value="/resources/js/custom/animate.js"/>"></script>
 		<script type="text/javascript"
 			src="<c:url value="/resources/js/library/jquery.simplePagination.js"/>"></script>

@@ -33,6 +33,18 @@ public class MainQuestion implements Serializable {
 	private int id;
 	private String name;
 	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "questionInTestquestion")
+	@Fetch(value = FetchMode.SELECT)
+	private List<TestQuestions> testQuestionInQuestion;
+	
+	public List<TestQuestions> getTestQuestionInQuestion() {
+		return testQuestionInQuestion;
+	}
+
+	public void setTestQuestionInQuestion(List<TestQuestions> testQuestionInQuestion) {
+		this.testQuestionInQuestion = testQuestionInQuestion;
+	}
 	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class ,property="@id")
 	//@JsonManagedReference
 	@JsonIgnore
@@ -47,11 +59,11 @@ public class MainQuestion implements Serializable {
 	@Fetch(value = FetchMode.SELECT)
 	private List<QuestionAnswer> questionAnswers = new ArrayList<QuestionAnswer>();
 	
-	@JsonIgnore
+	/*@JsonIgnore
 	@ManyToMany(mappedBy="questionInTest")
-	private List<TestSet> questiontests;
+	private List<TestQuestions> questiontests;
 
-
+*/
 	public int getId() {
 		return id;
 	}
@@ -84,13 +96,13 @@ public class MainQuestion implements Serializable {
 	public void setOptions(List<Options> options) {
 		this.options = options;
 	}
-	public List<TestSet> getQuestiontests() {
+	/*public List<TestQuestions> getQuestiontests() {
 		return questiontests;
 	}
 
-	public void setQuestiontests(List<TestSet> questiontests) {
+	public void setQuestiontests(List<TestQuestions> questiontests) {
 		this.questiontests = questiontests;
-	}
+	}*/
 
 	public QuestionType getQuestionType() {
 		return questionType;

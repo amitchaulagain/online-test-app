@@ -44,8 +44,8 @@ public class QuestionApi implements IQuestionApi{
 	@Override
 	public List<MainQuestion> findQuestionByTEst(int id) {
 		TestSet test = testripo.findOne(id);
-		List<MainQuestion> questioninTest = questionRipo.FindQuestionInTest(test);
-		return questioninTest;
+	//List<MainQuestion> questioninTest = questionRipo.FindQuestionInTest(test);
+		return null;
 	}
 	
 	

@@ -44,6 +44,7 @@ function findAllQuestions() {
 	});
 
 	show = $("#show option:selected").text();
+	
 }
 
 function deleteQuestion(id) {
@@ -106,6 +107,7 @@ function renderQuestions(questions) {
 	var index = $('#pagination').pagination('getCurrentPage');
 	var allData = aaData;
 	showLimitedQuestion(show, index,allData);
+	 
 }
 
 function showLimitedQuestion(show, index,datas) {
@@ -166,7 +168,7 @@ function showLimitedQuestion(show, index,datas) {
 }
 
 $(document).ready(function() {
-
+	
 	$('#show').on('change', function() {
 		$('tbody tr').remove();
 

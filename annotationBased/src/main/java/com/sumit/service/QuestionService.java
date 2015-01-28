@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.sumit.dto.QuestionJSONDTO;
 import com.sumit.model.MainQuestion;
 import com.sumit.model.Options;
 import com.sumit.model.QuestionAnswer;
 import com.sumit.model.QuestionDTO;
-import com.sumit.model.QuestionJSONDTO;
 
 public interface QuestionService {
 

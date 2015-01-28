@@ -1,4 +1,4 @@
-package com.sumit.model;
+package com.sumit.dto;
 
 public class QuestionJSONDTO {
 	

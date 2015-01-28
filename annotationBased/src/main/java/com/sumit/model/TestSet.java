@@ -17,6 +17,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "test")
 public class TestSet implements Serializable {
@@ -35,8 +40,14 @@ public class TestSet implements Serializable {
 	Date testDate;
 	boolean isNegativeMarking;
 	boolean negativeMarkingValue;
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "test")
 	List<TestRequest> testRequests = new ArrayList<TestRequest>();
+	
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "testInTestquestion")
+	@Fetch(value = FetchMode.SELECT)
+	private List<TestQuestions> testQuestionInTest;
 
 	public boolean isNegativeMarkingValue() {
 		return negativeMarkingValue;
@@ -93,11 +104,21 @@ public class TestSet implements Serializable {
 	public void setTestDate(Date testDate) {
 		this.testDate = testDate;
 	}
+	
 
-	@ManyToMany(cascade = { CascadeType.ALL })
+	public List<TestQuestions> getTestQuestionInTest() {
+		return testQuestionInTest;
+	}
+
+	public void setTestQuestionInTest(List<TestQuestions> testQuestionInTest) {
+		this.testQuestionInTest = testQuestionInTest;
+	}
+
+	/*@ManyToMany(cascade = { CascadeType.ALL })
+	@JsonIgnore
 	@JoinTable(name = "test_question", joinColumns = { @JoinColumn(name = "test_id") }, inverseJoinColumns = { @JoinColumn(name = "mainquestion_id") })
 	public List<MainQuestion> questionInTest;
-
+*/
 	public int getId() {
 		return id;
 	}
@@ -112,14 +133,6 @@ public class TestSet implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<MainQuestion> getQuestionInTest() {
-		return questionInTest;
-	}
-
-	public void setQuestionInTest(List<MainQuestion> questionInTest) {
-		this.questionInTest = questionInTest;
 	}
 
 	public List<TestRequest> getTestRequests() {
