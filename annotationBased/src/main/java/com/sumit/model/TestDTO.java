@@ -6,6 +6,33 @@ public class TestDTO {
 	private String name;
 	private int fullmark;
 	private int passmark;
+	private String testDate;
+	private TestType testType;
+	private String duration;
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+
+	public String getTestDate() {
+		return testDate;
+	}
+
+	public void setTestDate(String testDate) {
+		this.testDate = testDate;
+	}
+
+	public TestType getTestType() {
+		return testType;
+	}
+
+	public void setTestType(TestType testType) {
+		this.testType = testType;
+	}
 
 	public int getId() {
 		return id;

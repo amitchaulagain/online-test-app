@@ -70,12 +70,17 @@ public   class ConvertUtils {
 		return dtos;
 	}
 
-	private static TestDTO convertToTestDTO(TestSet tr) {
+	public static TestDTO convertToTestDTO(TestSet tr) {
 		TestDTO dto = new TestDTO();
 		dto.setId(tr.getId());
 		dto.setName(tr.getName());
 		dto.setFullmark(tr.getFullmark());
 		dto.setPassmark(tr.getPassmark());
+		dto.setTestType(tr.getType());
+		if(tr.getTestDate()!=null){
+			dto.setTestDate(tr.getTestDate().toGMTString());
+		}
+		dto.setDuration(tr.getDuration());
 		return dto;
 	}
 

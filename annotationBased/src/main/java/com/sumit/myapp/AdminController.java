@@ -172,27 +172,27 @@ public class AdminController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/createTest", method = RequestMethod.GET)
-	public ModelAndView createTestPage(@Valid TestSet test) {
-		ModelAndView mav = new ModelAndView("CreateTest");
-		List<MainQuestion> listOfQuestions = questionService.getAllQuestion();
-		String message = "ALL QUESTION TABLE";
-		mav.addObject("message", message);
-		mav.addObject("listofquestions", listOfQuestions);
-
-		return mav;
-	}
+//	@RequestMapping(value = "/createTest", method = RequestMethod.GET)
+//	public ModelAndView createTestPage(@Valid TestSet test) {
+//		ModelAndView mav = new ModelAndView("CreateTest");
+//		List<MainQuestion> listOfQuestions = questionService.getAllQuestion();
+//		String message = "ALL QUESTION TABLE";
+//		mav.addObject("message", message);
+//		mav.addObject("listofquestions", listOfQuestions);
+//
+//		return mav;
+//	}
 
 	@RequestMapping(value = "/createTest", method = RequestMethod.POST)
 	  @ResponseBody public void createTest(TestSet test) {
-		testRipo.save(test);
+		 testService.createOrEditTest(test);
 
 	}
 
 	@RequestMapping(value = "/test/{id}", method = RequestMethod.GET)
 	public ModelAndView getQuestionsInTest(@Valid TestSet test,
 			@PathVariable Integer id) {
-		TestSet testForQuestion = testService.findTestbyId(id);
+		TestSet testForQuestion = testService.findTestbyTheirId(id);
 		ModelAndView mav = new ModelAndView("TestQuestion");
 
 		List<MainQuestion> questionsInTest = questionService
@@ -238,15 +238,13 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/deleteTest/{id}", method = RequestMethod.GET)
-	public ModelAndView deleteTest(@PathVariable Integer id) {
-		ModelAndView mav = new ModelAndView("CreateTest");
-		List<MainQuestion> qus = questionService.findQuestionByTEst(id);
-		for (MainQuestion mainQuestion : qus) {
-			questionRipo.delete(mainQuestion.getId());
-		}
+	public String deleteTest(@PathVariable Integer id) throws JsonProcessingException {
+		 
 		testService.delete(id);
 
-		return mav;
+		 ObjectMapper mapper =new ObjectMapper();
+			String val = mapper.writeValueAsString("Done");
+			return val;
 	}
 
 	@Transactional
@@ -328,6 +326,21 @@ public class AdminController {
 		List<TestDTO> allTests = questionService.getAllTests();
 
 		return allTests;
+
+	}
+	@RequestMapping(value = "/viewTests", method = RequestMethod.GET)
+	public String getAllTestsView(){
+		 
+
+		return "all-tests";
+
+	}
+	@RequestMapping(value = "/viewTest/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public TestDTO viewTest(@PathVariable int id){
+		 TestDTO dto=testService.findTestbyId(id);
+
+		return dto;
 
 	}
 

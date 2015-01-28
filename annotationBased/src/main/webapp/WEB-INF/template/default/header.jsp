@@ -131,8 +131,8 @@
 					class="fa fa-fw fa-dashboard"></i> Dashboard</a></li>
 			<li><a href="<c:url value='/admin/dashboard' />"><i
 					class="fa fa-fw fa-bar-chart-o"></i> Create User</a></li>
-			<li><a href="<c:url value='/admin/createTest' />"><i
-					class="fa fa-fw fa-table"></i> Create Test</a></li>
+			<li><a href="<c:url value='/admin/viewTests' />"><i
+					class="fa fa-fw fa-table"></i> View Tests</a></li>
 			<li><a href="<c:url value='/admin/setQuestion' />"><i
 					class="fa fa-fw fa-edit"></i> Create Question</a></li>
 			<li><a href="<c:url value='/admin/dashboard' />"><i

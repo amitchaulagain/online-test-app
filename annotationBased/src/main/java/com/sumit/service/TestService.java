@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sumit.model.MainQuestion;
 import com.sumit.model.QuestionDTO;
+import com.sumit.model.TestDTO;
 import com.sumit.model.TestRequestDTO;
 import com.sumit.model.TestSet;
 
@@ -12,7 +13,7 @@ public interface TestService {
 
 	public List<TestSet> listOfAllTest();
 
-	public TestSet findTestbyId(int id);
+	public TestDTO findTestbyId(int id);
 
 	public TestSet update(MainQuestion question, QuestionDTO listOfQuestionId,TestSet test ,int id);
 
@@ -27,5 +28,9 @@ public interface TestService {
 	void createTestRequest(int testId);
 
 	public TestRequestDTO findTestRequestById(int testRequestId);
+
+	TestSet findTestbyTheirId(int id);
+
+	public void createOrEditTest(TestSet test);
 
 }

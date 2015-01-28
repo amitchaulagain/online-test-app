@@ -15,6 +15,7 @@ import com.sumit.api.TestApi;
 import com.sumit.convert.ConvertUtils;
 import com.sumit.model.MainQuestion;
 import com.sumit.model.QuestionDTO;
+import com.sumit.model.TestDTO;
 import com.sumit.model.TestRequest;
 import com.sumit.model.TestRequestDTO;
 import com.sumit.model.TestRequestStatus;
@@ -52,7 +53,7 @@ public class TestServiceImpl implements TestService {
 	}
 
 	@Override
-	public TestSet findTestbyId(int id) {
+	public TestSet findTestbyTheirId(int id) {
 
 		return testApi.findTestbyId(id);
 	}
@@ -153,5 +154,29 @@ public class TestServiceImpl implements TestService {
 		 
 		return ConvertUtils.convertToTestRequestDTO(testRequestRipo.findOne(testRequestId));
 	}
+	@Override
+	public TestDTO findTestbyId(int id) {
+
+		return ConvertUtils.convertToTestDTO(testApi.findTestbyId(id));
+	}
+
+	@Override
+	public void createOrEditTest(TestSet test) {
+		if(test.getId()==0){
+			testRipo.save(test);
+			
+		}
+		else{
+			TestSet ts= testRipo.findOne(test.getId());
+			ts.setName(test.getName());
+			ts.setFullmark(test.getFullmark());
+			ts.setPassmark(test.getPassmark());
+			ts.setDuration(test.getDuration());
+			ts.setTestDate(test.getTestDate());
+			testRipo.save(ts);
+		}
+		
+	}
+
 
 }

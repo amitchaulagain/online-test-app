@@ -35,6 +35,8 @@ public class TestSet implements Serializable {
 	String duration;
 	Date createDate = new Date();
 	Date testDate;
+	private TestType type;
+
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "test")
 	List<TestRequest> testRequests = new ArrayList<TestRequest>();
@@ -114,5 +116,12 @@ public class TestSet implements Serializable {
 
 	public void setTestRequests(List<TestRequest> testRequests) {
 		this.testRequests = testRequests;
+	}
+	public TestType getType() {
+		return type;
+	}
+	
+	public void setType(TestType type) {
+		this.type = type;
 	}
 }
