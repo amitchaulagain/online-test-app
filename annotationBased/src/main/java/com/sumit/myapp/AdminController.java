@@ -172,16 +172,16 @@ public class AdminController {
 		return mav;
 	}
 
-//	@RequestMapping(value = "/createTest", method = RequestMethod.GET)
-//	public ModelAndView createTestPage(@Valid TestSet test) {
-//		ModelAndView mav = new ModelAndView("CreateTest");
-//		List<MainQuestion> listOfQuestions = questionService.getAllQuestion();
-//		String message = "ALL QUESTION TABLE";
-//		mav.addObject("message", message);
-//		mav.addObject("listofquestions", listOfQuestions);
-//
-//		return mav;
-//	}
+	@RequestMapping(value = "/createTest", method = RequestMethod.GET)
+	public ModelAndView createTestPage(@Valid TestSet test) {
+		ModelAndView mav = new ModelAndView("CreateTest");
+		List<MainQuestion> listOfQuestions = questionService.getAllQuestion();
+		String message = "ALL QUESTION TABLE";
+		mav.addObject("message", message);
+		mav.addObject("listofquestions", listOfQuestions);
+
+		return mav;
+	}
 
 	@RequestMapping(value = "/createTest", method = RequestMethod.POST)
 	  @ResponseBody public void createTest(TestSet test) {
@@ -342,6 +342,31 @@ public class AdminController {
 
 		return dto;
 
+	}
+	@RequestMapping(value = "/alltest", method = RequestMethod.GET)
+	public @ResponseBody List<TestJsonDTO> viewallTest() {
+
+		List<TestJsonDTO> listOfTestQuestion = new ArrayList<TestJsonDTO>();
+		List<TestSet> allTest = testService.listOfAllTest();
+
+		for (TestSet testSet : allTest) {
+			List<Integer> listquestionId = new ArrayList<Integer>();
+			TestJsonDTO dto = new TestJsonDTO();
+			dto.setId(testSet.getId());
+			dto.setName(testSet.getName());
+			dto.setFullmark(testSet.getFullmark());
+			dto.setPassmark(testSet.getPassmark());
+			List<TestQuestions> tq = tquestionRipo.searchByTestId(testSet
+					.getId());
+			for (TestQuestions testQuestions : tq) {
+				listquestionId.add(testQuestions.getId());
+			}
+			dto.setListOfQuestions(listquestionId);
+			;
+			listOfTestQuestion.add(dto);
+		}
+
+		return listOfTestQuestion;
 	}
 
 }
