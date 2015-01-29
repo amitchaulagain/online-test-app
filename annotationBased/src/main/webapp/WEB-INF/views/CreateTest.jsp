@@ -138,7 +138,7 @@
 							<div class="row" style="margin-right: -22; margin-left:-22;">
 								<div id="formToCreateTest" class="col-md-6">
 
-									<form role="form" action='../admin/createTest' method="post">
+									<form role="form"  >
 										<div id="testOneInfo">
 											<div class="form-group ">
 												<label for="name">Name</label> <input type="text"
@@ -204,7 +204,7 @@
 												<a id="addQuestionInTest" href="#addQuestionInTest">Add
 													Questions </a>
 											</div>
-											<button type="submit" class="btn btn-primary btn-sm"
+											<button   class="btn btn-primary btn-sm"
 												onclick="createTest()">Submit</button>
 										</div>
 									</form>

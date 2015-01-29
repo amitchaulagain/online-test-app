@@ -190,7 +190,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/createTest", method = RequestMethod.POST)
 	@ResponseBody
-	public void createTest(@RequestBody TestJsonDTO testJson)
+	public String createTest(@RequestBody TestJsonDTO testJson)
 			throws JsonProcessingException, IOException {
 		TestSet test = new TestSet();
 		test.setName(testJson.getName());
@@ -206,6 +206,10 @@ public class AdminController {
 			t.setTestInTestquestion(testId);
 			tquestionRipo.save(t);
 		}
+		ObjectMapper mapper = new ObjectMapper();
+		String val = mapper.writeValueAsString("hell");
+
+		return val;
 
 	}
 
