@@ -17,7 +17,7 @@ function renderAllTests(tests) {
 			tName : test.name
 		}
 		$('#showTest').append('<tr><td>'+test.id+
-				'</td><td>'+test.name+'</td><td>'+
+				'</td><td>'+test.name+'</td><td>'
 				 +test.fullmark+'</td><td>' 
 				 +test.passmark+'</td><td>'
 				 +test.testDate+'</td><td>'

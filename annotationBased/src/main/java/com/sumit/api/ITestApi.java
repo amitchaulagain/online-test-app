@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.sumit.model.TestQuestions;
 import com.sumit.model.TestRequest;
 import com.sumit.model.TestRequestDTO;
 import com.sumit.model.TestRequestStatus;
@@ -29,6 +30,8 @@ public interface ITestApi {
 	public void setStausOfTestRequest(TestRequestDTO dto);
 
 	public void createTestRequest(int testId);
+
+	public List<TestQuestions> searchByTestId(int id);
 
 
 }

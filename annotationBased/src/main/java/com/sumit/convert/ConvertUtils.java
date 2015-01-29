@@ -3,6 +3,7 @@ package com.sumit.convert;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sumit.dto.TestJsonDTO;
 import com.sumit.model.Role;
 import com.sumit.model.TestDTO;
 import com.sumit.model.TestRequest;
@@ -72,16 +73,21 @@ public   class ConvertUtils {
 
 	public static TestDTO convertToTestDTO(TestSet tr) {
 		TestDTO dto = new TestDTO();
-		dto.setId(tr.getId());
+//		dto.setId(tr.getId());
 		dto.setName(tr.getName());
 		dto.setFullmark(tr.getFullmark());
 		dto.setPassmark(tr.getPassmark());
-		dto.setTestType(tr.getType());
+		dto.setTestType(tr.getType().toString());
 		if(tr.getTestDate()!=null){
 			dto.setTestDate(tr.getTestDate().toGMTString());
 		}
 		dto.setDuration(tr.getDuration());
 		return dto;
+	}
+
+	public static List<TestJsonDTO> convertToTestJSONDTOs() {
+	 
+		return null;
 	}
 
 }

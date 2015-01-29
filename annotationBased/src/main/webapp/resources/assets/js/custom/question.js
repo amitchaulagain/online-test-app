@@ -192,15 +192,13 @@ function renderQuestionType(types) {
 		
 	})
 	
-	var qType=($('#qType :selected').text())
+	
 	return JSON.stringify({
 		
-        "questionType": qType,
         "questionName": $('#question').val(),
-        "listOfOptions": listOfOptions,
-        "listOfAnswers": listOfAnswers
-        
-       
+        "questionType": $('#qtype').val(),
+        "listOfAnswers": listOfAnswers,
+        "listOfOptions": listOfOptions
 
     });
 	

@@ -2,12 +2,21 @@ package com.sumit.model;
 
 
 public class TestDTO {
-	private int id;
-	private String name;
-	private int fullmark;
-	private int passmark;
-	private String testDate;
-	private TestType testType;
+	public TestDTO() {
+	}
+	  Integer id;
+	  String name;
+	  int fullmark;
+	  int passmark;
+	  String testDate;
+	  String testType;
+	public String getTestType() {
+		return testType;
+	}
+
+	public void setTestType(String testType) {
+		this.testType = testType;
+	}
 	private String duration;
 
 	public String getDuration() {
@@ -26,13 +35,6 @@ public class TestDTO {
 		this.testDate = testDate;
 	}
 
-	public TestType getTestType() {
-		return testType;
-	}
-
-	public void setTestType(TestType testType) {
-		this.testType = testType;
-	}
 
 	public int getId() {
 		return id;

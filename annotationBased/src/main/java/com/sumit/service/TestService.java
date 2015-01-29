@@ -2,6 +2,7 @@ package com.sumit.service;
 
 import java.util.List;
 
+import com.sumit.dto.TestJsonDTO;
 import com.sumit.model.MainQuestion;
 import com.sumit.model.QuestionDTO;
 import com.sumit.model.TestDTO;
@@ -32,5 +33,7 @@ public interface TestService {
 	TestSet findTestbyTheirId(int id);
 
 	public void createOrEditTest(TestSet test);
+
+	public List<TestJsonDTO> getAllTestJsonDTOs(List<TestSet> allTest);
 
 }

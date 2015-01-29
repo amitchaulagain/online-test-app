@@ -8,10 +8,12 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import com.sumit.Utility.AuthenticationUtil;
+import com.sumit.model.TestQuestions;
 import com.sumit.model.TestRequest;
 import com.sumit.model.TestRequestDTO;
 import com.sumit.model.TestRequestStatus;
 import com.sumit.model.TestSet;
+import com.sumit.repository.TestQuestionRepository;
 import com.sumit.repository.TestRequestRepository;
 import com.sumit.repository.TestRipository;
 
@@ -19,6 +21,8 @@ import com.sumit.repository.TestRipository;
 public class TestApi implements ITestApi {
 	@Resource
 	TestRipository testRipo;
+	@Resource
+	TestQuestionRepository testQuestionRepository;
 	@Resource
 	TestRequestRepository testRequestRepository;
 
@@ -90,6 +94,12 @@ public class TestApi implements ITestApi {
 		testRequestRepository.save(tr);
 
 		
+	}
+
+	@Override
+	public List<TestQuestions> searchByTestId(int id) {
+		 
+		return testQuestionRepository.searchByTestId(id);
 	}
 
 }

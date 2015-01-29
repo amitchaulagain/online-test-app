@@ -6,16 +6,15 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,13 +34,28 @@ public class TestSet implements Serializable {
 	String duration;
 	Date createDate = new Date();
 	Date testDate;
+ 
 	private TestType type;
-
-
+ 
+	boolean isNegativeMarking;
+	boolean negativeMarkingValue;
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "test")
 	List<TestRequest> testRequests = new ArrayList<TestRequest>();
+	
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "testInTestquestion")
+	@Fetch(value = FetchMode.SELECT)
+	private List<TestQuestions> testQuestionInTest;
 
-	 
+	public boolean isNegativeMarkingValue() {
+		return negativeMarkingValue;
+	}
+
+	public void setNegativeMarkingValue(boolean negativeMarkingValue) {
+		this.negativeMarkingValue = negativeMarkingValue;
+	}
+ 
 	public int getFullmark() {
 		return fullmark;
 	}
@@ -81,10 +95,15 @@ public class TestSet implements Serializable {
 	public void setTestDate(Date testDate) {
 		this.testDate = testDate;
 	}
+	
 
-	@ManyToMany(cascade =CascadeType.ALL )
-	@JoinTable(name = "test_question", joinColumns = { @JoinColumn(name = "test_id") }, inverseJoinColumns = { @JoinColumn(name = "mainquestion_id") })
-	public List<MainQuestion> questionInTest;
+	public List<TestQuestions> getTestQuestionInTest() {
+		return testQuestionInTest;
+	}
+
+	public void setTestQuestionInTest(List<TestQuestions> testQuestionInTest) {
+		this.testQuestionInTest = testQuestionInTest;
+	}
 
 	public int getId() {
 		return id;
@@ -102,14 +121,7 @@ public class TestSet implements Serializable {
 		this.name = name;
 	}
 
-	public List<MainQuestion> getQuestionInTest() {
-		return questionInTest;
-	}
-
-	public void setQuestionInTest(List<MainQuestion> questionInTest) {
-		this.questionInTest = questionInTest;
-	}
-	@JsonIgnore
+ 
 	public List<TestRequest> getTestRequests() {
 		return testRequests;
 	}

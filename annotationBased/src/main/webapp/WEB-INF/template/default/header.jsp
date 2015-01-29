@@ -6,15 +6,21 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
+		<link
+			href="<c:url value="/resources/css/library/simplePagination.css" />"
+			rel="stylesheet">
 <link href="<c:url value='/resources/css/library/bootstrap.min.css'/>"
 	rel="stylesheet">
 <!-- Custom CSS -->
 <link href="<c:url value='/resources/css/custom/sb-admin.css'/>"
 	rel="stylesheet">
+	<link href="<c:url value='/resources/css/custom/agency.css'/>"
+	rel="stylesheet">
 <!-- Morris Charts CSS -->
 <link href="<c:url value='/resources/css/library/plugins/morris.css'/>"
 	rel="stylesheet">
-
+<link href="<c:url value='/resources/css/library/plugins/datepicker.css'/>"
+	rel="stylesheet">
 <link
 	href="<c:url value='/resources/font-awesome-4.1.0/css/font-awesome.min.css'/>"
 	rel="stylesheet">
@@ -133,6 +139,10 @@
 					class="fa fa-fw fa-bar-chart-o"></i> Create User</a></li>
 			<li><a href="<c:url value='/admin/viewTests' />"><i
 					class="fa fa-fw fa-table"></i> View Tests</a></li>
+					<li><a href="<c:url value='/admin/experiment' />"><i
+					class="fa fa-fw fa-bar-chart-o"></i>experiment</a></li>
+			<li><a href="<c:url value='/admin/createTest' />"><i
+					class="fa fa-fw fa-table"></i> Create Test</a></li>
 			<li><a href="<c:url value='/admin/setQuestion' />"><i
 					class="fa fa-fw fa-edit"></i> Create Question</a></li>
 			<li><a href="<c:url value='/admin/dashboard' />"><i

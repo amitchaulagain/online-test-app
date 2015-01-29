@@ -1,3 +1,7 @@
+
+.date-form { margin: 10px; }
+label.control-label span { cursor: pointer; }
+
 body {
 	
 
@@ -105,10 +109,10 @@ header  .intro-heading {
         line-height: 55px;
     }
 section {
-	/* 
-    margin-right: 90px;*/
-margin-left:20px; 
-    background-color: #29fdd9;
+
+    margin-right:40px;
+margin-left:10px; 
+  
 }
 
 section h2.section-heading {
@@ -126,10 +130,10 @@ section h3.section-subheading {
     font-weight: 400;
 }
 
-@media(min-width:768px) {
+/* /* @media(min-width:768px) {
     section {
-      /*   padding:0px 0; */
-    }
+        padding:0px 0;
+    } */ */
 }
 
 .service-heading {
@@ -140,7 +144,7 @@ section h3.section-subheading {
 /*---------------- admin page-----------  */
 
 .side-bar .list-group{
-	
+	border-radius:0px;
 	background-color:#464756;
 	 font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
         font-size: 15px;
@@ -149,18 +153,20 @@ section h3.section-subheading {
         color: #5cb85c;
 }
 .panel-group{
+	border-radius:0px;
 	/* background-color: #242442; */
 	color: #5cb85c;
 
 }
-.panel{
+.panel-group .panel{
 	color: #2be41b;
+	border-radius:0px;
 	/* background-color:#242442; */
 
 	
 }
-.panel-heading{
-	
+.panel{
+	border-radius:0px;
 
 	/* background-color:#242442;  */
 	
@@ -199,8 +205,8 @@ margin-left:15px; */
  padding: 15px 41px;
  margin-bottom: -19px;
  background-color: #5cb85c;
- border-radius:4px;
- margin-top: 70px;
+ border-radius:0px;
+ margin-top: 8px;
  margin-left: 12px;
  width : 98%;
  
@@ -216,3 +222,5 @@ margin-left:15px; */
  
  }
  #msg h5{margin-top: 35px;color:red;}
+ 
+ 

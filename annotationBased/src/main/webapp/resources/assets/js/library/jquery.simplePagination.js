@@ -36,6 +36,7 @@
 				
 					var show = $("#show option:selected").text();
 					showLimitedQuestion(show, pageNumber,aaData);
+					showTest(show,index,aaTest);
 					// Callback triggered when a page is clicked
 					// Page number is given as an optional parameter
 				},

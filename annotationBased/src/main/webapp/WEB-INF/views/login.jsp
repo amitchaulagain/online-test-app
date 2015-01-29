@@ -13,7 +13,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
+<<<<<<< HEAD:annotationBased/src/main/webapp/WEB-INF/views/login.jsp
 <link href="<c:url value="/resources/css/library/bootstrap.min.css" />" rel="stylesheet" />
+=======
+<link rel="stylesheet" href="<c:url value="/resources/css/library/bootstrap.min.css" />"/>
+>>>>>>> 2ed4cb0f572a383ef5d3d428573b39218b913d06:annotationBased/src/main/webapp/WEB-INF/views/home.jsp
 
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/custom/agency.css"/>" type='text/css'>
@@ -100,7 +104,7 @@
 						<input type="submit" class="btn btn-primary btn-block "
 							value="Login" id="login-btn" />
 						<p>
-							<a id=registerHere onclick="showRegisterUserView();" href="#">Not
+							<a id=registerHere  href="#">Not
 								a user yet !!!!! register here</a>
 					</div>
 				</form>

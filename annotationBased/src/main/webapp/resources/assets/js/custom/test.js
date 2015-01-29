@@ -32,32 +32,42 @@ function renderQuestionsforTest(questions) {
 }
 
 function createTest() {
-	alert("dddddd")
-	$.ajax({
-		type : 'POST',
-		url : "http://localhost:8085/annotationBased/admin/createTest",
-		dataType : "json",
-		contentType : "application/json",
-		data : testToJSON(),
-		success : function() {
-			alert("success")
-		},
-		error : function(msg) {
-			alert("error while saving test");
-		}
-	});
+	 $.ajax({      
+	        type: 'POST',
+	        url: "http://localhost:8085/annotationBased/admin/createTest",
+	        dataType: "json",
+	        contentType:"application/json",
+	        accept:"application/json",
+	        data: testToJSON(),        
+	        success:function(){
+	        	 alert("done");
+	        	
+	        },
+	        error:function(msg){
+	        	alert("error while saving question");
+	        }
+	    });
 
 }
 
 function testToJSON() {
-
-	listOfQuestionForTest = questionToAdd;
+	
+	var name=$('#testname').val();
+	var fullmark=$('#fullmark').val();
+	var passmark=$('#passmark').val();
+	var id=1;
+	var testType="dffd";
+	var duration="dffd";
+	var testDate="dffd";
+//	listOfQuestionForTest = questionToAdd;
 	return JSON.stringify({
-		"name" : $('#testname').val(),
-		"fullmark" : $('#fullmark').val(),
-		"passmark" : $('#passmark').val(),
-		"listOfQuestions" : listOfQuestionForTest
-	// "testDate":$('#testDate').value()
+		"id":1,
+		"name" :  name,
+		"fullmark" : fullmark,
+		"passmark" :  passmark,
+		"testType" : testType,
+		"duration":duration,
+		"testDate":testDate
 	})
 
 }
@@ -86,7 +96,11 @@ function renderTest(tests) {
 			tName : test.name,
 			tDate : test.createdDate,
 			tPassmark : test.passmark,
-			tFullmark : test.fullmark
+			tFullmark : test.fullmark,
+			tTestDate :test.testDate,
+			tType : test.testType,
+			tDuration : test.duration
+			
 		}
 		aaTest.push(oneTest);
 
@@ -108,7 +122,7 @@ var totalData = aaTest.length;
 			itemsOnPage : show,
 			cssStyle : 'light-theme',
 			onPageClick: function(pageNumber, event) {
-					$('#accordion .panel').remove()
+					$('#showTest tr td').remove()
 					var show = $("#show option:selected").text();
 					var index = $('#pagination').pagination('getCurrentPage');
 					showTest(show,index,aaTest);
@@ -138,44 +152,61 @@ function showTest(show,index,aTest) {
 	else {
 		var limitedTest= aaTest.slice(initial, finale);
 	}
-	$.each(limitedTest, function(idx, Test) {
-		var a = Test
-		var qBody = ('<div class= "panel panel-body test-container" id="b' + idx + '" >'
-				+ '<div class="row">' + '<div class="col-lg-3">' + "pass:"
-				+ Test.tPassmark + '</div>' + '<div class="col-lg-3">'
-				+ "full:" + Test.tFullmark + '</div>' + '</div>' + '</div>'
-				+ '</div>' + '</div>')
-		tInfo.push(qBody)
-		var testbox = ('<div class="panel panel-default" >'
-				+ '<div class="panel-heading" role="tab" id="t'
-				+ idx
-				+ '">'
-				+ '<div class="row">'
-				+ '<div class="col-md-10">'
-				+ '<h4 class="panel-title">'
-				+ '<a class="testname" id="'
-				+ idx
-				+ '"data-toggle="collapse" data-parent="#accordion"href="#test'
-				+ Test.tId
-				+ '" aria-expanded="true"aria-controls="test'
-				+ Test.tId
-				+ '">'
-				+ Test.tName
-				+ ' </a>'
-				+ '</h4>'
-				+ '</div>'
-				+ '<div class="col-md-2">'
-				+ '<a class="update" id="'
-				+ Test.tId + '">' + "update" + '</a>' + '</div>' + '</div>')
+	$.each(limitedTest, function(idx, test) {
+		var a = test
+//		var qBody = ('<div class= "panel panel-body test-container" id="b' + idx + '" >'
+//				+ '<div class="row">' + '<div class="col-lg-3">' + "pass:"
+//				+ Test.tPassmark + '</div>' + '<div class="col-lg-3">'
+//				+ "full:" + Test.tFullmark + '</div>' + '</div>' + '</div>'
+//				+ '</div>' + '</div>')
+//		tInfo.push(qBody)
+//		var testbox = ('<div class="panel panel-default" >'
+//				+ '<div class="panel-heading" role="tab" id="t'
+//				+ idx
+//				+ '">'
+//				+ '<div class="row">'
+//				+ '<div class="col-md-10">'
+//				+ '<h4 class="panel-title">'
+//				+ '<a class="testname" id="'
+//				+ idx
+//				+ '"data-toggle="collapse" data-parent="#accordion"href="#test'
+//				+ Test.tId
+//				+ '" aria-expanded="true"aria-controls="test'
+//				+ Test.tId
+//				+ '">'
+//				+ Test.tName
+//				+ ' </a>'
+//				+ '</h4>'
+//				+ '</div>'
+//				+ '<div class="col-md-2">'
+//				+ '<a class="update" id="'
+//				+ Test.tId + '">' + "update" + '</a>' + '</div>' + '</div>')
+		
+		
+		$('#showTest').append('<tr><td>'+test.tId+
+				'</td><td>'+test.tName+'</td><td>'
+				 +test.tFullmark+'</td><td>' 
+				 +test.tPassmark+'</td><td>'
+				 +test.tTestDate+'</td><td>'
+				 +test.tDuration+'</td><td>'
+				 +test.tType+'</td><td>'+
+				
+				'<a class='+"alert"+' href="#'
+				
+				+test.id+'" actionToBeDone="view" data-id="'+test.id+'" >'+'View</a>'+'</td><td>'+
+				'<a class='+"alert"+' href="http://localhost:8085/annotationBased/admin/viewTest/'
+				
+				+test.id+'" actionToBeDone="updateQ">'+'Update Q</a>'+'</td><td>'+
+				'<a class='+"alert"+' href="http://localhost:8085/annotationBased/admin/deleteTest/'
+				
+				+test.id+'" actionToBeDone="delete">'+'Delete</a>'+'</td><td>'+
+				'<a class='+"alert"+' href="http://localhost:8085/annotationBased/admin/viewTest/'
+				
+				+test.id+'" actionToBeDone="viewAllQ">'+'View All Q in test</a>'+'</td><td>'+
+				
+				'</td></tr>') 
+		
 
-		$('#accordion').append(testbox)
-		$('#t'+idx).after(tInfo[idx])
-		$('#b'+idx).hide()
-		// $('#accordion div').attr("id", "test" + idx)									
-		/*
-		 * $('#test' + idx + ' .panel-heading a h4 ').html( Test.name)
-		 */
-		// $(tInfo[idx]).hide()
 	})
 
 }
@@ -465,7 +496,7 @@ alert(questionToAdd)
 
 	})
 	$('#show').on('change', function() {
-		$('#accordion .panel').remove();
+		$('#showTest tr td').remove();
 
 		var show = $('#show option:selected').val();
 		var index = $('#pagination').pagination('getCurrentPage');
