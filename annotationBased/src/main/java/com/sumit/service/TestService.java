@@ -32,8 +32,8 @@ public interface TestService {
 
 	TestSet findTestbyTheirId(int id);
 
-	public void createOrEditTest(TestSet test);
-
 	public List<TestJsonDTO> getAllTestJsonDTOs(List<TestSet> allTest);
+
+	void createOrEditTest(TestDTO dto);
 
 }

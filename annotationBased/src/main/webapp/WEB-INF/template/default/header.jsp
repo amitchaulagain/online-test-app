@@ -141,7 +141,7 @@
 					class="fa fa-fw fa-table"></i> View Tests</a></li>
 					<li><a href="<c:url value='/admin/experiment' />"><i
 					class="fa fa-fw fa-bar-chart-o"></i>experiment</a></li>
-			<li><a href="<c:url value='/admin/createTest' />"><i
+			<li><a href="<c:url value='/admin/viewAllTests' />"><i
 					class="fa fa-fw fa-table"></i> Create Test</a></li>
 			<li><a href="<c:url value='/admin/setQuestion' />"><i
 					class="fa fa-fw fa-edit"></i> Create Question</a></li>

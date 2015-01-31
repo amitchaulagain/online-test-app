@@ -148,35 +148,29 @@ public class AdminController {
 		return searchedReasult;
 	}
 
-	@RequestMapping(value = "/alltest", method = RequestMethod.GET)
-	public @ResponseBody List<TestJsonDTO> viewallTest() {
-
-		List<TestSet> allTest = testService.listOfAllTest();
-		List<TestJsonDTO> listOfTestQuestion =testService.getAllTestJsonDTOs(allTest);
-		
-		
-		return listOfTestQuestion;
-	}
+//	@RequestMapping(value = "/alltest", method = RequestMethod.GET)
+//	public @ResponseBody List<TestJsonDTO> viewallTest() {
+//
+//		List<TestSet> allTest = testService.listOfAllTest();
+//		List<TestJsonDTO> listOfTestQuestion =testService.getAllTestJsonDTOs(allTest);
+//		
+//		
+//		return listOfTestQuestion;
+//	}
 
 	// test.setQuestionInTest(questions);
 
-	@RequestMapping(value = "/createTest", method = RequestMethod.GET)
-	public ModelAndView createTestPage(@Valid TestSet test) {
-		ModelAndView mav = new ModelAndView("CreateTest");
-
-		return mav;
+	@RequestMapping(value = "/viewAllTests", method = RequestMethod.GET)
+	public String createTestPage(@Valid TestSet test) {
+		 
+		return "all-tests";
 	}
 
-	@RequestMapping(value = "/createTest", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveTest", method = RequestMethod.POST)
 	 @ResponseBody
-	public String createTest(@RequestBody TestDTO testJson)
+	public String createTest(@RequestBody TestDTO testDTO)
 			throws JsonProcessingException, IOException {
-//		 testService.createOrEditTest(test);
-		TestSet test = new TestSet();
-		test.setName(testJson.getName());
-		test.setFullmark(testJson.getFullmark());
-		test.setPassmark(testJson.getPassmark());
-		 testRipo.save(test);
+		 testService.createOrEditTest(testDTO);
 		 ObjectMapper mapper = new ObjectMapper();
 			String val = mapper.writeValueAsString("DOne");
 			return val;
@@ -234,14 +228,15 @@ public class AdminController {
 
 	}
 
-	@RequestMapping(value = "/deleteTest/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/deleteTest/{id}", method = RequestMethod.DELETE)
+	@ResponseBody 
 	public String deleteTest(@PathVariable Integer id)
 			throws JsonProcessingException {
 
 		testService.delete(id);
 
 		ObjectMapper mapper = new ObjectMapper();
-		String val = mapper.writeValueAsString("Done");
+		String val = mapper.writeValueAsString("Deleted");
 		return val;
 	}
 
@@ -305,9 +300,9 @@ public class AdminController {
 		return dto;
 	}
 
-	@RequestMapping(value = "/testRequests/setStatus", method = RequestMethod.POST)
-	@ResponseBody
-	public String setTestRequestsStatus(@RequestBody TestRequestDTO dto)
+	@RequestMapping(value = "/testRequests/setStatus", method = RequestMethod.POST ,produces="Application/json")
+	
+	public @ResponseBody String setTestRequestsStatus(@RequestBody TestRequestDTO dto)
 			throws JsonProcessingException {
 		testService.setTestRequestStatusCompletedOrRejected(dto);
 		ObjectMapper mapper = new ObjectMapper();

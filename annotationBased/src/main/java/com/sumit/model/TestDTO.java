@@ -2,12 +2,10 @@ package com.sumit.model;
 
 
 public class TestDTO {
-	public TestDTO() {
-	}
 	  Integer id;
 	  String name;
-	  int fullmark;
-	  int passmark;
+	  Integer fullmark;
+	  Integer passmark;
 	  String testDate;
 	  String testType;
 	public String getTestType() {

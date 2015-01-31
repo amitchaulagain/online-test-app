@@ -73,11 +73,13 @@ public   class ConvertUtils {
 
 	public static TestDTO convertToTestDTO(TestSet tr) {
 		TestDTO dto = new TestDTO();
-//		dto.setId(tr.getId());
+		dto.setId(tr.getId());
 		dto.setName(tr.getName());
 		dto.setFullmark(tr.getFullmark());
 		dto.setPassmark(tr.getPassmark());
-		dto.setTestType(tr.getType().toString());
+		if(tr.getType()!=null){
+			dto.setTestType(tr.getType().toString());
+		}
 		if(tr.getTestDate()!=null){
 			dto.setTestDate(tr.getTestDate().toGMTString());
 		}

@@ -1,5 +1,7 @@
 package com.sumit.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ import com.sumit.model.TestRequest;
 import com.sumit.model.TestRequestDTO;
 import com.sumit.model.TestRequestStatus;
 import com.sumit.model.TestSet;
+import com.sumit.model.TestType;
 import com.sumit.repository.QuestionRepository;
 import com.sumit.repository.TestRequestRepository;
 import com.sumit.repository.TestRipository;
@@ -172,19 +175,37 @@ public class TestServiceImpl implements TestService {
 	}
 
 	@Override
-	public void createOrEditTest(TestSet test) {
-		if (test.getId() == 0) {
-			testRipo.save(test);
-
-		} else {
-			TestSet ts = testRipo.findOne(test.getId());
-			ts.setName(test.getName());
-			ts.setFullmark(test.getFullmark());
-			ts.setPassmark(test.getPassmark());
-			ts.setDuration(test.getDuration());
-			ts.setTestDate(test.getTestDate());
-			testRipo.save(ts);
+	public void createOrEditTest(TestDTO dto) {
+		TestSet ts = new TestSet();
+		if (dto.getId() != 0) {
+			TestSet testToEdit = testRipo.findOne(dto.getId());
+			ts = testToEdit;
 		}
+		if (dto.getTestType().equals("testTypeOne")) {
+			ts.setType(TestType.WITHOUT_SET_AND_SECTION);
+			
+		} else if (dto.getTestType().equals("testTypeTwo")) {
+			ts.setType(TestType.WITH_SET_ONLY);
+
+		} else if (dto.getTestType().equals("testTypeThree")) {
+			ts.setType(TestType.WITH_SECTION_ONLY);
+
+		} else if (dto.getTestType().equals("testTypeFour")) {
+			ts.setType(TestType.WITH_SET_AND_SECTION);
+
+		}
+		ts.setName(dto.getName());
+		ts.setFullmark(dto.getFullmark());
+		ts.setPassmark(dto.getPassmark());
+		ts.setDuration(dto.getDuration());
+		SimpleDateFormat formatter = new SimpleDateFormat("E, MMM dd yyyy");
+		try {
+			ts.setTestDate(formatter.parse(dto.getTestDate()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		testRipo.save(ts);
 
 	}
 
@@ -201,7 +222,7 @@ public class TestServiceImpl implements TestService {
 			dto.setPassmark(testSet.getPassmark());
 			dto.setTestType(testSet.getType());
 			dto.setDuration(testSet.getDuration());
-			if(testSet.getTestDate()!=null){
+			if (testSet.getTestDate() != null) {
 				dto.setTestDate(testSet.getTestDate().toGMTString());
 			}
 			List<TestQuestions> tq = testApi.searchByTestId(testSet.getId());

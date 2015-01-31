@@ -34,13 +34,13 @@ function renderQuestionsforTest(questions) {
 function createTest() {
 	 $.ajax({      
 	        type: 'POST',
-	        url: "http://localhost:8085/annotationBased/admin/createTest",
+	        url: "http://localhost:8085/annotationBased/admin/saveTest",
 	        dataType: "json",
 	        contentType:"application/json",
 	        accept:"application/json",
 	        data: testToJSON(),        
-	        success:function(){
-	        	 alert("done");
+	        success:function(msg){
+	        	findAllTEst();
 	        	
 	        },
 	        error:function(msg){

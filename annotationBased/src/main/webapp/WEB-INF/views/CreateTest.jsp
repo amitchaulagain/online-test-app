@@ -11,13 +11,11 @@
 <tiles:insertDefinition name="defaultTemplate">
 
 	<tiles:putAttribute name="body">
-
-
-
-
 		<div class="body">
 			<script type="text/javascript"
 				src="<c:url value="/resources/js/library/jquery.simplePagination.js"/>"></script>
+	<script type="text/javascript"
+				src="<c:url value="/resources/js/library/jquery.test.js"/>"></script>
 
 			<div class="row">
 				<div class="col-lg-12">
@@ -149,7 +147,6 @@
 						<div class="row" style="margin-right: -22; margin-left: -22;">
 							<div id="formToCreateTest" class="col-md-6">
 
-								<form role="form"   method="post">
 									<div id="testOneInfo">
 										<div class="form-group ">
 											<label for="name">Name</label> <input type="text" name="name"
