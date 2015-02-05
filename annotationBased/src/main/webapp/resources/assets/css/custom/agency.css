@@ -2,8 +2,8 @@
 .date-form { margin: 10px; }
 label.control-label span { cursor: pointer; }
 
-body {
-	
+.body {
+	margin: 0px -18px 0px 0px;"
 
 	
 }
@@ -206,7 +206,7 @@ margin-left:15px; */
  margin-bottom: -19px;
  background-color: #5cb85c;
  border-radius:0px;
- margin-top: 8px;
+ margin-top:20px;
  margin-left: 12px;
  width : 98%;
  
@@ -222,5 +222,54 @@ margin-left:15px; */
  
  }
  #msg h5{margin-top: 35px;color:red;}
+ h1{
+ margin-top: 35px;
+        text-transform: uppercase;
+        font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 45px;
+        font-weight: 600;
+        line-height: 45px;}
+ /* /* //form builder */ */
+ .row .box {
+
+}
  
- 
+ .row .box.box-primary{
+ border-top-color: #3c8dbc;
+ //border: 2px solid;
+ position: relative;
+background: #ffffff;
+border-top: 2px solid #5ADB98;
+margin-bottom: 20px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+width: 100%;
+box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+ }
+ #test-toolbar{
+ background-color:#5cb85c;
+ height:30px;
+ margin-top:2%;
+ margin-bottom:2%;
+ }
+ #test-toolbar div{
+ margin-top:4px; 
+
+ }
+ .drop-container{
+ height:33%
+ }
+ .dropable-box .dropable{
+ padding: 5px 10px;
+ width:29%;
+ height:50px;
+ border: 2px solid;
+  border-color: #5cb85c;
+ margin:10px 10px 10px 15px ;
+ background-color:#b2f4d2; 
+   font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+   color: #777;
+   text-align: center;
+ }

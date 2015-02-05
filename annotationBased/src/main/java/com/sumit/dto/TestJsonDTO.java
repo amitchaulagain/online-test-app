@@ -2,14 +2,27 @@ package com.sumit.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sumit.model.DynamicOption;
 import com.sumit.model.MainQuestion;
 import com.sumit.model.TestSet;
 
 
 public class TestJsonDTO {
-/*private	TestSet testSet;
+	
+public List<DynamicOption> getDynamicOptions() {
+		return dynamicOptions;
+	}
 
+	public void setDynamicOPtions(List<DynamicOption> dynamicOptions) {
+		this.dynamicOptions = dynamicOptions;
+	}
+
+private	TestSet testSet;
+	
 private List<MainQuestion> questionsInTest;
+
+private List<DynamicOption> dynamicOptions;
 
 public TestSet getTestSet() {
 	return testSet;
@@ -25,8 +38,8 @@ public List<MainQuestion> getQuestionsInTest() {
 
 public void setQuestionsInTest(List<MainQuestion> questionsInTest) {
 	this.questionsInTest = questionsInTest;
-}*/
-	
+}
+	/*
 	private int id;
 	public int getId() {
 		return id;
@@ -62,6 +75,6 @@ public void setQuestionsInTest(List<MainQuestion> questionsInTest) {
 	}
 	public void setListOfQuestions(java.util.List<Integer> listOfQuestions) {
 		this.listOfQuestions = listOfQuestions;
-	}
+	}*/
 	
 }

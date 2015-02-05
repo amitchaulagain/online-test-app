@@ -28,7 +28,7 @@ function renderSearchQuestion(data) {
 	})
 	
 	var show = $("#show option:selected").text();
-	var index = data.length
+	var index =$('#pagination').pagination('getCurrentPage');
 	$('tbody tr').remove();
 	pagi()
 	showLimitedQuestion(show, index,searchedData);
@@ -168,7 +168,8 @@ function showLimitedQuestion(show, index,datas) {
 }
 
 $(document).ready(function() {
-	
+	findAllQuestions()
+	$('.side-nav').hide()
 	$('#show').on('change', function() {
 		$('tbody tr').remove();
 

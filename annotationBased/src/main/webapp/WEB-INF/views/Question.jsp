@@ -23,33 +23,33 @@
 			src="<c:url value="/resources/js/custom/dataTable.js"/>"></script>
 
 
-		<body class="body" onload="findAllQuestions()">
+		<div class="body">
 			<div class="row">
 				<div class="col-lg-12">
 					<ol class="breadcrumb">
 						<li><i class="fa fa-dashboard"></i> <a
 							href="../admin/dashboard" style="color: white;">Dashboard</a></li>
 						<li class="active" style="color: white;"><i
-							class="fa fa-desktop"></i> Create Question</li>
+							class="fa fa-desktop"></i> Create Questions</li>
 					</ol>
 				</div>
 			</div>
+			<div class="contianer">
+				<div class=" col-md-8" style="margin-top: 45;">
+					<section>
+						<!-- CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX  -->
+						<!-- CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX  -->
 
-			<div class="row contianer-fluid">
-				<div class=" col-md-9 side-bar" style="margin-top: 50px">
-					<!-- CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX  -->
-					<!-- CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX CHECK BOX  -->
+
+						<div class="row contianer-fluid">
+							<section>
 
 
-					<div class="row contianer-fluid">
-						<section>
-							<div class="panel panel-primary">
-								<div class="panel-heading">
-									<h3 class="panel-title">Insert Question</h3>
-								</div>
+								<h1 style="color: #777">Insert Question</h1>
+
 								<div class="panel-body">
 									<!-- <form role="form" method="post" action="#"> -->
-									<div class="form-group" id="qtype" style="margin: 0">
+									<div class="form-group" id="choose-qType" style="margin: 0">
 										<label for="sel1">Question type</label> <select
 											name="questionType" class="form-control input-sm" id="qType">
 
@@ -67,50 +67,46 @@
 										</li>
 									</ul>
 									<!--   -->
-									<div class="row" id="option-box" clss="checkBox"
-										style="margin: 0">
-										<ul class="list-group">
+									<div id="options">
+										<div class="row" id="option-box" class="CHECKBOX"
+											style="margin: 0">
+											<ul class="list-group">
 
-											<li class="list-group-item" style="margin: 0">
-												<div class=" col-md-2">Option:1</div>
-												<div class=" col-md-8">
-													<div class="input-group">
-														<span class="input-group-addon"> <input
-															type="checkbox" name="listOfAnswers" class="rdo"
-															aria-label="sss" value="1">
-														</span> <input type="text" name="listOfOptions"
-															class="form-control txt" aria-label="...">
+												<li class="list-group-item" style="margin: 0">
+													<div class=" col-md-2">Option:1</div>
+													<div class=" col-md-8">
+														<div class="input-group">
+															<span class="input-group-addon"> <input
+																type="checkbox" name="listOfAnswers" class="rdo"
+																aria-label="sss" value="1">
+															</span> <input type="text" name="listOfOptions"
+																class="form-control txt" aria-label="...">
+														</div>
 													</div>
-												</div>
-												<div class=" col-md-2">
-													<button type="button" class="btn btn-primary btn-sm"
-														id="add-option">Add More</button>
-												</div>
-											</li>
-										</ul>
-									</div>
-
-									<div class="row" id="roption-box" clss="radiokBox"
-										style="margin: 0">
-										<ul class="list-group">
-
-											<li class="list-group-item" style="margin: 0">
-												<div class=" col-md-2">Option:1</div>
-												<div class=" col-md-8">
-													<div class="input-group">
-														<span class="input-group-addon"> <input
-															type="radio" name="listOfAnswers" class="rdo"
-															aria-label="sss" value="1">
-														</span> <input type="text" name="listOfOptions"
-															class="form-control txt" aria-label="...">
+													<div class=" col-md-2">
+														<button type="button" class="btn btn-primary btn-sm"
+															id="add-option">Add More</button>
 													</div>
-												</div>
-												<div class=" col-md-2">
-													<button type="button" class="btn btn-default btn-sm"
-														id="add-option">Add More</button>
-												</div>
-											</li>
-										</ul>
+												</li>
+												<li class="list-group-item" style="margin: 0"id="RADIO" class="roption-box">
+													<div class=" col-md-2">Option:1</div>
+													<div class=" col-md-8">
+														<div class="input-group">
+															<span class="input-group-addon"> <input
+																type="radio" name="listOfAnswers" class="rdo"
+																aria-label="sss" value="1">
+															</span> <input type="text" name="listOfOptions"
+																class="form-control txt" aria-label="...">
+														</div>
+													</div>
+													<div class=" col-md-2">
+														<button type="button" class="btn btn-default btn-sm"
+															id="add-option">Add More</button>
+													</div>
+												</li>
+											</ul>
+										</div>
+
 									</div>
 									<div class='row' style="margin: 0">
 										<div class="col-md-1"></div>
@@ -122,17 +118,17 @@
 									</div>
 									</form>
 								</div>
-							</div>
-						</section>
-					</div>
 
+							</section>
+						</div>
 
+					</section>
 				</div>
 
 				<div class=" col-md-3 side-bar" style="margin-top: 50px">
 					<section class="links">
 						<h1 class="section-heading text-highlight">
-							<span class="line">Quick Links</span>
+							<span class="line" style="color: #777">Quick Links</span>
 						</h1>
 						<div class="section-content">
 							<p>
@@ -234,14 +230,14 @@
 						<ul id="showquestion" style="color: yellow"></ul>
 					</div>
 				</div>
-		</body>
+			</div>
 
-		<script type="text/javascript"
-			src="<c:url value="/resources/js/custom/question.js"/>"></script>
-		<script type="text/javascript"
-			src="<c:url value="/resources/js/custom/animate.js"/>"></script>
-		<script type="text/javascript"
-			src="<c:url value="/resources/js/library/jquery.simplePagination.js"/>"></script>
+			<script type="text/javascript"
+				src="<c:url value="/resources/js/custom/question.js"/>"></script>
+			<script type="text/javascript"
+				src="<c:url value="/resources/js/custom/animate.js"/>"></script>
+			<script type="text/javascript"
+				src="<c:url value="/resources/js/library/jquery.simplePagination.js"/>"></script>
 	</tiles:putAttribute>
 </tiles:insertDefinition>
 

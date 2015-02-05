@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sumit.dto.QuestionJSONDTO;
 import com.sumit.dto.QuestionsInTestJSON;
 import com.sumit.dto.TestJsonDTO;
+import com.sumit.model.DynamicOption;
 import com.sumit.model.MainQuestion;
 import com.sumit.model.Options;
 import com.sumit.model.QuestionAnswer;
@@ -40,6 +41,7 @@ import com.sumit.model.TestRequestRejectDTO;
 import com.sumit.model.TestRequestStatus;
 import com.sumit.model.TestSet;
 import com.sumit.repository.AnsRepository;
+import com.sumit.repository.DynamicOptionRepository;
 import com.sumit.repository.OptionsRepository;
 import com.sumit.repository.QuestionRepository;
 import com.sumit.repository.TestQuestionRepository;
@@ -55,6 +57,8 @@ import com.sumit.service.TestService;
 @Secured("ROLE_ADMIN")
 @RequestMapping("/admin")
 public class AdminController {
+	@Resource
+	DynamicOptionRepository dOptionRipo;
 	@Resource
 	QuestionRepository questionRipo;
 	@Resource
@@ -73,9 +77,17 @@ public class AdminController {
 	OptionService optionService;
 	@Autowired
 	AnsService ansService;
+	
+	
+	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+	public @ResponseBody String userInfo(Principal principal,HttpServletResponse response) {
+		return principal.getName();
+		
+		
+	}
 
 	@RequestMapping(value = "/setQuestion", method = RequestMethod.GET)
-	public ModelAndView setQuestionPage(Principal principal) {
+	public ModelAndView setQuestionPage(Principal principal,HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("Question");
 		String name = principal.getName();
 		mav.addObject("name", name);
@@ -97,7 +109,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/saveQuestion", method = RequestMethod.POST)
-	public @ResponseBody String check(
+	public @ResponseBody String saveQuestion(
 			@RequestBody QuestionJSONDTO questionJSONDto)
 			throws JsonProcessingException, IOException {
 		questionService.save_Question_Option_Answer(questionJSONDto);
@@ -156,27 +168,27 @@ public class AdminController {
 	@RequestMapping(value = "/alltest", method = RequestMethod.GET)
 	public @ResponseBody List<TestJsonDTO> viewallTest() {
 
-		List<TestJsonDTO> listOfTestQuestion = new ArrayList<TestJsonDTO>();
+		List<TestJsonDTO> listOfTestWithQuestion = new ArrayList<TestJsonDTO>();
 		List<TestSet> allTest = testService.listOfAllTest();
 
 		for (TestSet testSet : allTest) {
-			List<Integer> listquestionId = new ArrayList<Integer>();
+			List<MainQuestion> listquestion = new ArrayList<MainQuestion>();
 			TestJsonDTO dto = new TestJsonDTO();
-			dto.setId(testSet.getId());
-			dto.setName(testSet.getName());
-			dto.setFullmark(testSet.getFullmark());
-			dto.setPassmark(testSet.getPassmark());
+			dto.setTestSet(testSet);
 			List<TestQuestions> tq = tquestionRipo.searchByTestId(testSet
 					.getId());
 			for (TestQuestions testQuestions : tq) {
-				listquestionId.add(testQuestions.getId());
+				MainQuestion question=testQuestions.getQuestionInTestquestion();
+				listquestion.add(question);
 			}
-			dto.setListOfQuestions(listquestionId);
-			;
-			listOfTestQuestion.add(dto);
+			
+			dto.setQuestionsInTest(listquestion);
+			 
+			
+			listOfTestWithQuestion.add(dto);
 		}
 
-		return listOfTestQuestion;
+		return listOfTestWithQuestion;
 	}
 
 	// test.setQuestionInTest(questions);
@@ -188,26 +200,37 @@ public class AdminController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/createTest", method = RequestMethod.POST)
-	@ResponseBody
-	public void createTest(@RequestBody TestJsonDTO testJson)
+
+	@RequestMapping(value = "/createTest", method = RequestMethod.POST )
+	
+	public  @ResponseBody  String createTest(@RequestBody TestJsonDTO testJson)
 			throws JsonProcessingException, IOException {
 		TestSet test = new TestSet();
-		test.setName(testJson.getName());
-		test.setFullmark(testJson.getFullmark());
-		test.setPassmark(testJson.getPassmark());
+		test.setName(testJson.getTestSet().getName());
+		test.setFullmark(testJson.getTestSet().getFullmark());
+		test.setPassmark(testJson.getTestSet().getPassmark());
 		TestSet testId = testRipo.save(test);
-		List<Integer> listquestionId = testJson.getListOfQuestions();
-		for (Integer id : listquestionId) {
-			MainQuestion questions = questionRipo.findOne(id);
+		List<MainQuestion> listquestionId = testJson.getQuestionsInTest();
+		for (MainQuestion questions : listquestionId) {
+		//	MainQuestion questions = questionRipo.findOne(id);
 
 			TestQuestions t = new TestQuestions();
 			t.setQuestionInTestquestion(questions);
 			t.setTestInTestquestion(testId);
 			tquestionRipo.save(t);
+		
 		}
+		for (DynamicOption dynamicOption : testJson.getDynamicOptions()) {
+			dynamicOption.setTestInDynamicOption(testId);
+			dOptionRipo.save(dynamicOption);
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		String val = mapper.writeValueAsString("Saved");
 
+		return val;
 	}
+	
+
 
 	@RequestMapping(value = "/viewTest/{id}", method = RequestMethod.GET)
 	public @ResponseBody QuestionsInTestJSON getTestToUpdate(@PathVariable int id) {
@@ -226,47 +249,50 @@ public class AdminController {
 	return dto;
 	}
 
-	@RequestMapping(value = "/updateTest/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/updateTest/{tId}/{qId}", method = RequestMethod.PUT)
 	@ResponseBody
-	public void addQuestionToTest(@PathVariable int id,
+	@Transactional
+	public void addQuestionToTest(@PathVariable int tId,@PathVariable int qId,
 			@RequestBody TestJsonDTO testJson) throws JsonProcessingException,
 			IOException {
-	TestSet testToUpdate=testService.findTestbyId(id);
-	testToUpdate.setName(testJson.getName());
-	testToUpdate.setFullmark(testJson.getFullmark());
-	testToUpdate.setPassmark(testJson.getPassmark());
-	System.out.println(testJson.getFullmark()+","+testJson.getName()+","+testJson.getPassmark());
-	List<TestQuestions> testQuestionToUpdate = tquestionRipo.searchByTestId(id);
-for (TestQuestions testQuestions : testQuestionToUpdate) {
-	System.out.println(testQuestions.getQuestionInTestquestion().getName());
-}
+	TestSet testToUpdate=testService.findTestbyId(tId);
+	testToUpdate.setName(testJson.getTestSet().getName());
+	testToUpdate.setFullmark(testJson.getTestSet().getFullmark());
+	testToUpdate.setPassmark(testJson.getTestSet().getPassmark());
+	TestSet testSet =  testRipo.save(testToUpdate);
+	
+	
+	MainQuestion mainQuestion = questionService.findQuestionById(qId);
+	MainQuestion questionToUpdate = new MainQuestion();
+	questionToUpdate.setId(mainQuestion.getId());
+	//List<TestQuestions> testQuestionToUpdate = tquestionRipo.searchByTestId(tId);
+	TestQuestions testQuestions = new TestQuestions();
+	testQuestions.setTestInTestquestion(testSet);
+	testQuestions.setQuestionInTestquestion(questionToUpdate);
+	
+	tquestionRipo.save(testQuestions);
+	
+	
+		
 	}
 
-	@RequestMapping(value = "/test/{id}", method = RequestMethod.GET)
-	public ModelAndView getQuestionsInTest(@Valid TestSet test,
-			@PathVariable Integer id) {
-		TestSet testForQuestion = testService.findTestbyId(id);
+	@RequestMapping(value = "/experiment", method = RequestMethod.GET)
+	public ModelAndView getQuestionsInTest() {
+		
 		ModelAndView mav = new ModelAndView("TestQuestion");
 
-		List<MainQuestion> questionsInTest = questionService
-				.findQuestionByTEst(id);
-
-		mav.addObject("questionsInTestToSelect", questionsInTest);
-		mav.addObject("t", testForQuestion);
 		return mav;
 
 	}
 
-	@RequestMapping(value = "/deleteTest/{id}", method = RequestMethod.GET)
-	public ModelAndView deleteTest(@PathVariable Integer id) {
-		ModelAndView mav = new ModelAndView("CreateTest");
-		List<MainQuestion> qus = questionService.findQuestionByTEst(id);
-		for (MainQuestion mainQuestion : qus) {
-			questionRipo.delete(mainQuestion.getId());
-		}
-		testService.delete(id);
-
-		return mav;
+	@RequestMapping(value = "/deleteTest/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody String deleteTest(@PathVariable Integer id) {
+	List<TestQuestions> testToDelet = tquestionRipo.searchByTestId(id);
+	for (TestQuestions testQuestions : testToDelet) {
+		tquestionRipo.delete(testQuestions.getId());
+	}
+	testService.delete(id);
+	return "deleted";
 	}
 
 	@Transactional
@@ -286,7 +312,26 @@ for (TestQuestions testQuestions : testQuestionToUpdate) {
 
 		return options;
 	}
-
+	@RequestMapping(value = "/deleteQuestionFromTest/{tId}/{qId}", method = RequestMethod.DELETE)
+	@ResponseBody
+//	@Transactional
+	public void deletQuestionToTest(@PathVariable int tId,@PathVariable int qId
+			) throws JsonProcessingException,
+			IOException {
+	TestSet testToUpdate=testService.findTestbyId(tId);
+	List<TestQuestions> testQuestions = tquestionRipo.searchByTestId(tId);
+	MainQuestion questionToDelete = questionService.findQuestionById(qId);
+	for (TestQuestions testQuestions2 : testQuestions) {
+		if(testQuestions2.getQuestionInTestquestion().getId()== qId){
+			tquestionRipo.delete(testQuestions2.getId());
+		
+		}
+	}
+	
+	
+	
+		
+	}
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String viewOpAns() {
 

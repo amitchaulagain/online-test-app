@@ -98,16 +98,18 @@ function renderQuestionType(types) {
 
 
 	jQuery(document).ready(function($) {
+		$("#qType").on("change",function(){
+			alert("fdfdfd")
+			var qType=$('#qType option:selected').val();
+			$('#options .row').hide();
+			$("#"+qType).show();
+				
+		})
 		
 		
 		
 		getQuestionType()	
-					$('#show-question-console').click(function() {
-						$('#tabs').tab();
-						$('#tabs a:second').tab('show')
-						$('#question-table').hide();
-						$('#content').show()
-					})
+					
 					$('#show-allquestion-table').click(function() {
 						$('#question-table').show();
 					})
@@ -167,6 +169,7 @@ function renderQuestionType(types) {
 					    
 				});
 	
+	
 	function questionToJSON() {
 		
 		var listOfAnswers=[];
@@ -196,7 +199,7 @@ function renderQuestionType(types) {
 	return JSON.stringify({
 		
         "questionName": $('#question').val(),
-        "questionType": $('#qtype').val(),
+        "questionType": $('#qtype option:selected').val(),
         "listOfAnswers": listOfAnswers,
         "listOfOptions": listOfOptions
 

@@ -41,13 +41,25 @@ public class TestSet implements Serializable {
 	boolean isNegativeMarking;
 	boolean negativeMarkingValue;
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "test")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "test")
 	List<TestRequest> testRequests = new ArrayList<TestRequest>();
 	
-	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "testInTestquestion")
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "testInTestquestion")
 	@Fetch(value = FetchMode.SELECT)
 	private List<TestQuestions> testQuestionInTest;
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "testInDynamicOption")
+	private List<DynamicOption> dynamicOptions = new ArrayList<DynamicOption>();
+	
+	
+	public List<DynamicOption> getDynamicOptions() {
+		return dynamicOptions;
+	}
+
+	public void setDynamicOptions(List<DynamicOption> dynamicOptions) {
+		this.dynamicOptions = dynamicOptions;
+	}
 
 	public boolean isNegativeMarkingValue() {
 		return negativeMarkingValue;
@@ -114,11 +126,7 @@ public class TestSet implements Serializable {
 		this.testQuestionInTest = testQuestionInTest;
 	}
 
-	/*@ManyToMany(cascade = { CascadeType.ALL })
-	@JsonIgnore
-	@JoinTable(name = "test_question", joinColumns = { @JoinColumn(name = "test_id") }, inverseJoinColumns = { @JoinColumn(name = "mainquestion_id") })
-	public List<MainQuestion> questionInTest;
-*/
+	
 	public int getId() {
 		return id;
 	}

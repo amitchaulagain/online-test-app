@@ -26,9 +26,12 @@
 	rel="stylesheet">
 <script type="text/javascript"
 	src="<c:url value="/resources/js/library/jquery.js"/>"></script>
+	<script type="text/javascript"
+	src="<c:url value="/resources/js/library/jquery-ui.js"/>"></script>
 <script type="text/javascript"
-	src="<c:url value="/resources/js/library/bootstrap.min.js"/>"></script>
-
+	src="<c:url value="/resources/js/library/bootstrap.min.js"/>">userInfo()</script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/custom/animate.js"/>"> </script>
 
 <div class="header">
 	<nav id="top-navigation" class="navbar navbar-inverse navbar-fixed-top"
@@ -39,7 +42,7 @@
 			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 			<span class="icon-bar"></span> <span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="index.html">Admin Dashboard</a>
+		<a class="navbar-brand" href="../admin/dashboard">Admin Dashboard</a>
 	</div>
 	<!-- Top Menu Items -->
 	<ul class="nav navbar-right top-nav">
@@ -54,7 +57,7 @@
 							</span>
 							<div class="media-body">
 								<h5 class="media-heading">
-									<strong>John Smith</strong>
+									<strong>${name}</strong>
 								</h5>
 								<p class="small text-muted">
 									<i class="fa fa-clock-o"></i> Yesterday at 4:32 PM
@@ -70,7 +73,7 @@
 							</span>
 							<div class="media-body">
 								<h5 class="media-heading">
-									<strong>John Smith</strong>
+									<strong>${name}</strong>
 								</h5>
 								<p class="small text-muted">
 									<i class="fa fa-clock-o"></i> Yesterday at 4:32 PM
@@ -86,7 +89,7 @@
 							</span>
 							<div class="media-body">
 								<h5 class="media-heading">
-									<strong>John Smith</strong>
+									<strong>${name}</strong>
 								</h5>
 								<p class="small text-muted">
 									<i class="fa fa-clock-o"></i> Yesterday at 4:32 PM
@@ -118,7 +121,7 @@
 				<li><a href="#">View All</a></li>
 			</ul></li>
 		<li class="dropdown"><a href="#" class="dropdown-toggle"
-			data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b
+			data-toggle="dropdown"><i class="fa fa-user"></i><b
 				class="caret"></b></a>
 			<ul class="dropdown-menu">
 				<li><a href="#"><i class="fa fa-fw fa-user"></i> Profile</a></li>
@@ -161,6 +164,4 @@
 		</ul>
 	</div>
 	<!-- /.navbar-collapse --> </nav>
-	
-
 </div>

@@ -25,6 +25,7 @@ public class SimpleCORSFilter implements Filter {
 				"POST, GET, OPTIONS, DELETE");
 		response.setHeader("Access-Control-Max-Age", "3600");
 		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+		response.setContentType("application/json");
 		chain.doFilter(req, res);
 	}
 
