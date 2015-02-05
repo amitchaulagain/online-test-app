@@ -43,8 +43,7 @@ jQuery(document)
 						return false;
 					});
 
-					$(document).on(	"click",
-									".alert",
+					$(document).on(	"click",".alert",
 									function(e) {
 										var link = $(this).attr("href");  
 										e.preventDefault();

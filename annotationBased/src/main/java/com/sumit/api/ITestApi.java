@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.sumit.model.Sections;
 import com.sumit.model.TestQuestions;
 import com.sumit.model.TestRequest;
 import com.sumit.model.TestRequestDTO;
@@ -32,6 +33,10 @@ public interface ITestApi {
 	public void createTestRequest(int testId);
 
 	public List<TestQuestions> searchByTestId(int id);
+
+	public List<Sections> findSectionByTestId(Integer testId);
+
+	public Sections findSectionById(Integer sectionId);
 
 
 }

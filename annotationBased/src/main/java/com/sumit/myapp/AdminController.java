@@ -24,12 +24,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sumit.dto.QuestionsInTestJSON;
+import com.sumit.dto.SectionDTO;
 import com.sumit.dto.TestJsonDTO;
 import com.sumit.model.MainQuestion;
 import com.sumit.model.Options;
 import com.sumit.model.QuestionAnswer;
 import com.sumit.model.QuestionJSONDTO;
 import com.sumit.model.QuestionType;
+import com.sumit.model.Sections;
 import com.sumit.model.TestDTO;
 import com.sumit.model.TestQuestions;
 import com.sumit.model.TestRequestDTO;
@@ -148,53 +150,54 @@ public class AdminController {
 		return searchedReasult;
 	}
 
-//	@RequestMapping(value = "/alltest", method = RequestMethod.GET)
-//	public @ResponseBody List<TestJsonDTO> viewallTest() {
-//
-//		List<TestSet> allTest = testService.listOfAllTest();
-//		List<TestJsonDTO> listOfTestQuestion =testService.getAllTestJsonDTOs(allTest);
-//		
-//		
-//		return listOfTestQuestion;
-//	}
+	// @RequestMapping(value = "/alltest", method = RequestMethod.GET)
+	// public @ResponseBody List<TestJsonDTO> viewallTest() {
+	//
+	// List<TestSet> allTest = testService.listOfAllTest();
+	// List<TestJsonDTO> listOfTestQuestion
+	// =testService.getAllTestJsonDTOs(allTest);
+	//
+	//
+	// return listOfTestQuestion;
+	// }
 
 	// test.setQuestionInTest(questions);
 
 	@RequestMapping(value = "/viewAllTests", method = RequestMethod.GET)
 	public String createTestPage(@Valid TestSet test) {
-		 
+
 		return "all-tests";
 	}
 
 	@RequestMapping(value = "/saveTest", method = RequestMethod.POST)
-	 @ResponseBody
+	@ResponseBody
 	public String createTest(@RequestBody TestDTO testDTO)
 			throws JsonProcessingException, IOException {
-		 testService.createOrEditTest(testDTO);
-		 ObjectMapper mapper = new ObjectMapper();
-			String val = mapper.writeValueAsString("DOne");
-			return val;
+		testService.createOrEditTest(testDTO);
+		ObjectMapper mapper = new ObjectMapper();
+		String val = mapper.writeValueAsString("DOne");
+		return val;
 
 	}
 
-//	@RequestMapping(value = "/viewTest/{id}", method = RequestMethod.GET)
-//	public @ResponseBody QuestionsInTestJSON getTestToUpdate(
-//			@PathVariable int id) {
-//		QuestionsInTestJSON dto = new QuestionsInTestJSON();
-//		// TestSet test = testService.findTestbyId(id);
-//		//
-//		// List<TestQuestions> testQuestions =
-//		// tquestionRipo.searchByTestId(test.getId());
-//		// List<MainQuestion> questions = new ArrayList<MainQuestion>();
-//		// for (TestQuestions tq : testQuestions) {
-//		// questions.add(tq.getQuestionInTestquestion());
-//		//
-//		// }
-//		// dto.setTestSet(test);
-//		// dto.setQuestions(questions);
-//		//
-//		return dto;
-//	}
+	// @RequestMapping(value = "/viewTest/{id}", method = RequestMethod.GET)
+	// public @ResponseBody QuestionsInTestJSON getTestToUpdate(
+	// @PathVariable int id) {
+	// QuestionsInTestJSON dto = new QuestionsInTestJSON();
+	// // TestSet test = testService.findTestbyId(id);
+	// //
+	// // List<TestQuestions> testQuestions =
+	// // tquestionRipo.searchByTestId(test.getId());
+	// // List<MainQuestion> questions = new ArrayList<MainQuestion>();
+	// // for (TestQuestions tq : testQuestions) {
+	// // questions.add(tq.getQuestionInTestquestion());
+	// //
+	// // }
+	// // dto.setTestSet(test);
+	// // dto.setQuestions(questions);
+	// //
+	// return dto;
+	// }
 
 	@RequestMapping(value = "/updateTest/{id}", method = RequestMethod.PUT)
 	@ResponseBody
@@ -229,7 +232,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/deleteTest/{id}", method = RequestMethod.DELETE)
-	@ResponseBody 
+	@ResponseBody
 	public String deleteTest(@PathVariable Integer id)
 			throws JsonProcessingException {
 
@@ -300,10 +303,9 @@ public class AdminController {
 		return dto;
 	}
 
-	@RequestMapping(value = "/testRequests/setStatus", method = RequestMethod.POST ,produces="Application/json")
-	
-	public @ResponseBody String setTestRequestsStatus(@RequestBody TestRequestDTO dto)
-			throws JsonProcessingException {
+	@RequestMapping(value = "/testRequests/setStatus", method = RequestMethod.POST, produces = "Application/json")
+	public @ResponseBody String setTestRequestsStatus(
+			@RequestBody TestRequestDTO dto) throws JsonProcessingException {
 		testService.setTestRequestStatusCompletedOrRejected(dto);
 		ObjectMapper mapper = new ObjectMapper();
 		String val = mapper.writeValueAsString("DOne");
@@ -343,6 +345,55 @@ public class AdminController {
 
 		return dto;
 
+	}
+
+	// This request mapping is just to load the test-questions.jsp through
+	// jquery done in allTests.js file
+	@RequestMapping(value = "/testquestions", method = RequestMethod.GET)
+	public String viewQuestionsInTest() {
+
+		return "testquestions";
+	}
+
+	@RequestMapping(value = "/createSet", method = RequestMethod.GET)
+	@ResponseBody
+	public String createSetInTest(@PathVariable Integer id)
+			throws JsonProcessingException {
+
+		testService.delete(id);
+
+		ObjectMapper mapper = new ObjectMapper();
+		String val = mapper.writeValueAsString("Created");
+		return val;
+	}
+
+	@RequestMapping(value = "/createSection", method = RequestMethod.POST)
+	@ResponseBody
+	public String createSectionInTest(@RequestBody SectionDTO sectionDTO)
+			throws JsonProcessingException {
+		testService.createOrEditSection(sectionDTO);
+		ObjectMapper mapper = new ObjectMapper();
+		String val = mapper.writeValueAsString("Created");
+		return val;
+	}
+
+	@RequestMapping(value = "/viewSets", method = RequestMethod.GET)
+	@ResponseBody
+	public String viewAllSetsInTest(@PathVariable Integer id)
+			throws JsonProcessingException {
+
+		testService.delete(id);
+
+		ObjectMapper mapper = new ObjectMapper();
+		String val = mapper.writeValueAsString("Created");
+		return val;
+	}
+
+	@RequestMapping(value = "/viewSection/{testId}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Sections> viewAllSectionsInTest(@PathVariable int testId) throws JsonProcessingException {
+		List<Sections> testSections= testService.findAllSectionsByTestId(testId);
+		return testSections;
 	}
 
 }

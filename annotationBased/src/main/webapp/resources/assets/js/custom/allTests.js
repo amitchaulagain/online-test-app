@@ -1,6 +1,7 @@
 
 var aaTest=[];
 var testType;
+var globalTestId;
 function findAllTests() {
 
 	$.ajax({
@@ -45,6 +46,12 @@ $(document).ready(function (){
 					
 				}
 				else if(todo=="updateQ"){
+					globalTestId=$(this).attr("data-id"); 
+					var testId = $(this).attr("data-id"); 
+					hideTestPageAndLoadTestQuestionsPage();
+						
+						
+//						$( "#page-wrapper" ).hide();
 				}
 				else if(todo=="delete"){
 					deleteTest(testId);
@@ -62,7 +69,20 @@ $(document).ready(function (){
      	 if($(this).text().trim()=='Create'){
      		 $(this).html('Close');
      		 $(this).css("background-color","red");
-     	 }else {
+     	 }
+     	 else if($(this).text().trim()=='Edit'){
+     		$('#id').prop('disabled', false);
+     		$('#name').prop('disabled', false);
+     		$('#fullmark').prop('disabled', false);
+     		$('#passmark').prop('disabled', false);
+     		$('#duration').prop('disabled', false);
+     		$('#testDate').prop('disabled', false);
+     		$('#submit').prop('disabled', false);
+     		 $(this).html('Close');
+     		 $(this).css("background-color","red");
+     		 $('#chooseTestOption').hide();
+     	 }
+     	 else {
      		 hideAll();
      		 $(this).html('Create');
      		 $(this).css("background-color","#428bca");
@@ -89,8 +109,8 @@ $(document).ready(function (){
 function showSingleTest(testId) {
 	testType="";
 	$('#createTestPanel').show();
-	 $('#createTestButton').html('Close');
-	 $('#createTestButton').css("background-color","red");
+	 $('#createTestButton').html('Edit');
+	 $('#createTestButton').css("background-color","green");
 	
 	$.ajax({
 		type : 'GET',
@@ -104,11 +124,20 @@ function showSingleTest(testId) {
 }
 function putTestValues(test){
 	$('#id').val(test.id);
+	
 	$('#name').val(test.name);
 	$('#fullmark').val(test.fullmark);
 	$('#passmark').val(test.passmark);
 	$('#testDate').val(test.testDate);
 	$('#duration').val(test.duration);
+	
+	$('#id').prop('disabled', true);
+	$('#name').prop('disabled', true);
+	$('#fullmark').prop('disabled', true);
+	$('#passmark').prop('disabled', true);
+	$('#duration').prop('disabled', true);
+	$('#testDate').prop('disabled', true);
+	$('#submit').prop('disabled', true);
 	
 }
 function clearTestFormValues(){
@@ -168,10 +197,8 @@ function showTest(show,index,aTest) {
 				'<a class='+"alert"+' href="#'
 				
 				+test.tId+'" actionToBeDone="view" data-id="'+test.tId+'" >'+'View</a>'+'</td><td>'+
-				'<a class='+"alert"+' href="http://localhost:8085/annotationBased/admin/viewTest/'
-				
-				+test.tId+'" actionToBeDone="updateQ">'+'Update Q</a>'+'</td><td>'+
-'<a class='+"alert"+' href="#'
+				'<a class='+"alert"+' href="#" actionToBeDone="updateQ" data-id="'+test.tId+'" >'+'Update Q</a>'+'</td><td>'+
+				'<a class='+"alert"+' href="#'
 				
 				+test.tId+'" actionToBeDone="delete" data-id="'+test.tId+'" >'+'Delete</a>'+'</td><td>'+
 				'<a class='+"alert"+' href="http://localhost:8085/annotationBased/admin/viewTest/'
@@ -248,4 +275,32 @@ function deleteTest(testId){
 			alert("Error while deleting test !!!");
 		}
 	});
+}
+function hideTestPageAndLoadTestQuestionsPage() {
+	$("#hero").load("testquestions");
+	$('#testPage').hide();
+	getTestTypeAndShowViewAccordingly(globalTestId);
+}
+function getTestTypeAndShowViewAccordingly(testId){
+	$.ajax({
+		type : 'GET',
+		url : "http://localhost:8085/annotationBased/admin/viewTest/"+testId,
+		dataType : "json",
+
+		success : showViewByTestType
+	});
+}
+function showViewByTestType(data){
+	if(data.testType=="WITHOUT_SET_AND_SECTION"){
+		alert("WITHOUT_SET_AND_SECTION");
+	}
+	else if(data.testType=="WITH_SET_AND_SECTION"){
+		alert("WITH_SET_AND_SECTION");
+	}
+	else if(data.testType=="WITH_SET_ONLY"){
+		$('#sectionName').hide();
+	}
+	else if(data.testType=="WITH_SECTION_ONLY"){
+		$('#createSectionPanel').hide();
+	}
 }

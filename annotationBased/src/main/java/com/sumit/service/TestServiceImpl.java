@@ -15,9 +15,12 @@ import com.sumit.api.ITestApi;
 import com.sumit.api.QuestionApi;
 import com.sumit.api.TestApi;
 import com.sumit.convert.ConvertUtils;
+import com.sumit.dto.SectionDTO;
 import com.sumit.dto.TestJsonDTO;
 import com.sumit.model.MainQuestion;
 import com.sumit.model.QuestionDTO;
+import com.sumit.model.Sections;
+import com.sumit.model.Sets;
 import com.sumit.model.TestDTO;
 import com.sumit.model.TestQuestions;
 import com.sumit.model.TestRequest;
@@ -26,6 +29,7 @@ import com.sumit.model.TestRequestStatus;
 import com.sumit.model.TestSet;
 import com.sumit.model.TestType;
 import com.sumit.repository.QuestionRepository;
+import com.sumit.repository.SectionsRepository;
 import com.sumit.repository.TestRequestRepository;
 import com.sumit.repository.TestRipository;
 
@@ -46,6 +50,8 @@ public class TestServiceImpl implements TestService {
 
 	@Resource
 	QuestionRepository questionRipo;
+	@Resource
+	SectionsRepository sectionsRipo;
 
 	@Override
 	public void save(TestSet test) {
@@ -183,7 +189,7 @@ public class TestServiceImpl implements TestService {
 		}
 		if (dto.getTestType().equals("testTypeOne")) {
 			ts.setType(TestType.WITHOUT_SET_AND_SECTION);
-			
+
 		} else if (dto.getTestType().equals("testTypeTwo")) {
 			ts.setType(TestType.WITH_SET_ONLY);
 
@@ -228,12 +234,36 @@ public class TestServiceImpl implements TestService {
 			List<TestQuestions> tq = testApi.searchByTestId(testSet.getId());
 			for (TestQuestions testQuestions : tq) {
 				listquestionId.add(testQuestions.getId());
+				dto.setListOfQuestions(listquestionId);
 			}
-			dto.setListOfQuestions(listquestionId);
 			listOfTestQuestion.add(dto);
 		}
 		return listOfTestQuestion;
 
+	}
+
+	@Override
+	public void createOrEditSection(SectionDTO sectionDTO) {
+		Sections section = new Sections();
+		if (sectionDTO.getSectionId() == 0) {
+			section.setName(sectionDTO.getSectionName());
+			TestSet test = testApi.findTestbyId(sectionDTO.getTestId());
+			section.setTest(test);
+		} else {
+
+			Sections sec = testApi.findSectionById(sectionDTO.getSectionId());
+			section = sec;
+			section.setName(sectionDTO.getSectionName());
+
+		}
+		sectionsRipo.save(section);
+
+	}
+
+	@Override
+	public List<Sections> findAllSectionsByTestId(int testId) {
+		
+		return testApi.findSectionByTestId(testId);
 	}
 
 }

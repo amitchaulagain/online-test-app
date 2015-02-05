@@ -36,13 +36,18 @@
 
 <script type="text/javascript"
 	src="<c:url value="/resources/js/library/jquery.simplePagination.js"/>"></script>
+	
+	<script type="text/javascript"
+	src="<c:url value="/resources/js/library/bootbox.js"/>"></script>
+	
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>	 -->
 <html>
 
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<link href="<c:url value="/resources/css/library/bootstrap.min.css" />"
-	rel="stylesheet">
-<script type="text/javascript"
-	src="<c:url value="/resources/js/library/bootbox.js"/>"></script>
 <head>
 
 <title>Welcome ${username}</title>
@@ -78,7 +83,7 @@
 
 		<div id="page-wrapper">
 
-			<div class="container-fluid">
+			<div class="container-fluid" id="testPage">
 				<div class="row">
 					<div class="col-lg-8">
 						<div class="buttonPanel">
@@ -86,115 +91,115 @@
 							</button>
 						</div>
 					</div>
-					<br></br>  
+					<br></br>
 					<div class="col-md-12">
 
 						<div id="chooseTestOption">
 							<div class="col-lg-3 col-md-6" id="testTypeOne">
-							<div class="testTypes" id="testTypeOne">
-								<a href="#">
-									<div class="panel panel-primary">
-										<div class="panel-heading">
-											<div class="row">
-												<div class="col-xs-3">
-													<i class="fa fa-th-list fa-5x"></i>
-												</div>
-												<div class="col-xs-9 text-right">
-													<div style="margin-left: 20px">Test Without SET And
-														SECTION</div>
+								<div class="testTypes" id="testTypeOne">
+									<a href="#">
+										<div class="panel panel-primary">
+											<div class="panel-heading">
+												<div class="row">
+													<div class="col-xs-3">
+														<i class="fa fa-th-list fa-5x"></i>
+													</div>
+													<div class="col-xs-9 text-right">
+														<div style="margin-left: 20px">Test Without SET And
+															SECTION</div>
+													</div>
 												</div>
 											</div>
-										</div>
 
-										<div class="panel-footer">
-											<span class="pull-left">create</span> <span
-												class="pull-right"><i
-												class="fa fa-arrow-circle-right"></i></span>
-											<div class="clearfix"></div>
-										</div>
+											<div class="panel-footer">
+												<span class="pull-left">create</span> <span
+													class="pull-right"><i
+													class="fa fa-arrow-circle-right"></i></span>
+												<div class="clearfix"></div>
+											</div>
 
-									</div>
-								</a>
+										</div>
+									</a>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-6" >
-							<div class="testTypes" id="testTypeTwo">
-								<a href="#">
-									<div class="panel panel-primary">
-										<div class="panel-heading">
-											<div class="row">
-												<div class="col-xs-3">
-													<i class="fa fa-th-list fa-5x"></i>
-												</div>
-												<div class="col-xs-9 text-right">
-													<div style="margin-left: 20px">Test With SETS Only</div>
+							<div class="col-lg-3 col-md-6">
+								<div class="testTypes" id="testTypeTwo">
+									<a href="#">
+										<div class="panel panel-primary">
+											<div class="panel-heading">
+												<div class="row">
+													<div class="col-xs-3">
+														<i class="fa fa-th-list fa-5x"></i>
+													</div>
+													<div class="col-xs-9 text-right">
+														<div style="margin-left: 20px">Test With SETS Only</div>
+													</div>
 												</div>
 											</div>
-										</div>
 
-										<div class="panel-footer">
-											<span class="pull-left">create</span> <span
-												class="pull-right"><i
-												class="fa fa-arrow-circle-right"></i></span>
-											<div class="clearfix"></div>
-										</div>
+											<div class="panel-footer">
+												<span class="pull-left">create</span> <span
+													class="pull-right"><i
+													class="fa fa-arrow-circle-right"></i></span>
+												<div class="clearfix"></div>
+											</div>
 
-									</div>
-								</a>
+										</div>
+									</a>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-6" >
-							<div class="testTypes" id="testTypeThree">
-								<a href="#">
-									<div class="panel panel-primary">
-										<div class="panel-heading">
-											<div class="row">
-												<div class="col-xs-3">
-													<i class="fa fa-th-list fa-5x"></i>
-												</div>
-												<div class="col-xs-9 text-right">
-													<div style="margin-left: 20px">Test With SECTIONS
-														Only</div>
+							<div class="col-lg-3 col-md-6">
+								<div class="testTypes" id="testTypeThree">
+									<a href="#">
+										<div class="panel panel-primary">
+											<div class="panel-heading">
+												<div class="row">
+													<div class="col-xs-3">
+														<i class="fa fa-th-list fa-5x"></i>
+													</div>
+													<div class="col-xs-9 text-right">
+														<div style="margin-left: 20px">Test With SECTIONS
+															Only</div>
+													</div>
 												</div>
 											</div>
-										</div>
 
-										<div class="panel-footer">
-											<span class="pull-left">create</span> <span
-												class="pull-right"><i
-												class="fa fa-arrow-circle-right"></i></span>
-											<div class="clearfix"></div>
-										</div>
+											<div class="panel-footer">
+												<span class="pull-left">create</span> <span
+													class="pull-right"><i
+													class="fa fa-arrow-circle-right"></i></span>
+												<div class="clearfix"></div>
+											</div>
 
-									</div>
-								</a>
+										</div>
+									</a>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-6" >
-							<div class="testTypes" id="testTypeFour">
-								<a href="#">
-									<div class="panel panel-primary">
-										<div class="panel-heading">
-											<div class="row">
-												<div class="col-xs-3">
-													<i class="fa fa-th-list fa-5x"></i>
-												</div>
-												<div class="col-xs-9 text-right">
-													<div style="margin-left: 20px">Test With Both SETS
-														And SECTIONS</div>
+							<div class="col-lg-3 col-md-6">
+								<div class="testTypes" id="testTypeFour">
+									<a href="#">
+										<div class="panel panel-primary">
+											<div class="panel-heading">
+												<div class="row">
+													<div class="col-xs-3">
+														<i class="fa fa-th-list fa-5x"></i>
+													</div>
+													<div class="col-xs-9 text-right">
+														<div style="margin-left: 20px">Test With Both SETS
+															And SECTIONS</div>
+													</div>
 												</div>
 											</div>
-										</div>
 
-										<div class="panel-footer">
-											<span class="pull-left">create</span> <span
-												class="pull-right"><i
-												class="fa fa-arrow-circle-right"></i></span>
-											<div class="clearfix"></div>
-										</div>
+											<div class="panel-footer">
+												<span class="pull-left">create</span> <span
+													class="pull-right"><i
+													class="fa fa-arrow-circle-right"></i></span>
+												<div class="clearfix"></div>
+											</div>
 
-									</div>
-								</a>
+										</div>
+									</a>
 								</div>
 							</div>
 
@@ -280,9 +285,15 @@
 										<div id="pagination"></div>
 									</div>
 								</div>
+
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div id="hero"></div>
 				</div>
 			</div>
 </body>
