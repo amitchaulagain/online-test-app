@@ -38,6 +38,9 @@ public class TestSet implements Serializable {
 	String duration;
 	Date createDate = new Date();
 	Date testDate;
+ 
+	private TestType type;
+ 
 	boolean isNegativeMarking;
 	boolean negativeMarkingValue;
 	@JsonIgnore
@@ -126,8 +129,7 @@ public class TestSet implements Serializable {
 		this.testQuestionInTest = testQuestionInTest;
 	}
 
-	
-	public int getId() {
+		public int getId() {
 		return id;
 	}
 
@@ -149,5 +151,12 @@ public class TestSet implements Serializable {
 
 	public void setTestRequests(List<TestRequest> testRequests) {
 		this.testRequests = testRequests;
+	}
+	public TestType getType() {
+		return type;
+	}
+	
+	public void setType(TestType type) {
+		this.type = type;
 	}
 }

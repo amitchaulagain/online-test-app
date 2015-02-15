@@ -1,5 +1,5 @@
 
-<div class="col-md-12" class="row">
+<div class="col-md-3">
                             <div class="box box-primary">
                                 <div class="box-header">
                                     <h4 class="box-title">Create Form Parameter</h4>

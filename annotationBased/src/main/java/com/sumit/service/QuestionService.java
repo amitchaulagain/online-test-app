@@ -4,11 +4,9 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import com.sumit.dto.QuestionJSONDTO;
 import com.sumit.model.MainQuestion;
-import com.sumit.model.Options;
-import com.sumit.model.QuestionAnswer;
-import com.sumit.model.QuestionDTO;
+import com.sumit.model.QuestionJSONDTO;
+import com.sumit.model.TestDTO;
 
 public interface QuestionService {
 
@@ -25,4 +23,6 @@ public interface QuestionService {
 	void save_Question_Option_Answer(QuestionJSONDTO questionJSONDto);
 
 	public List<MainQuestion> findInQuestions(String parameter);
+
+	public List<TestDTO> getAllTests();
 }

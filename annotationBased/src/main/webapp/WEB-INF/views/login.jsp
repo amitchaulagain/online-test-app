@@ -13,7 +13,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
+<<<<<<< HEAD:annotationBased/src/main/webapp/WEB-INF/views/login.jsp
+<link href="<c:url value="/resources/css/library/bootstrap.min.css" />" rel="stylesheet" />
+=======
 <link rel="stylesheet" href="<c:url value="/resources/css/library/bootstrap.min.css" />"/>
+>>>>>>> 2ed4cb0f572a383ef5d3d428573b39218b913d06:annotationBased/src/main/webapp/WEB-INF/views/home.jsp
 
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/custom/agency.css"/>" type='text/css'>
@@ -23,24 +27,12 @@
 <script src="<c:url value="/resources/js/library/jquery.js" />"></script>
 <script src="<c:url value="/resources/js/library/bootstrap.min.js" />"></script>
 
+<script src="<c:url value="/resources/js/custom/loginOrRegister.js" />"></script>
 
 
 
-
-<!-- Custom Fonts -->
-<link href="font-awesome-4.1.0/css/font-awesome.min.css"
-	rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700"
-	rel="stylesheet" type="text/css">
-<link href='http://fonts.googleapis.com/css?family=Kaushan+Script'
-	rel='stylesheet' type='text/css'>
-<link
-	href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
-	rel='stylesheet' type='text/css'>
-<link
-	href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
-	rel='stylesheet' type='text/css'>
-<title>Insert title here</title>
+ 
+<title>Sign In</title>
 </head>
 <body>
 

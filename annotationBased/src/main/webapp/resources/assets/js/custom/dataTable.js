@@ -6,14 +6,16 @@ var index = 0;
 function searchQuestions() {
 	var parameter = $('#search').val();
 
-	$.ajax({
-		type : 'GET',
-		url : "http://localhost:8085/annotationBased/admin/search/"+parameter,
-		dataType : "json",
+	$
+			.ajax({
+				type : 'GET',
+				url : "http://localhost:8085/annotationBased/admin/search/"
+						+ parameter,
+				dataType : "json",
 
-		success : renderSearchQuestion 
-	});
-	
+				success : renderSearchQuestion
+			});
+
 }
 function renderSearchQuestion(data) {
 	var searchedData = [];
@@ -26,12 +28,12 @@ function renderSearchQuestion(data) {
 		searchedData.push(oneQuestion);
 
 	})
-	
+
 	var show = $("#show option:selected").text();
-	var index =$('#pagination').pagination('getCurrentPage');
+	var index = $('#pagination').pagination('getCurrentPage');
 	$('tbody tr').remove();
 	pagi()
-	showLimitedQuestion(show, index,searchedData);
+	showLimitedQuestion(show, index, searchedData);
 }
 function findAllQuestions() {
 
@@ -44,7 +46,8 @@ function findAllQuestions() {
 	});
 
 	show = $("#show option:selected").text();
-	
+
+
 }
 
 function deleteQuestion(id) {
@@ -102,15 +105,16 @@ function renderQuestions(questions) {
 		aaData.push(oneQuestion);
 
 	})
-	pagi();
+	
 	var show = $("#show option:selected").text();
+	pagi()
 	var index = $('#pagination').pagination('getCurrentPage');
 	var allData = aaData;
-	showLimitedQuestion(show, index,allData);
-	 
+	showLimitedQuestion(show, index, allData);
+
 }
 
-function showLimitedQuestion(show, index,datas) {
+function showLimitedQuestion(show, index, datas) {
 	var initial = 0;
 	var finale = show;
 
@@ -168,7 +172,8 @@ function showLimitedQuestion(show, index,datas) {
 }
 
 $(document).ready(function() {
-	findAllQuestions()
+	findAllQuestions();
+	
 	$('.side-nav').hide()
 	$('#show').on('change', function() {
 		$('tbody tr').remove();
@@ -176,14 +181,13 @@ $(document).ready(function() {
 		var show = $('#show option:selected').val();
 		var index = $('#pagination').pagination('getCurrentPage');
 
-		showLimitedQuestion(show, index,aaData);
+		showLimitedQuestion(show, index, aaData);
 		pagi();
 	});
 
-	/*$('#search').on('input', function() {
-		//alert("ohooo")
-		var parameter = $('#search').val();
-		searchQuestions(parameter)
-	})*/
-	
+	/*
+	 * $('#search').on('input', function() { //alert("ohooo") var parameter =
+	 * $('#search').val(); searchQuestions(parameter) })
+	 */
+
 });

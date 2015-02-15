@@ -11,7 +11,7 @@
 <tiles:insertDefinition name="defaultTemplate">
 
 	<tiles:putAttribute name="body">
-
+admin
 
 
 
@@ -254,6 +254,7 @@
 							</div>
 						</div>
 						</section>
+						<div id="demo"></div>
 						<div class="container" style="margin-right: 0; margin-left: 0;">
 							<div class="row">
 								<section>

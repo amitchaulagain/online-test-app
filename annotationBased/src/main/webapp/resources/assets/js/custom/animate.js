@@ -26,7 +26,9 @@ $('#registerHere').click(function () {
 // ----------admin page---------------
 
 $(document).ready(function () {
+	
 	$('#drop-container').hide();
+	
 	$('label.tree-toggler').click(function () {
 		$(this).parent().children('ul.tree').toggle(300);
 	});
@@ -36,25 +38,25 @@ $(document).ready(function () {
 $('#registerContainer').hide();
 		
 
-$('#create-form').click(function(){
-$('#dynamic-option').load("experiment")
+$(Document).on('click','#create-form',function(){
+$('#createDOption').show()
 })
-	//$(".date-picker").datepicker();
+	$(Document).on('click','#closeDoption',function(){
+	$('#createDOption').hide();
+	$('.dropable').hide();
 
-/*	$(".date-picker").on("change", function () {
-	    var id = $(this).attr("id");
-	    var val = $("label[for='" + id + "']").text();
-	    $("#msg").text(val + " changed");
 	});
-*/
+
 	
-$('#dynamic-option').on('click','#new-field',function(){
+$(Document).on('click','#new-field',function(){
 	var field = $('#new-event').val()
 		$('#drop-container').show();
+	$('#drop-Header').show();
 	var count = $('#external-events > button').length;
 	$('#external-events').append('<div class="btn btn-info btn-xs dragable" id="count'+count+1+'">'+field+'</div>')
 	$(".dragable").draggable({cursor: 'move', containment: 'document',helper:'clone'})
 	$('.dropable').droppable({ drop: handleDropEvent});
+	$('#new-event').val("");
 })
 	
 });	
@@ -62,7 +64,7 @@ function handleDropEvent( event, ui ) {
 	  var draggable = ui.draggable;
 	 var droppable = $(this).attr('id');
 	 
-	  alert( 'The square with ID "' + draggable.attr('id') +'' +droppable+'" was dropped onto me!' );
+	  
 $(this).html('');
 $('#'+droppable).removeAttr('class');
 $('#'+droppable).attr('class','col-md-4');

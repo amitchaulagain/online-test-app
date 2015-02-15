@@ -70,8 +70,20 @@ function getOptionOfQuestion(id) {
         error:function(msg){
         }
 	});
+	return options;
 	}
+var options=[];
  function renderOptionsOfQuestion(options){
+	 $.each(options,function(idx,option){
+		 var option ={
+				 oId:option.Id,
+				 oName:option.name
+				 
+		 }
+		 options.push(option)
+		 
+	 })
+	 
 	 var question;
 	 $('#ques li ').remove();
 		$('#showquestion li').remove();
@@ -165,7 +177,13 @@ function renderQuestionType(types) {
 				
 
 
-					   
+					   $(Document).on('click','.question',function(){
+						  var qId= $(this).attr('question-id');
+						  drawOptionPanel(qId);
+						  $('#o'+id).toggle('fast')
+						 
+						   
+					   })
 					    
 				});
 	
@@ -211,7 +229,19 @@ function renderQuestionType(types) {
 	
 	
 	
-		
+		function   drawOptionPanel(qId){
+			var options = getOptionOfQuestion(qId);
+			
+			var qBody = ('<div class= "panel panel-body test-container" id="o'
+					+ qId + '" >'
+					 + '</div>')
+					 $('#q'+qId).after(qBody)
+			$.each(options,function(idx,option){
+				$('#o'+qId	).apprnd('<li>'+option.name+'</li>')
+				
+			})
+			 $('#o'+qid).hide();
+		}
 	      
 	
 

@@ -1,84 +1,85 @@
+.date-form {
+	margin: 10px;
+}
 
-.date-form { margin: 10px; }
-label.control-label span { cursor: pointer; }
+label.control-label span {
+	cursor: pointer;
+}
 
 .body {
-	margin: 0px -18px 0px 0px;"
-
-	
+	margin: 0px -18px 0px 0px;
+	"
 }
+
 img {
 	width: 700px;
 	height: 100%;
-	
 }
-#loginContainer, #registerContainer{
-	margin-top:50px;
- background-image: url(../../images/j.jpg); }
+
+#loginContainer, #registerContainer {
+	margin-top: 50px;
+	background-image: url(../../images/j.jpg);
+}
+
 header {
-	
-    text-align: center;
-    color: #fff;
-    background-attachment: scroll;
-   
-    background-position: center center;
-    background-repeat: none;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-    height: 400px;
+	text-align: center;
+	color: #fff;
+	background-attachment: scroll;
+	background-position: center center;
+	background-repeat: none;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+	-o-background-size: cover;
+	height: 400px;
 }
-header #login-box{
- margin-left:50px;
-  padding-top: 10px;
-        padding-bottom: 100px;
-      width: 35%;
- }
- 
-#login-box .intro-heading{
+
+header #login-box {
+	margin-left: 50px;
+	padding-top: 10px;
+	padding-bottom: 100px;
+	width: 35%;
+}
+
+#login-box .intro-heading {
 	color: #6b9bff;
-   
-   	margin-right:260px;
-     margin-bottom: 5px;
-    text-transform: uppercase;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 30px;
-	
+	margin-right: 260px;
+	margin-bottom: 5px;
+	text-transform: uppercase;
+	font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 30px;
+	font-weight: 500;
+	line-height: 30px;
 }
+
 header .input-grup {
 	width: 350px;
 	height: 30px;
-	font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 30px;
+	font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 30px;
+	font-weight: 500;
+	line-height: 30px;
 }
-.input-group #login-btn{
-	
+
+.input-group #login-btn {
 	width: 350px;
 }
+
 header  .intro-heading {
 	color: #6b9bff;
-   
-   
-     margin-bottom: 50px;
-    text-transform: uppercase;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 55px;
-    font-weight: 500;
-    line-height: 30px;
+	margin-bottom: 50px;
+	text-transform: uppercase;
+	font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 55px;
+	font-weight: 500;
+	line-height: 30px;
 }
 
+header .intro-text {
+	padding-top: 20px;
+	padding-bottom: 100px;
+}
 
-    header .intro-text {
-        padding-top: 20px;
-        padding-bottom: 100px;
-    }
-
- 
 /*  #login-box .intro-heading {
 
   
@@ -88,188 +89,292 @@ header  .intro-heading {
     font-weight: 500;
     line-height: 30px;
 } */
+header .intro-text .intro-lead-in {
+	margin-top: 10px;
+	font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial,
+		sans-serif;
+	font-size: 30px;
+	font-style: italic;
+	line-height: 40px;
+	color: #6b9bff;
+}
 
+header .intro-text .intro-heading {
+	margin-top: 70px;
+	margin-bottom: 50px;
+	text-transform: uppercase;
+	font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 55px;
+	font-weight: 700;
+	line-height: 55px;
+}
 
-    header .intro-text .intro-lead-in {
-    	margin-top: 10px;
-        font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
-        font-size: 30px;
-        font-style: italic;
-        line-height: 40px;
-        color: #6b9bff;
-    }
-
-    header .intro-text .intro-heading {
-    margin-top: 70px;
-        margin-bottom: 50px;
-        text-transform: uppercase;
-        font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-        font-size: 55px;
-        font-weight: 700;
-        line-height: 55px;
-    }
 section {
-
-    margin-right:40px;
-margin-left:10px; 
-  
+	margin-right:8px;
+	margin-left: 8px;
+	    margin-top: 35px;
+}
 }
 
 section h2.section-heading {
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 40px;
+	margin-top: 0;
+	margin-bottom: 15px;
+	font-size: 40px;
 }
 
 section h3.section-subheading {
-    margin-bottom: 75px;
-    text-transform: none;
-    font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 16px;
-    font-style: italic;
-    font-weight: 400;
+	margin-bottom: 75px;
+	text-transform: none;
+	font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial,
+		sans-serif;
+	font-size: 16px;
+	font-style: italic;
+	font-weight: 400;
 }
 
 /* /* @media(min-width:768px) {
     section {
         padding:0px 0;
-    } */ */
-}
+    } */
+*
+/
 
+
+
+
+
+
+
+
+
+
+
+
+}
 .service-heading {
-    margin: 15px 0;
-    text-transform: none;
+	margin: 15px 0;
+	text-transform: none;
 }
 
 /*---------------- admin page-----------  */
-
-.side-bar .list-group{
-	border-radius:0px;
-	background-color:#464756;
-	 font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
-        font-size: 15px;
-        font-style: italic;
-        line-height: 10px;
-        color: #5cb85c;
+.side-bar .list-group {
+	border-radius: 0px;
+	background-color: #464756;
+	font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial,
+		sans-serif;
+	font-size: 15px;
+	font-style: italic;
+	line-height: 10px;
+	color: #5cb85c;
 }
-.panel-group{
-	border-radius:0px;
+
+.panel-group {
+	border-radius: 0px;
 	/* background-color: #242442; */
 	color: #5cb85c;
-
 }
-.panel-group .panel{
+
+.panel-group .panel {
 	color: #2be41b;
-	border-radius:0px;
+	border-radius: 0px;
 	/* background-color:#242442; */
-
-	
 }
-.panel{
-	border-radius:0px;
 
+.panel {
+	border-radius: 0px;
+margin-bottom: 5px;
+	/* background-color:#242442;  */
+}
+
+.panel-title {
 	/* background-color:#242442;  */
 	
 }
-.panel-title{
-	
 
-	/* background-color:#242442;  */
-	
-}
 #option-box {
-
-	
-	
-	 font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
-        font-size: 15px;
-        font-style: italic;
-       
-        color: #5cb85c;
-	
+	font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial,
+		sans-serif;
+	font-size: 15px;
+	font-style: italic;
+	color: #5cb85c;
 }
- #option-box li {
- height:50px;
-/* margin-right:16px;
+
+#option-box li {
+	height: 50px;
+	/* margin-right:16px;
 margin-left:15px; */
-/*  margin-bottom: 5px; */
- }
- 
- #clickquestion{
- font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 20px;
-    font-weight: 50;
-    line-height: 20px;
- }
- .breadcrumb{
- padding: 15px 41px;
- margin-bottom: -19px;
- background-color: #5cb85c;
- border-radius:0px;
- margin-top:20px;
- margin-left: 12px;
- width : 98%;
- 
- }
- #qtype{
- width:40%;
- font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
-        font-size: 15px;
-        font-style: italic;
-        line-height: 10px;
-        color: #5cb85c;
-        margin-bottom: 10px;
- 
- }
- #msg h5{margin-top: 35px;color:red;}
- h1{
- margin-top: 35px;
-        text-transform: uppercase;
-        font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-        font-size: 45px;
-        font-weight: 600;
-        line-height: 45px;}
- /* /* //form builder */ */
- .row .box {
-
+	/*  margin-bottom: 5px; */
 }
- 
- .row .box.box-primary{
- border-top-color: #3c8dbc;
- //border: 2px solid;
- position: relative;
-background: #ffffff;
-border-top: 2px solid #5ADB98;
-margin-bottom: 20px;
--webkit-border-radius: 3px;
--moz-border-radius: 3px;
-border-radius: 3px;
-width: 100%;
-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
- }
- #test-toolbar{
- background-color:#5cb85c;
- height:30px;
- margin-top:2%;
- margin-bottom:2%;
- }
- #test-toolbar div{
- margin-top:4px; 
 
- }
- .drop-container{
- height:33%
- }
- .dropable-box .dropable{
- padding: 5px 10px;
- width:29%;
- height:50px;
- border: 2px solid;
-  border-color: #5cb85c;
- margin:10px 10px 10px 15px ;
- background-color:#b2f4d2; 
-   font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 16px;
-   color: #777;
-   text-align: center;
- }
+#clickquestion {
+	font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 20px;
+	font-weight: 50;
+	line-height: 20px;
+}
+
+.breadcrumb {
+	padding: 15px 41px;
+	margin-bottom: -19px;
+	background-color: #5cb85c;
+	border-radius: 0px;
+	margin-top: 20px;
+	margin-left: 12px;
+	width: 98%;
+}
+
+#qtype {
+	width: 40%;
+	font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial,
+		sans-serif;
+	font-size: 15px;
+	font-style: italic;
+	line-height: 10px;
+	color: #5cb85c;
+	margin-bottom: 10px;
+}
+
+#msg h5 {
+	margin-top: 35px;
+	color: red;
+}
+
+h1 {
+	margin-top: 35px;
+	text-transform: uppercase;
+	font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 45px;
+	font-weight: 600;
+	line-height: 45px;
+}
+/* /* //form builder */
+* /
+ .row .box {
+	
+}
+
+.row .box.box-primary {
+	border-top-color: #3c8dbc; //
+	border: 2px solid;
+	position: relative;
+	background: #ffffff;
+	border-top: 2px solid #5ADB98;
+	margin-bottom: 20px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	width: 100%;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#test-toolbar {
+	background-color: #5cb85c;
+	height: 30px;
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+#test-toolbar div {
+	margin-top: 4px;
+}
+
+.drop-container {
+	height: 33%
+}
+
+.dropable-box .dropable {
+	padding: 5px 10px;
+	width: 29%;
+	height: 50px;
+	border: 2px solid;
+	border-color: #5cb85c;
+	margin: 10px 10px 10px 15px;
+	background-color: #b2f4d2;
+	font-family: "Droid Serif", "Helvetica Neue", Helvetica, Arial,
+		sans-serif;
+	font-size: 16px;
+	color: #777;
+	text-align: center;
+}
+
+#toolBarBtns div {
+	margin: 0px 0px 0px 0px;
+	position: relative;
+	width: 20%;
+}
+
+a #cancle {
+	margin: -2px -5px 0px 12px;
+	float: right;
+	padding-top: 6px;
+}
+
+#testPanel nav {
+	/*  width:103%; */
+	margin-bottom: 0px;
+	margin-right: 0px;
+	height: 30px;
+	min-height: 15px;
+	/* float:left; */
+}
+
+#testPanel .navbar a {
+	height: 30px;
+	margin-bottom: 7px;
+	min-height: 15px;
+}
+
+.navbar-right {
+	margin-top: 3px;
+}
+
+.tab-pan {
+	color: #c8dce5;
+}
+
+#leftNavBar {
+	margin: bottom;
+	width: 80%;
+}
+
+#tabContianer {
+	border: 1px solid;
+	border-color: #DDD;
+	height: 500px;
+	margin:10px -24px 10px -23px;
+}
+
+#tabContianer  #myTab {
+	margin: 5px;
+}
+
+/* #myTab>li>:active {
+	border-left: 1px solid;
+	border-right: 1px solid;
+	border-top: 1px solid;
+	border-color: #DDD;
+} */
+
+#tab-option {
+	width: 100%;
+	float: right;
+	background-color:#dbd6d6;
+	height:24px;
+	    margin-top: -28px;
+}
+/* 	margin: -5px 1px 3px 0px; */
+}
+
+#tab-option li {
+	
+	height:24px;
+}
+
+#tab-option  li a {
+	
+	height: 24px;
+	padding-top: 2px;
+	padding-bottom: 0px;
+	float: left;
+	
+}

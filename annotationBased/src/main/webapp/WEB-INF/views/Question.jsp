@@ -18,6 +18,13 @@
 		<script type="text/javascript"
 			src="<c:url value="/resources/js/library/bootstrap.min.js"/>"></script>
 
+			<script type="text/javascript"
+				src="<c:url value="/resources/js/custom/question.js"/>"></script>
+			<script type="text/javascript"
+				src="<c:url value="/resources/js/custom/animate.js"/>"></script>
+			<script type="text/javascript"
+				src="<c:url value="/resources/js/library/jquery.simplePagination.js"/>"></script>
+
 		<!-- DATA TABES SCRIPT -->
 		<script type="text/javascript"
 			src="<c:url value="/resources/js/custom/dataTable.js"/>"></script>
@@ -148,9 +155,6 @@
 						<!--//section-content-->
 					</section>
 				</div>
-
-
-
 			</div>
 
 			<div class="row contianer-fluid  ">
@@ -231,13 +235,6 @@
 					</div>
 				</div>
 			</div>
-
-			<script type="text/javascript"
-				src="<c:url value="/resources/js/custom/question.js"/>"></script>
-			<script type="text/javascript"
-				src="<c:url value="/resources/js/custom/animate.js"/>"></script>
-			<script type="text/javascript"
-				src="<c:url value="/resources/js/library/jquery.simplePagination.js"/>"></script>
 	</tiles:putAttribute>
 </tiles:insertDefinition>
 

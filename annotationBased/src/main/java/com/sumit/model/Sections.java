@@ -27,26 +27,32 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "sections")
 public class Sections implements Serializable {
-
-	
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id")
 	private int id;
-	
-	
+
 	private String name;
-	
+
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "sectionInTestquestion")
 	@Fetch(value = FetchMode.SELECT)
 	private List<TestQuestions> testQuestionInSection;
+	
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "test_id")
+	private TestSet test;
+
+	public TestSet getTest() {
+		return test;
+	}
+
+	public void setTest(TestSet test) {
+		this.test = test;
+	}
 
 	public int getId() {
 		return id;
@@ -68,9 +74,9 @@ public class Sections implements Serializable {
 		return testQuestionInSection;
 	}
 
-	public void setTestQuestionInSection(List<TestQuestions> testQuestionInSection) {
+	public void setTestQuestionInSection(
+			List<TestQuestions> testQuestionInSection) {
 		this.testQuestionInSection = testQuestionInSection;
 	}
-
 
 }

@@ -3,9 +3,12 @@ package com.sumit.convert;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sumit.dto.TestJsonDTO;
 import com.sumit.model.Role;
+import com.sumit.model.TestDTO;
 import com.sumit.model.TestRequest;
 import com.sumit.model.TestRequestDTO;
+import com.sumit.model.TestSet;
 import com.sumit.model.User;
 import com.sumit.model.UserDTO;
 import com.sumit.model.UserInfo;
@@ -37,8 +40,9 @@ public   class ConvertUtils {
 		return dtos;
 	}
 
-	private static TestRequestDTO convertToTestRequestDTO(TestRequest tr) {
+	public static TestRequestDTO convertToTestRequestDTO(TestRequest tr) {
 		TestRequestDTO dto= new TestRequestDTO();
+		dto.setId(tr.getId());
 		dto.setTestRequestId(tr.getId());
 		dto.setInitiatedBy(tr.getInitiatedBy().getUsername());
 		dto.setRequestedDate(tr.getRequestedDate());
@@ -57,6 +61,35 @@ public   class ConvertUtils {
 			dto.setRejectedReason(tr.getRejectedReason());
 		}
 		return dto;
+	}
+
+	public static List<TestDTO> convertToTestDTOs(List<TestSet> allTests) {
+		List<TestDTO> dtos= new ArrayList<TestDTO>();
+		for (TestSet tr : allTests) {
+			dtos.add(ConvertUtils.convertToTestDTO(tr));
+		}
+		return dtos;
+	}
+
+	public static TestDTO convertToTestDTO(TestSet tr) {
+		TestDTO dto = new TestDTO();
+		dto.setId(tr.getId());
+		dto.setName(tr.getName());
+		dto.setFullmark(tr.getFullmark());
+		dto.setPassmark(tr.getPassmark());
+		if(tr.getType()!=null){
+			dto.setTestType(tr.getType().toString());
+		}
+		if(tr.getTestDate()!=null){
+			dto.setTestDate(tr.getTestDate().toGMTString());
+		}
+		dto.setDuration(tr.getDuration());
+		return dto;
+	}
+
+	public static List<TestJsonDTO> convertToTestJSONDTOs() {
+	 
+		return null;
 	}
 
 }

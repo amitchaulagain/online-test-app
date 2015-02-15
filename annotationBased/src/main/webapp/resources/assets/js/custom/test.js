@@ -1,20 +1,21 @@
-var allQuestions = [];
+
 var aaTest = [];
-// Delete delete
+var allQuestions = [];
 function deleteTest(id) {
 
 	$.ajax({
 		type : 'DELETE',
-		url : "http://localhost:8085/annotationBased/admin/deleteTest/"+id,
+		url : "http://localhost:8085/annotationBased/admin/deleteTest/" + id,
 		dataType : "json",
 
-		success : function(){
-		while(aaTest.length>0){
-			aaTest.pop()
-			
-		}
+		success : function() {
+			while (aaTest.length > 0) {
+				aaTest.pop()
+
+			}
 			$('#accordion .panel').remove();
-			findAllTEst()}
+			findAllTEst()
+		}
 	});
 
 }
@@ -29,10 +30,10 @@ function findAllQuestionsToAddOnTest() {
 
 		success : renderQuestionsforTest
 	});
-
+	return allQuestions;
 }
 function renderQuestionsforTest(questions) {
-
+	
 	$.each(questions, function(idx, question) {
 		var oneQuestion = {
 			qId : question.id,
@@ -43,55 +44,61 @@ function renderQuestionsforTest(questions) {
 		allQuestions.push(oneQuestion);
 
 	})
-	drawQuestionList()
+
 
 }
-
-function createTest() {
+function createOrEditTest() {
 	$.ajax({
 		type : 'POST',
-		url : "http://localhost:8085/annotationBased/admin/createTest",
+		url : "http://localhost:8085/annotationBased/admin/saveTest",
 		dataType : "json",
-		accept:"application/json",
 		contentType : "application/json",
+		accept : "application/json",
 		data : testToJSON(),
-		success : function() {
-			alert("success")
+		success : function(msg) {
+			findAllTests();
+			showQuestionsToSelectForTest();
+			$('#createTest').attr("data-step", "step3");
+			$('#createTest').html("SAVE");
+				$('#createTestForm').hide()
+				$('#createSetPanel').after('<section id=selectedQuestionList ><h2>Add question in test'+msg+'</h2><ol ></ol></section>')
+
 		},
-		complete : function(){
-			findAllTEst()
-			alert("OK")
-			
-		},	
-	  error:function(){
-		  
-		 
-	  }
+		error : function(msg) {
+			alert("error while saving test");
+		}
 	});
 
 }
-
 function testToJSON() {
-	var dynamicField = $('.dynamic-option').toArray();
-	var dynamicOptions = [];
-$.each(dynamicField,function(idx,field){
-	var aField = { 
-			 dynamicOptionValue : $(this).val(),
-			 dynamicOptionKey :$(this).attr('data-key')
-	}
-	dynamicOptions.push(aField)
-})
-	listOfQuestionForTest = questionToAdd;
-	return JSON.stringify({
-
-	 	"testSet" : {"name" : $('#testname').val(),
-			"fullmark" : $('#fullmark').val(),
-			"passmark" : $('#passmark').val()},
-		"questionsInTest" : listOfQuestionForTest,
-		"dynamicOptions" :  dynamicOptions
 	
+	return JSON.stringify({
+		"testSet" : {
+		"id" : $('#id').val(),
+		"name" :$('#name').val(),
+		"fullmark" :$('#fullmark').val(),
+		"passmark" : $('#passmark').val(),
+		"testType" : testType,
+		"duration" : $('#duration').val(),
+		"testDate" :  $('#testDate').val()
+		},
+		
+	"dynamicOptions":getDynamicForm()
 	})
 
+}
+function getDynamicForm(){
+	//TODO
+	var dynamicOptions=[];
+	var rawDoptions=$('.dynamic-option').toArray();
+	$.each(rawDoptions,function(idx,dOption){
+		var dynamicOption={
+				dynamicOptionKey: $(this).attr('data-key'),
+				dynamicOptionValue:$(this).val()
+		}
+		dynamicOptions.push(dynamicOption)
+	})
+	return dynamicOptions;
 }
 // RETRIVE ALL TEST RETRIVE ALL TEST RETRIVE ALL TEST RETRIVE ALL TEST
 
@@ -130,7 +137,7 @@ function renderTest(tests) {
 	showTest(show, index, aaTest)
 }
 
-function pagi() {
+/*function pagi() {
 	var show = $("#show option:selected").text();
 	var totalData = aaTest.length;
 	$(function() {
@@ -148,9 +155,9 @@ function pagi() {
 			}
 		});
 	});
-}
+}*/
 
-function showTest(show, index, aTest) {
+/*function showTest(show, index, aTest) {
 	var tInfo = []
 
 	var initial = 0;
@@ -203,22 +210,21 @@ function showTest(show, index, aTest) {
 				+ '<div class="col-lg-2">'
 				+ '<buttob class="delete-test btn btn-warning" id="'
 				+ Test.tId
-				+ '" style="color:red">delete</button>'
-				+ '</div>' + '</div>')
+				+ '" style="color:red">delete</button>' + '</div>' + '</div>')
 
 		$('#accordion').append(testbox)
 		$('#t' + idx).after(tInfo[idx])
 		$('#b' + idx).hide()
 		// $('#accordion div').attr("id", "test" + idx)
-		/*
+		
 		 * $('#test' + idx + ' .panel-heading a h4 ').html( Test.name)
-		 */
+		 
 		// $(tInfo[idx]).hide()
 	})
 
 }
-
-function drawTestInfoContainer(id) {
+*/
+/*function drawTestInfoContainer(id) {
 
 	var outerBox = (' <div id="test'
 			+ id
@@ -226,24 +232,41 @@ function drawTestInfoContainer(id) {
 			+ '<div class="panel-body">' + "sasasas" + '</div>' + '</div>')
 
 	$("#t" + id).append(outerBox)
-}
-function drawQuestionList() {
+}*/
+function drawQuestionList(show, index, totalData) {
 	var count = 0;
 	var questionToDraw = allQuestions
+	var count = 0;
+	var questionToDraw = totalData
+
+	var initial = 0;
+	var finale = show;
+
+	if (index > 0) {
+
+		initial = (index - 1) * show;
+		finale = index * show;
+		var limitedQuestion = questionToDraw.slice(initial, finale);
+
+	}
+
+	else {
+		limitedQuestion = questionToDraw.slice(initial, finale);
+	}
 	$
 			.each(
-					questionToDraw,
+					limitedQuestion,
 					function(idx, aQuestion) {
 						count = count + 1;
 						var qHtml = ('<div class="panel panel-default">'
-								+ '<div class="panel-heading" role="tab" >'
+								+ '<div class="panel-heading" role="tab" id="q'+aQuestion.qId+'" >'
 								+ '<div class="row">'
 								+ '<div class="col-lg-1">'
 								+ count
 								+ '</div>'
 								+ '<div class="col-lg-10">'
-								+ '<h4 class="panel-title">'
-								+ '<a data-toggle="collapse" data-parent="#accordion"href="#collapse" aria-expanded="true"aria-controls="collapseOne">'
+								+ '<h4 class="panel-title" >'
+								+ '<a data-toggle="collapse" class="question" data-parent="#accordion"href="#collapse" question-id="'+aQuestion.qId+'" aria-expanded="true"aria-controls="collapseOne">'
 								+ aQuestion.qName
 								+ ' </a>'
 								+ '</h4>'
@@ -254,14 +277,14 @@ function drawQuestionList() {
 								+ '" class="addtotest">'
 								+ '<i class="fa fa-plus-circle" style="color:rgb(34, 241, 34)"></i>'
 								+ ' </a>' + '</div>' + '</div>' + '</div>' + '</div>')
-						$('#panelContainer').append(qHtml)// .slideDown(500)
+						$('#loadQuestion #allQuestionContianer').append(qHtml)// .slideDown(500)
 					})
 
 }
 function updateTest(id) {
 	$.ajax({
 		type : 'GET',
-		url : "http://localhost:8085/annotationBased/admin/viewTest/"+id,
+		url : "http://localhost:8085/annotationBased/admin/viewTest/" + id,
 		dataType : "json",
 
 		success : renderTestToUpdate
@@ -309,7 +332,7 @@ function renderTestToUpdate(data) {
 													+ '</div>'
 													+ '<div class="col-lg-10">'
 													+ '<h4 class="panel-title">'
-													+ '<a data-toggle="collapse" data-parent="#accordion"href="#collapse" aria-expanded="true"aria-controls="collapseOne">'
+													+ '<a data-toggle="collapse" class="question" data-parent="#accordion"href="#collapse" aria-expanded="true"aria-controls="collapseOne">'
 													+ aQuestion.name
 													+ ' </a>'
 													+ '</h4>'
@@ -318,8 +341,11 @@ function renderTestToUpdate(data) {
 													+ '<a id="'
 													+ idx
 													+ '" class="del" style="color:rgb(179, 58, 58)">'
-
-													+ '<i class="fa fa-times" id="'+aQuestion.id+'" data-testid="'+test.id+'" style="color:red"></i>'
+													+ '<i class="fa fa-times" id="'
+													+ aQuestion.id
+													+ '" data-testid="'
+													+ test.id
+													+ '" style="color:red"></i>'
 													+ ' </a>'
 													+ '</div>'
 													+ '</div>' + '</div>' + '</div>')
@@ -359,9 +385,13 @@ function renderTestToUpdate(data) {
 								+ '<a id="'
 								+ question.qId
 								+ '" class="addtotest">'
-								+ '<i class=" fa fa-plus-circle" id="'+question.qId+'" data-testid="'+test.id+'" style="color:rgb(34, 241, 34)"></i>'
+								+ '<i class=" fa fa-plus-circle" id="'
+								+ question.qId
+								+ '" data-testid="'
+								+ test.id
+								+ '" style="color:rgb(34, 241, 34)"></i>'
 								+ ' </a>' + '</div>' + '</div>' + '</div>' + '</div>')
-						$('#questionsInTest').append(qhtml)// .slideDown(500)
+						$('#loadQuestion #allQuestionContianer').append(qhtml)// .slideDown(500)
 
 					})
 	$('#testname').val(test.name)
@@ -369,11 +399,12 @@ function renderTestToUpdate(data) {
 	$('#fullmark').val(test.fullMark)
 	drawSelectedQuestion(questionToAdd)
 }
-function addQuestionToTest(tId,qId) {
+function addQuestionToTest(tId, qId) {
 
 	$.ajax({
 		type : 'PUT',
-		url : "http://localhost:8085/annotationBased/admin/updateTest/"+tId+"/"+qId,
+		url : "http://localhost:8085/annotationBased/admin/updateTest/" + tId
+				+ "/" + qId,
 		dataType : "json",
 		contentType : "application/json",
 		data : testToJSON(),
@@ -389,183 +420,215 @@ function addQuestionToTest(tId,qId) {
 }
 function drawSelectedQuestion(questionToAdd) {
 	var questionToDraw = allQuestions
-	$('#selectedQuestion li').remove()
+	$('#selectedQuestionList > div').remove()
 	$.each(questionToAdd, function(idx, q) {
-	
+
 		var matches = $.grep(allQuestions, function(n, i) {
 
-			return (n.qId == q.id	)
+			return (n.qId == q.id)
 		})
 		var na = matches[0]
+		var qHtml = ('<div class="panel panel-default">'
+				+ '<div class="panel-heading" role="tab" id="q'+na.qId+'" >'
+				+ '<div class="row">'
+				+ '<div class="col-lg-1">'
+				+na.qId
+				+ '</div>'
+				+ '<div class="col-lg-10">'
+				+ '<h4 class="panel-title" >'
+				+ '<a data-toggle="collapse" class="question" data-parent="#accordion"href="#collapse" question-id="'+na.qId+'" aria-expanded="true"aria-controls="collapseOne">'
+				+ na.qName
+				+ ' </a>'
+				+ '</h4>'
+				+ '</div>'
+				+ '<div class="col-lg-1">'
+				+ '<a id="'
+			
+				+ '" class="del" style="color:rgb(179, 58, 58)">'
+				+ '<i class="fa fa-times" id="'
+				+na.qId
+				+ '" data-testid="'
+			
+				+ '" style="color:red"></i>'
+				+ ' </a>'+ '</div>' + '</div>' + '</div>' + '</div>')
 		
-		// $(this).replaceChild('i')
 
-		$('#selectedQuestion h1').after(
-				'<li>' + '<h5 style="color:blue">' + na.qName + '</h5>'
-						+ '</li>')
+		// $(this).replaceChild('i')
+			
+		$('.tab-content .tab-pane #selectedQuestionList').append(qHtml)
+		
+		/*(
+				
+				
+				'<li  style="margin:10px 5px 5px 5px">' + '<h5 style="color:blue">' + na.qName + '</h5>'
+						+ '</li>')*/
 
 	})
 }
 
 var questionToAdd = []
-function getTestInfo(id) {
-	
-	var tests = aaTest
-	$.each(tests, function(idx, t) {
 
-		if (q.qId == id) {
-			$('#selectedQuestion').append(
-					'<li>' + '<h4 style="color:blue">' + q.qName + '</h4>'
-							+ '</li>')
 
-		}
-	})/*
-		 * 
-		 */
+function deleteQuestionfromTest(tId, qId) {
 
-}
+	$
+			.ajax({
+				type : 'DELETE',
+				url : "http://localhost:8085/annotationBased/admin/deleteQuestionFromTest/"
+						+ tId + "/" + qId,
+				dataType : "json",
+				success : function(msg) {
 
-function deleteQuestionfromTest(tId,qId) {
+				},
+				error : function(msg) {
 
-	$.ajax({
-		type : 'DELETE',
-		url : "http://localhost:8085/annotationBased/admin/deleteQuestionFromTest/"+tId+"/"+qId,
-		dataType : "json",
-		success : function(msg) {
-			
-
-		},
-		error : function(msg) {
-			
-		}
-	});
+				}
+			});
 
 }
 
-$(document).ready(function() {
-	$('.side-nav').hide()
-	$('#updateInput').hide();
-	
-	$('#accordion').on('click', '.update', function() {
-		$('#updateInput').show();
-		var testIdToUpdate = $(this).attr('id')
-		$('#chooseTestOption').hide()
-	$('#questionsInTest .panel-default').remove()
-		$('#formToCreateTest').show()
-		updateTest(testIdToUpdate)
-    $('dynamic-option').parent().hide()
-	
-		// $('#updateInput').fadeOut("slow");
-		// alert(testIdToUpdate)
-		$('#selectedQuestion button').attr('id', testIdToUpdate)
+$(document)
+		.ready(
+				function() {
+					/*$('.side-nav').hide()
+					$('#updateInput').hide();*/
+				
+					$('#accordion').on(
+							'click',
+							'.update',
+							function() {
+								$('#updateInput').show();
+								var testIdToUpdate = $(this).attr('id')
+								$('#chooseTestOption').hide()
+								$('#questionsInTest .panel-default').remove()
+								$('#formToCreateTest').show()
+								updateTest(testIdToUpdate)
 
-	})
+								// $('#updateInput').fadeOut("slow");
+								// alert(testIdToUpdate)
+								$('#selectedQuestion button').attr('id',
+										testIdToUpdate)
 
-	$('#selectedQuestion').hide();
+							})
 
-	$('#panelContainer').hide();
-	$('#formToCreateTest').hide();
-	$('.body').css({
-		"margin" : "0px -18px 0px 0px"
 
-	})
+					$(Document).on("click", ".addtotest", function() {
 
-	$('#panelContainer').on("click", ".addtotest", function() {
+						var oneQuestion = {
 
-		var oneQuestion = {
+							id : $(this).attr('id')
+						
+						}
 
-			id : $(this).attr('id')
-		// addQuestionToTest(id)
-		}
+						questionToAdd.push(oneQuestion)
 
-		questionToAdd.push(oneQuestion)
+						$('#selectedQuestion').show();
+						drawSelectedQuestion(questionToAdd)
 
-		$('#selectedQuestion').show();
-		drawSelectedQuestion(questionToAdd)
+					})
 
-	})
+					$('#questionsInTest').on(
+							"click",
+							".addtotest",
+							function() {
+								var qId = parseInt($(this).children('i').attr(
+										'id'))
+								var tId = parseInt($(this).children('i').attr(
+										'data-testid'))
+								$('#selectedQuestion li').remove();
+								$('#selectedQuestion').show();
+								var q = {
+									id : qId
+								}
+								questionToAdd.push(q)
+								drawSelectedQuestion(questionToAdd)
+								$(this).children("i").remove();
+								$(this).append(
+										'<i class="fa fa-times" id="' + qId
+												+ '" data-testid="' + tId
+												+ '" style="color:red"></i>');
+								$(this).attr('class', 'del')
+								addQuestionToTest(tId, qId)
+								alert(qId + "," + tId)
+							})
+					$('#questionsInTest')
+							.on(
+									"click",
+									".del",
+									function() {
+										var qId = parseInt($(this)
+												.children('i').attr('id'))
+										var tId = parseInt($(this)
+												.children('i').attr(
+														'data-testid'))
+										var matches = $.grep(questionToAdd,
+												function(n, i) {
+													return (n.id == qId)
+												})
+										var na = matches[0]
+										var d = questionToAdd.indexOf(na)
+										questionToAdd.pop(d)
+										drawSelectedQuestion(questionToAdd)
+										deleteQuestionfromTest(tId, qId)
+										$(this).children('i').remove();
+										$(this)
+												.append(
+														'<i class=" fa fa-plus-circle" id="'
+																+ qId
+																+ '" data-testid="'
+																+ tId
+																+ '" style="color:rgb(34, 241, 34)"></i>')
+										$(this).attr('class', 'addtotest')
+										alert(qId + "," + tId)
+									})
+				
+									
+					$('#addQuestionInTest').on("click", function() {
+						$("#accordion").hide();
+						$(this).hide();
 
-	$('#questionsInTest').on("click", ".addtotest", function() {
-		var qId = parseInt($(this).children('i').attr('id'))
-		var tId = parseInt($(this).children('i').attr('data-testid'))
-		$('#selectedQuestion li').remove();
-		$('#selectedQuestion').show();
-		var q={
-				id:qId
-			}
-	     questionToAdd.push(q)
-		drawSelectedQuestion(questionToAdd)
-		$(this).children("i").remove();
-		$(this).append('<i class="fa fa-times" id="'+qId+'" data-testid="'+tId+'" style="color:red"></i>');
-		$(this).attr('class','del')
-		addQuestionToTest(tId,qId)
-		alert(qId+","+tId)
-	})
-	$('#questionsInTest').on("click", ".del", function() {
-		var qId = parseInt($(this).children('i').attr('id'))
-		var tId = parseInt($(this).children('i').attr('data-testid'))
-		var matches = $.grep(questionToAdd, function(n, i) {
-			return (n.id == qId	)
-		})
-		var na = matches[0]
-		var d = questionToAdd.indexOf(na)
-	  questionToAdd.splice(d,1);
-	  drawSelectedQuestion(questionToAdd)
-       deleteQuestionfromTest(tId,qId)
-       $(this).children('i').remove();
-		$(this).append('<i class=" fa fa-plus-circle" id="'+qId+'" data-testid="'+tId+'" style="color:rgb(34, 241, 34)"></i>')
-		$(this).attr('class','addtotest')
-		alert(qId+","+tId)
-	})
-	findAllQuestionsToAddOnTest()
+						$('#questionsInTest .panel-default').remove()
+						$('#panelContainer').show();
 
-	findAllTEst();
+					})
+					$('#testTypeOne').on("click", function() {
+						$('#create-form').show();
+						$('#chooseTestOption').hide()
+						$('#formToCreateTest').show();
+					})
 
-	$('#addQuestionInTest').on("click", function() {
-		 $('#dynamic-option').parent().hide()
-		$("#accordion").hide();
-		$(this).hide();
+					$('#accordion').on('click', '.testname', function() {
 
-		$('#questionsInTest .panel-default').remove()
-		$('#panelContainer').show();
+						var id = $(this).attr('id')
+						$('#b' + id).toggle('fast')
 
-	})
-	$('#testTypeOne').on("click", function() {
-		$('#create-form').show	();
-		$('#chooseTestOption').hide()
-		$('#formToCreateTest').show();
-	})
+					})
+					$('#show').on(
+							'change',
+							function() {
+								$('#accordion .panel').remove();
 
-	$('#accordion').on('click', '.testname', function() {
+								var show = $('#show option:selected').val();
+								var index = $('#pagination').pagination(
+										'getCurrentPage');
 
-		var id = $(this).attr('id')
-		$('#b' + id).toggle('fast')
+								showTest(show, index, aaTest);
+								pagi();
+							});
 
-	})
-	$('#show').on('change', function() {
-		$('#accordion .panel').remove();
+					$('#selectedQuestion button').on('click', function() {
+						var id = $(this).attr('id')
+						var q = {
+							id : id
+						}
+						addQuestionToTest(q)
+						alert(id)
 
-		var show = $('#show option:selected').val();
-		var index = $('#pagination').pagination('getCurrentPage');
+					})
+					$('#accordion').on('click', '.delete-test', function() {
+						alert()
+						var id = $(this).attr('id')
+						deleteTest(id);
+					})
 
-		showTest(show, index, aaTest);
-		pagi();
-	});
-
-	$('#selectedQuestion button').on('click', function() {
-		var id = $(this).attr('id')
-		var q={
-			id:id
-		}
-		addQuestionToTest(q)
-		alert(id)
-
-	})
-	$('#accordion').on('click', '.delete-test', function() {
-alert()
-		var id = $(this).attr('id')
-		 deleteTest(id);
-	})
-	
-	
-})
+				})

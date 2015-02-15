@@ -18,12 +18,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sumit.model.MainQuestion;
 import com.sumit.model.Options;
 import com.sumit.model.QuestionAnswer;
 import com.sumit.model.QuestionDTO;
+import com.sumit.model.TestDTO;
 import com.sumit.model.TestSet;
 import com.sumit.repository.TestRipository;
 import com.sumit.service.OptionService;
@@ -41,7 +45,7 @@ public class StudentController {
 	@Autowired
 	QuestionService questionService;
 	@Autowired
-	TestService testServicee;
+	TestService testService;
 	@Resource
 	TestRipository testRipo;
 	private Map<Integer, List<Integer>> myQuestionAnsMap;
@@ -195,6 +199,23 @@ public class StudentController {
 					 
 				}
 			return questionOptionMap;
+	}
+	
+	@RequestMapping(value = "/allTests", method = RequestMethod.GET)
+	public @ResponseBody List<TestDTO> getAllTestInJSON(){
+		List<TestDTO> allTests = questionService.getAllTests();
+
+		return allTests;
+
+	}
+	@RequestMapping(value = "/send/testRequest/{testId}", method = RequestMethod.GET)
+	@ResponseBody
+	public String getTestRequest(@PathVariable int testId) throws JsonProcessingException {
+		testService.createTestRequest(testId);
+		ObjectMapper mapper =new ObjectMapper();
+		String val = mapper.writeValueAsString("Test Request sent successfully !! Be prepared for the test. Best Of Luck .");
+		
+		return val;
 	}
 
 }
