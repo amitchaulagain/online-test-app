@@ -1,6 +1,6 @@
 /**
  * New node file
- */
+ *//*
 var aaData = [];
 var index = 0;
 function searchQuestions() {
@@ -35,20 +35,7 @@ function renderSearchQuestion(data) {
 	pagi()
 	showLimitedQuestion(show, index, searchedData);
 }
-function findAllQuestions() {
 
-	$.ajax({
-		type : 'GET',
-		url : "http://localhost:8085/annotationBased/admin/allQuestions",
-		dataType : "json",
-
-		success : renderQuestions
-	});
-
-	show = $("#show option:selected").text();
-
-
-}
 
 function deleteQuestion(id) {
 
@@ -62,11 +49,11 @@ function deleteQuestion(id) {
 			$("#msg").html(
 					'<h5>' + "question- " + result.name + "deleted" + '</h5>')
 					.fadeIn(500).delay(500).fadeOut(500);
-			/*
+			
 			 * $('#msg').append('<h4>'+"question"+result.name+"::::deleted"+'</h4>')
 			 * 
 			 * $("#msg h4").delay(100000).fadeOut('slow');
-			 */
+			 
 		},
 		complete : function() {
 			$('tbody tr').remove();
@@ -81,38 +68,11 @@ function deleteQuestion(id) {
 	});
 
 }
-function pagi() {
-	var show = $("#show option:selected").text();
-	var totalData = aaData.length;
-	$(function() {
-		$('#pagination').pagination({
-			items : totalData,
-			itemsOnPage : show,
-			cssStyle : 'light-theme'
-		});
-	});
-}
 
-function renderQuestions(questions) {
 
-	$.each(questions, function(idx, question) {
-		var oneQuestion = {
-			qId : question.id,
-			qName : question.name,
-			qType : question.questionType,
-			qDate : question.createdDate
-		}
-		aaData.push(oneQuestion);
 
-	})
 	
-	var show = $("#show option:selected").text();
-	pagi()
-	var index = $('#pagination').pagination('getCurrentPage');
-	var allData = aaData;
-	showLimitedQuestion(show, index, allData);
 
-}
 
 function showLimitedQuestion(show, index, datas) {
 	var initial = 0;
@@ -174,7 +134,7 @@ function showLimitedQuestion(show, index, datas) {
 $(document).ready(function() {
 	findAllQuestions();
 	
-	$('.side-nav').hide()
+	
 	$('#show').on('change', function() {
 		$('tbody tr').remove();
 
@@ -185,9 +145,9 @@ $(document).ready(function() {
 		pagi();
 	});
 
-	/*
+	
 	 * $('#search').on('input', function() { //alert("ohooo") var parameter =
 	 * $('#search').val(); searchQuestions(parameter) })
-	 */
+	 
 
-});
+});*/

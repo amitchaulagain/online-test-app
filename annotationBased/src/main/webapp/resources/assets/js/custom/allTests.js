@@ -42,7 +42,10 @@ function renderAllTests(tests) {
 
 // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::DOCUMENT>READY>FUNCTION
 $(document).ready(function() {
-	
+	$('div .form-group .datepicker').datepicker({
+	    format: 'mm/dd/yyyy',
+	    startDate: '-3d'
+	})
 	// findAllQuestionsToAddOnTest();
 	$('#createDOption').hide();
 	$('#questions').css('display', 'none');
@@ -98,6 +101,7 @@ $(document).ready(function() {
 		pagi();
 	});
 	$(document).on("click", ".testTypes", function(e) {
+		 $("#testDate").datepicker();
 		testType = $(this).attr("id")
 		$('#createTestPanel').show();
 		$('#chooseTestOption').hide();

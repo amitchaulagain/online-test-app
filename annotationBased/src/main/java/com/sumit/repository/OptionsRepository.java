@@ -9,7 +9,7 @@ import com.sumit.model.MainQuestion;
 import com.sumit.model.Options;
 
 public interface OptionsRepository extends  JpaRepository<Options, Integer> {
-	 @Query("select o from Options o join o.optionQuestion q where  q in (?1)")
+	 @Query("select o from Options o join o.optionQuestion q where  q.id in (?1)")
 	/*select o from Employee o where o.departments.departmentId is null or o.departments.departmentId=:departmentId
 
 */

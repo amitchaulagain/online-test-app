@@ -92,10 +92,21 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/allQuestions", method = RequestMethod.GET)
-	public @ResponseBody List<MainQuestion> getQuestionInJSON() {
+	public @ResponseBody List<QuestionJSONDTO> getQuestionInJSON() {
+		List<QuestionJSONDTO> dto = new  ArrayList<QuestionJSONDTO>();
 		List<MainQuestion> questions = questionService.getAllQuestion();
+		for (MainQuestion mainQuestion : questions) {
+			QuestionJSONDTO qDto = new QuestionJSONDTO();
+			qDto.setMainquestion(mainQuestion);
+			List<Options> options = optionRipo.findOptionByquestion(mainQuestion.getId());
+			qDto.setOptions(options);
+			List<QuestionAnswer> answers = ansRipo.findAnsByQuestion(mainQuestion);
+			qDto.setAnswers(answers);
+			
+			dto.add(qDto);
+		}
 
-		return questions;
+		return dto;
 
 	}
 
@@ -233,6 +244,7 @@ public class AdminController {
 		}
 		ObjectMapper mapper = new ObjectMapper();
 		String val = mapper.writeValueAsString(test.getName());
+
 
 		return val;
 	}

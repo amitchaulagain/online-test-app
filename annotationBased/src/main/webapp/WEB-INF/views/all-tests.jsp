@@ -25,6 +25,8 @@
 	<link
 	href="<c:url value="/resources/css/library/simplePagination.css" />"
 	rel="stylesheet">
+	<link href="<c:url value='/resources/css/library/plugins/datepicker.css'/>"
+	rel="stylesheet">
 <script type="text/javascript"
 	src="<c:url value="/resources/js/library/jquery.js"/>"></script>
 <script type="text/javascript"
@@ -33,6 +35,10 @@
 	src="<c:url value="/resources/js/library/bootstrap.min.js"/>"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/library/jquery.simplePagination.js"/>"></script>
+	<script type="text/javascript"
+	src="<c:url value="/resources/js/library/plugins/datepicker.js"/>"></script>
+	<script type="text/javascript"
+	src="<c:url value="/resources/js/library/bootstrap-timepicker.js"/>"></script>
 	<script type="text/javascript"  	src="<c:url value="/resources/js/library/jquery.bs_pagination.js"/>"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/custom/allTests.js"/>"></script>

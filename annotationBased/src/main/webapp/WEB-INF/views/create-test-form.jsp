@@ -62,9 +62,9 @@
 					</div>
 				</div>
 				<div class="col-md-4">
-					<div class="form-group ">
+					<div class="datepicker form-group " data-date-format="yyyy/mm/dd">
 						<label for="testDate">Test Date</label> <input type="text"
-							name="testDate" class="form-control input-sm" id="testDate" />
+							name="testDate" class=" form-control input-sm" id="testDate"   />
 					</div>
 
 
@@ -73,7 +73,7 @@
 				</div>
 
 				<div class="col-md-4">
-					<div class="form-group ">
+					<div class=" ">
 						<label for="testDuration">Test Duration</label> <input type="text"
 							name="duration" class="form-control input-sm" id="duration" />
 					</div>

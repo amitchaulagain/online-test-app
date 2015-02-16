@@ -1,39 +1,28 @@
 package com.sumit.model;
 
+import java.util.List;
+
 public class QuestionJSONDTO {
 	
-	String questionType;
-
-	String questionName;
-	
-
-	String listOfOptions[];
-	String listOfAnswers[];
-	
-	
-	public String getQuestionType() {
-		return questionType;
+	private MainQuestion mainquestion;
+	private List<Options> options;
+	private List<QuestionAnswer> answers;
+	public MainQuestion getMainquestion() {
+		return mainquestion;
 	}
-	public void setQuestionType(String questionType) {
-		this.questionType = questionType;
+	public void setMainquestion(MainQuestion mainquestion) {
+		this.mainquestion = mainquestion;
 	}
-	public String getQuestionName() {
-		return questionName;
+	public List<Options> getOptions() {
+		return options;
 	}
-	public void setQuestionName(String questionName) {
-		this.questionName = questionName;
+	public void setOptions(List<Options> options) {
+		this.options = options;
 	}
-	public String[] getListOfOptions() {
-		return listOfOptions;
+	public List<QuestionAnswer> getAnswers() {
+		return answers;
 	}
-	public void setListOfOptions(String[] listOfOptions) {
-		this.listOfOptions = listOfOptions;
+	public void setAnswers(List<QuestionAnswer> answers) {
+		this.answers = answers;
 	}
-	public String[] getListOfAnswers() {
-		return listOfAnswers;
-	}
-	public void setListOfAnswers(String[] listOfAnswers) {
-		this.listOfAnswers = listOfAnswers;
-	}
-
 }

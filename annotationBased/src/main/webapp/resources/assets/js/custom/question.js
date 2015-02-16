@@ -1,6 +1,107 @@
 /**
  * 
  */
+var allQuestions = [];
+function findAllQuestionsToAddOnTest() {
+	
+	$.ajax({
+		type : 'GET',
+		url : "http://localhost:8085/annotationBased/admin/allQuestions",
+		dataType : "json",
+
+		success : renderQuestionsforTest
+	});
+	return allQuestions;
+}
+function renderQuestionsforTest(questions) {
+	
+	$.each(questions, function(idx, q) {
+		var options=[];
+		$.each(q.options, function(idx, o){
+			var option ={
+					id:o.Id,
+					name:o.name
+			}
+			options.push(option)
+		})
+		var oneQuestion = {
+			qId : q.mainquestion.id,
+			qName : q.mainquestion.name,
+			qType : q.mainquestion.questionType,
+			qDate : q.mainquestion.createdDate,
+			qOptions:options
+		}
+		allQuestions.push(oneQuestion);
+
+	})
+
+
+}
+function drawQuestionList(show, index, questions) {
+	var count = 0;
+	var questionToDraw = questions;
+	var limitedQuestion;
+	var initial = 0;
+	var finale = show;
+
+	if (index > 0) {
+
+		initial = (index - 1) * show;
+		finale = index * show;
+		 limitedQuestion = questionToDraw.slice(initial, finale);
+
+	}
+
+	else {
+		limitedQuestion = questionToDraw.slice(initial, finale);
+	}
+	alert(limitedQuestion.length)
+	$
+			.each(
+					limitedQuestion,
+					function(idx, aQuestion) {
+						count = count + 1;
+						var qHtml = ('<div class="panel panel-default">'
+								+ '<div class="panel-heading" role="tab" id="q'+aQuestion.qId+'" >'
+								+ '<div class="row">'
+								+ '<div class="col-lg-1">'
+								+ count
+								+ '</div>'
+								+ '<div class="col-lg-10">'
+								+ '<h4 class="panel-title" >'
+								+ '<a data-toggle="collapse" class="question" data-parent="#accordion"href="#collapse" question-id="'+aQuestion.qId+'" aria-expanded="true"aria-controls="collapseOne">'
+								+ aQuestion.qName
+								+ ' </a>'
+								+ '</h4>'
+								+ '</div>'
+								+ '<div class="col-lg-1">'
+								+ '<a id="'
+								+ aQuestion.qId
+								+ '" class="addtotest">'
+								+ '<i class="fa fa-plus-circle" style="color:rgb(34, 241, 34)"></i>'
+								+ ' </a>' + '</div>' + '</div>' + '</div>' + '</div>')
+						$('#allQuestionContianer').append(qHtml)
+						
+						
+						
+						var qBody = ('<div class= "panel panel-body test-container" id="o'
+								+ aQuestion.qId + '" >'
+								 + '<ol></ol></div>')
+								 $('#q'+aQuestion.qId).after(qBody)
+								 $('#o'+aQuestion.qId+' > li').remove();
+						$.each(aQuestion.aOptions,function(idx,option){
+							//alert(option.oName)
+							$('.test-container#o'+aQuestion.qId+' ol').append('<li>'+option.oName+'</li>')
+							
+						})
+						 $('#o'+aQuestion.qId).hide();
+						while(options.length>0){
+							options.pop();
+							
+						}
+					})
+
+}
 
 function createQuestion() {
  var count=0;
@@ -31,87 +132,13 @@ function createQuestion() {
 }
 
 
-function getQuestionType() {
-	$.ajax({
-		type : 'get',
-		url : "http://localhost:8085/annotationBased/admin/questionType",
-		dataType : "json",
-
-		success : renderQuestionType
-	});
-
-}function getOfQuestion(id) {
-
-	$.ajax({
-		type : 'GET',
-		url : "http://localhost:8085/annotationBased/admin/questionAnswer/"+id,
-		dataType : "json",
-
-		success : renderOfQuestion,
-        error:function(msg){
-        	 
-        }
-	});
-	}
-function opt(id){
-/*	*/
-	
-	getOptionOfQuestion(id);
- }
-
-function getOptionOfQuestion(id) {
-
-	$.ajax({
-		type : 'GET',
-		url : "http://localhost:8085/annotationBased/admin/questionOption/"+id,
-		dataType : "json",
-
-		success : renderOptionsOfQuestion,
-        error:function(msg){
-        }
-	});
-	return options;
-	}
-var options=[];
- function renderOptionsOfQuestion(options){
-	 $.each(options,function(idx,option){
-		 var option ={
-				 oId:option.Id,
-				 oName:option.name
-				 
-		 }
-		 options.push(option)
-		 
-	 })
-	 
-	 var question;
-	 $('#ques li ').remove();
-		$('#showquestion li').remove();
-	$.each(options,function(idx,option){
-		
-	
-		
-		question=option.question.name
-		$('#showquestion').append('<li>'+'<h4>'+option.name+'</h4>'+'</li>')
-	})
-	 
-	 $('#ques').append('<li>'+'<h2>'+question+'</h2>'+'</li>')
-	 
-	 
- }
-
-
-function renderQuestionType(types) {
-
-	$.each(types,function(idx, type) {
-						$('#qType').append('<option>'+'<h5>'+type+'</h5>'+'</option>')
-					});
-}
 
 
 	jQuery(document).ready(function($) {
+		$('.side-nav').hide()
+		 loadAllQuestions();  
 		$("#qType").on("change",function(){
-			alert("fdfdfd")
+			
 			var qType=$('#qType option:selected').val();
 			$('#options .row').hide();
 			$("#"+qType).show();
@@ -120,7 +147,7 @@ function renderQuestionType(types) {
 		
 		
 		
-		getQuestionType()	
+		
 					
 					$('#show-allquestion-table').click(function() {
 						$('#question-table').show();
@@ -179,12 +206,12 @@ function renderQuestionType(types) {
 
 					   $(Document).on('click','.question',function(){
 						  var qId= $(this).attr('question-id');
-						  drawOptionPanel(qId);
-						  $('#o'+id).toggle('fast')
+						 
+						  $('#o'+qId).toggle('fast')
 						 
 						   
 					   })
-					    
+					 
 				});
 	
 	
@@ -229,20 +256,35 @@ function renderQuestionType(types) {
 	
 	
 	
-		function   drawOptionPanel(qId){
-			var options = getOptionOfQuestion(qId);
-			
-			var qBody = ('<div class= "panel panel-body test-container" id="o'
-					+ qId + '" >'
-					 + '</div>')
-					 $('#q'+qId).after(qBody)
-			$.each(options,function(idx,option){
-				$('#o'+qId	).apprnd('<li>'+option.name+'</li>')
-				
-			})
-			 $('#o'+qid).hide();
-		}
-	      
-	
+	function loadAllQuestions(){
+		
+		var questions = findAllQuestionsToAddOnTest();
+		pagi(questions);
+		var show = $("#show option:selected").text();
+		var index = $('#pagination').pagination('getCurrentPage');
+		drawQuestionList(show, index, questions);
+		
+	}
+		
+	function pagi(questions) {
+		alert("ewewe")
+		var show = $("#show option:selected").text();
+		var totalData =questions.length ;
+		
+			$('#pagination').pagination({
+				items : totalData,
+				itemsOnPage : show,
+				cssStyle : 'light-theme',
+					onPageClick: function(pageNumber, event) {
+						$('tbody tr').remove();
+					
+						var show = $("#show option:selected").text();
+						drawQuestionList(show, pageNumber,questions);
+						
+						// Callback triggered when a page is clicked
+						// Page number is given as an optional parameter
+					}	
+		});
+	}
 
 

@@ -143,6 +143,7 @@ admin
 											id="addQuestionInTest">Add Questions</button>
 									</div>
 
+<<<<<<< HEAD
 									<div class="col-md-2">
 										<button class="btn btn-success btn-xs" id="create-form"
 											type="button">create form</button>
@@ -157,6 +158,10 @@ admin
 									</div>
 									<div class="row">
 										<div class="col-md-4">
+=======
+									<form role="form"  >
+										<div id="testOneInfo">
+>>>>>>> 471a1b7604378995b340408d8b69660152b91161
 											<div class="form-group ">
 												<label for="fullmark" style="color: #777">Full Mark</label>
 												<input type="text" id="fullmark"
@@ -222,6 +227,18 @@ admin
 											<div class="col-md-3 dropable" id="dropable5">DROP HERE</div>
 											<div class="col-md-3 dropable" id="dropable6">DROP HERE</div>
 
+<<<<<<< HEAD
+=======
+												<p>
+													Negative Marking <input type="checkbox" name="equalMarking"
+														value="true">
+												</p>
+												<a id="addQuestionInTest" href="#addQuestionInTest">Add
+													Questions </a>
+											</div>
+											<button   class="btn btn-primary btn-sm"
+												onclick="createTest()">Submit</button>
+>>>>>>> 471a1b7604378995b340408d8b69660152b91161
 										</div>
 
 

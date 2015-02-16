@@ -32,13 +32,7 @@
 				useStartEdge : true,
 				useEndEdge : true,
 				onPageClick: function(pageNumber, event) {
-					$('tbody tr').remove();
-				
-					var show = $("#show option:selected").text();
-					showLimitedQuestion(show, pageNumber,aaData);
-					showTest(show,index,aaTest);
-					// Callback triggered when a page is clicked
-					// Page number is given as an optional parameter
+					
 				},
 				onInit: function() {
 					// Callback triggered immediately after initialization

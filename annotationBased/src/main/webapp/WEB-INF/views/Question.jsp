@@ -17,17 +17,15 @@
 
 		<script type="text/javascript"
 			src="<c:url value="/resources/js/library/bootstrap.min.js"/>"></script>
-
+<script type="text/javascript"
+				src="<c:url value="/resources/js/library/jquery.simplePagination.js"/>"></script>
 			<script type="text/javascript"
 				src="<c:url value="/resources/js/custom/question.js"/>"></script>
 			<script type="text/javascript"
 				src="<c:url value="/resources/js/custom/animate.js"/>"></script>
-			<script type="text/javascript"
-				src="<c:url value="/resources/js/library/jquery.simplePagination.js"/>"></script>
+			
 
 		<!-- DATA TABES SCRIPT -->
-		<script type="text/javascript"
-			src="<c:url value="/resources/js/custom/dataTable.js"/>"></script>
 
 
 		<div class="body">
@@ -192,30 +190,10 @@
 							</div>
 						</div>
 
-						<table id="dataTables" class="table table-bordered"
-							style="margin: 0">
-							<thead>
-								<tr>
-									<th style="width: 20px">id</th>
-									<th>name</th>
-									<th style="width: 50px">Type</th>
-									<th>Date</th>
-
-									<th style="width: 150px">action</th>
-								</tr>
-							</thead>
-							<tbody id="dataTable"></tbody>
-							<tfoot>
-								<tr>
-									<th>id</th>
-									<th>name</th>
-									<th>Type</th>
-									<th>Date</th>
-									<th>action</th>
-
-								</tr>
-							</tfoot>
-						</table>
+						<div id="allQuestionContianer">
+						
+						
+						</div>
 
 						<div id="pagination"></div>
 					</div>
