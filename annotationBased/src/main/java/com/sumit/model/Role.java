@@ -12,13 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
  
 @Entity
 @Table(name = "role 	"/*, 
 	uniqueConstraints = @UniqueConstraint(
 		columnNames = { "role", "user_id" })*/)
-public class Role implements Serializable{
+public class Role implements   Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)

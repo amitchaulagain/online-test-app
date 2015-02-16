@@ -33,7 +33,7 @@ public class TestSet implements Serializable {
 	private int passmark;
 	String duration;
 	Date createDate = new Date();
-	Date testDate;
+//	Date testDate;
  
 	private TestType type;
  
@@ -88,14 +88,6 @@ public class TestSet implements Serializable {
 		this.createDate = createDate;
 	}
 
-	public Date getTestDate() {
-		return testDate;
-	}
-
-	public void setTestDate(Date testDate) {
-		this.testDate = testDate;
-	}
-	
 
 	public List<TestQuestions> getTestQuestionInTest() {
 		return testQuestionInTest;

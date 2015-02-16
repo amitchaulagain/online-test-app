@@ -10,6 +10,7 @@ import com.sumit.model.Sections;
 import com.sumit.model.TestDTO;
 import com.sumit.model.TestRequestDTO;
 import com.sumit.model.TestSet;
+import com.sumit.model.User;
 
 public interface TestService {
 	public void save(TestSet test);
@@ -41,5 +42,12 @@ public interface TestService {
 	public void createOrEditSection(SectionDTO sectionDTO);
 
 	public List<Sections> findAllSectionsByTestId(int testId);
+
+	public void createOrEditGroup(SectionDTO sectionDTO);
+
+	public void findStudentsByGroupId(SectionDTO sectionDTO);
+
+	public void deleteGroup(SectionDTO sectionDTO);
+
 
 }

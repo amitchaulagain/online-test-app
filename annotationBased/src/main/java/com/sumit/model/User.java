@@ -39,7 +39,10 @@ public class User implements Serializable{
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
 	private UserInfo userInfo;
- 
+	
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "student")
+	private List<StudentGroup> students = new ArrayList<StudentGroup>();
+
 
 	public User() {
 	}

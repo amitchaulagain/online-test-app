@@ -80,9 +80,6 @@ public   class ConvertUtils {
 		if(tr.getType()!=null){
 			dto.setTestType(tr.getType().toString());
 		}
-		if(tr.getTestDate()!=null){
-			dto.setTestDate(tr.getTestDate().toGMTString());
-		}
 		dto.setDuration(tr.getDuration());
 		return dto;
 	}

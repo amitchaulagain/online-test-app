@@ -9,7 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,7 +19,6 @@ import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -52,7 +52,14 @@ public class MainQuestion implements Serializable {
 	private List<Options> options = new ArrayList<Options>();
 	
 	
+	OptionType optionType;
+	
 	QuestionType questionType;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_id")
+	private  Category category;
+
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "answerQuestion")
@@ -104,12 +111,28 @@ public class MainQuestion implements Serializable {
 		this.questiontests = questiontests;
 	}*/
 
+	public OptionType getOptionType() {
+		return optionType;
+	}
+
+	public void setOptionType(OptionType questionType) {
+		this.optionType = questionType;
+	}
+
 	public QuestionType getQuestionType() {
 		return questionType;
 	}
 
 	public void setQuestionType(QuestionType questionType) {
 		this.questionType = questionType;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	 
 }

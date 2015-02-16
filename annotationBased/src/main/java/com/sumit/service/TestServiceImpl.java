@@ -1,6 +1,5 @@
 package com.sumit.service;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sumit.api.ITestApi;
 import com.sumit.api.QuestionApi;
-import com.sumit.api.TestApi;
 import com.sumit.convert.ConvertUtils;
 import com.sumit.dto.SectionDTO;
 import com.sumit.dto.TestJsonDTO;
 import com.sumit.model.MainQuestion;
 import com.sumit.model.QuestionDTO;
 import com.sumit.model.Sections;
-import com.sumit.model.Sets;
 import com.sumit.model.TestDTO;
 import com.sumit.model.TestQuestions;
 import com.sumit.model.TestRequest;
@@ -32,8 +29,6 @@ import com.sumit.repository.QuestionRepository;
 import com.sumit.repository.SectionsRepository;
 import com.sumit.repository.TestRequestRepository;
 import com.sumit.repository.TestRipository;
-
-import freemarker.core.ReturnInstruction.Return;
 
 @Service
 public class TestServiceImpl implements TestService {
@@ -205,11 +200,11 @@ public class TestServiceImpl implements TestService {
 		ts.setPassmark(dto.getPassmark());
 		ts.setDuration(dto.getDuration());
 		SimpleDateFormat formatter = new SimpleDateFormat("E, MMM dd yyyy");
-		try {
-			ts.setTestDate(formatter.parse(dto.getTestDate()));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			ts.setTestDate(formatter.parse(dto.getTestDate()));
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
 
 		testRipo.save(ts);
 
@@ -228,9 +223,6 @@ public class TestServiceImpl implements TestService {
 			dto.setPassmark(testSet.getPassmark());
 			dto.setTestType(testSet.getType());
 			dto.setDuration(testSet.getDuration());
-			if (testSet.getTestDate() != null) {
-				dto.setTestDate(testSet.getTestDate().toGMTString());
-			}
 			List<TestQuestions> tq = testApi.searchByTestId(testSet.getId());
 			for (TestQuestions testQuestions : tq) {
 				listquestionId.add(testQuestions.getId());
@@ -264,6 +256,24 @@ public class TestServiceImpl implements TestService {
 	public List<Sections> findAllSectionsByTestId(int testId) {
 		
 		return testApi.findSectionByTestId(testId);
+	}
+
+	@Override
+	public void createOrEditGroup(SectionDTO sectionDTO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void findStudentsByGroupId(SectionDTO sectionDTO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteGroup(SectionDTO sectionDTO) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
