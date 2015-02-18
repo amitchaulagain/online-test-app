@@ -19,10 +19,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "sections")
@@ -45,6 +42,25 @@ public class Sections implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "test_id")
 	private TestSet test;
+	
+	private int fullmark;
+	private int passmark;
+
+	public int getFullmark() {
+		return fullmark;
+	}
+
+	public void setFullmark(int fullmark) {
+		this.fullmark = fullmark;
+	}
+
+	public int getPassmark() {
+		return passmark;
+	}
+
+	public void setPassmark(int passmark) {
+		this.passmark = passmark;
+	}
 
 	public TestSet getTest() {
 		return test;

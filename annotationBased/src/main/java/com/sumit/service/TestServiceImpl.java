@@ -205,11 +205,11 @@ public class TestServiceImpl implements TestService {
 		ts.setPassmark(dto.getPassmark());
 		ts.setDuration(dto.getDuration());
 		SimpleDateFormat formatter = new SimpleDateFormat("E, MMM dd yyyy");
-		try {
-			ts.setTestDate(formatter.parse(dto.getTestDate()));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+//		try {
+////			ts.setTestDate(formatter.parse(dto.getTestDate()));
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
 
 		testRipo.save(ts);
 
@@ -270,6 +270,24 @@ public class TestServiceImpl implements TestService {
 	public List<TestJsonDTO> getAllTestJsonDTOs(List<TestSet> allTest) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void createOrEditGroup(SectionDTO sectionDTO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void findStudentsByGroupId(SectionDTO sectionDTO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteGroup(SectionDTO sectionDTO) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

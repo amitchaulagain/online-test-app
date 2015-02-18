@@ -67,6 +67,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Transactional
 	@Override
 	public void save_Question_Option_Answer(QuestionJSONDTO questionJSONDto) {
+ 
 		OptionType type = checkQuestionType(questionJSONDto.getMainquestion().getOptionType().toString());
 		MainQuestion question = new MainQuestion();
 		question.setName(questionJSONDto.getMainquestion().getName());
