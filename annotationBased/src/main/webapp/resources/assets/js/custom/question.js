@@ -101,11 +101,22 @@ function drawQuestionList(show, index, questions,contianer) {
 								+ '</h4>'
 								+ '</div>'
 								+ '<div class="col-lg-2">'
-								+ '<a id="'
+								+ '<a class='
+								+ "updateQuestion"
+								+ ' href="#" actionToBeDone="updateQ" data-id="'
 								+ aQuestion.qId
-								+ '" class="addtotest">'
-								+ '<i class="fa fa-plus-circle" style="color:rgb(34, 241, 34)"></i>'
-								+ ' </a>' + '</div>' + '</div>' + '</div>' + '</div>')
+								+ '" style="float:right;" >'
+								+ '<i style="color:rgba(189, 189, 41, 0.94);"class="fa fa-pencil-square-o"></i></a>'
+								+ '<a class='
+								+ "deleteQuestion"
+								+ ' href="#'
+
+								+ aQuestion.qId
+								+ '" actionToBeDone="delete" data-id="'
+								+ aQuestion.qId
+								+ '" style="float:right;" >'
+								+ '<i class="fa fa-trash-o" style="color:red"></i>'
+								+ '</a>' + '</div>' + '</div>' + '</div>' + '</div>')
 						$('#'+contianer).append(qHtml)
 
 						var qBody = ('<div class= "panel panel-body test-container" id="o'
@@ -153,7 +164,7 @@ function createQuestion() {
 jQuery(document)
 		.ready(
 				function($) {
-					
+					findAllOptionTypes();
 						
 						findAllQuestions();
 					
@@ -228,7 +239,14 @@ jQuery(document)
 						$('#o' + qId).toggle('fast')
 
 					})
-
+ $(Document).on('click','.deleteQuestion',function(){
+	 var qId  = $(this).attr('data-id')
+	 deleteQuestion(qId);
+ })
+  $(Document).on('click','.updateQuestion',function(){
+	 var qId  = $(this).attr('data-id')
+	 drawQuestionToUpdate(qId);
+ })
 				});
 
 function questionToJSON() {
@@ -252,14 +270,16 @@ function questionToJSON() {
 		}
 
 	})
-
+	var optionTpe=$('#oType option:selected').val();
 	return JSON.stringify({
-
-		"questionName" : $('#question').val(),
-		"questionType" : $('#qtype option:selected').val(),
-		"listOfAnswers" : listOfAnswers,
-		"listOfOptions" : listOfOptions
-
+	
+		"mainquestion":{
+		"name" : $('#question').val(),
+		"optionType" : optionTpe,
+		
+		},
+	"listOfAnswers" : listOfAnswers,
+	"listOfOptions" : listOfOptions
 	});
 
 }
@@ -285,4 +305,56 @@ function pagi(questions) {
 			// Page number is given as an optional parameter
 		}
 	});
+}
+function findAllOptionTypes() {
+
+	$.ajax({
+		type : 'GET',
+		url : "http://localhost:8085/annotationBased/admin/allOptionTypes",
+		dataType : "json",
+
+		success : renderOptionType,
+	});
+}
+
+function renderOptionType(optionTypes){
+	$.each(optionTypes,function(idx,optionType){
+		$('#oType').append('<option>'+optionType+'</option>')
+		
+		
+	})
+	
+	
+}
+function deleteQuestion(id) {
+
+	$.ajax({
+		type : 'DELETE',
+		url : "http://localhost:8085/annotationBased/admin/deleteQuestion/"
+				+ id,
+		dataType : "json",
+
+		success : function(result) {
+		},
+		complete : function() {
+			$('#allQuestionContianer > div').remove();
+			while (allQuestions.length > 0) {
+				allQuestions.pop();
+			}
+			findAllQuestions();
+		},
+		error : function(msg) {
+			alert("Error deleting !!!");
+		}
+	});
+
+}
+function drawQuestionToUpdate(id){
+	
+	var matches = $.grep(allQuestions, function(n, i) {
+
+		return (n.qId == id)
+	})
+	var  question = matches[0] 
+	$('#question').val(question.qName)
 }

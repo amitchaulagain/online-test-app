@@ -37,37 +37,7 @@ function renderSearchQuestion(data) {
 }
 
 
-function deleteQuestion(id) {
 
-	$.ajax({
-		type : 'DELETE',
-		url : "http://localhost:8085/annotationBased/admin/deleteQuestion/"
-				+ id,
-		dataType : "json",
-
-		success : function(result) {
-			$("#msg").html(
-					'<h5>' + "question- " + result.name + "deleted" + '</h5>')
-					.fadeIn(500).delay(500).fadeOut(500);
-			
-			 * $('#msg').append('<h4>'+"question"+result.name+"::::deleted"+'</h4>')
-			 * 
-			 * $("#msg h4").delay(100000).fadeOut('slow');
-			 
-		},
-		complete : function() {
-			$('tbody tr').remove();
-			while (aaData.length > 0) {
-				aaData.pop();
-			}
-			findAllQuestions();
-		},
-		error : function(msg) {
-			alert("Error deleting !!!");
-		}
-	});
-
-}
 
 
 

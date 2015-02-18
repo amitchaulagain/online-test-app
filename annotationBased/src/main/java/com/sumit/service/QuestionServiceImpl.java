@@ -15,7 +15,7 @@ import com.sumit.model.MainQuestion;
 import com.sumit.model.Options;
 import com.sumit.model.QuestionAnswer;
 import com.sumit.model.QuestionJSONDTO;
-import com.sumit.model.QuestionType;
+import com.sumit.model.OptionType;
 import com.sumit.model.TestDTO;
 import com.sumit.repository.AnsRepository;
 import com.sumit.repository.OptionsRepository;
@@ -67,10 +67,10 @@ public class QuestionServiceImpl implements QuestionService {
 	@Transactional
 	@Override
 	public void save_Question_Option_Answer(QuestionJSONDTO questionJSONDto) {
-		QuestionType type = checkQuestionType(questionJSONDto.getQuestionType());
+		OptionType type = checkQuestionType(questionJSONDto.getMainquestion().getOptionType().toString());
 		MainQuestion question = new MainQuestion();
-		question.setName(questionJSONDto.getQuestionName());
-		 question.setQuestionType(type);
+		question.setName(questionJSONDto.getMainquestion().getName());
+		 question.setOptionType(type);
 		MainQuestion savedQuestion = questionRipo.save(question);
 		int count = 0;
 		for (String value : questionJSONDto.getListOfOptions()) {
@@ -98,12 +98,12 @@ public class QuestionServiceImpl implements QuestionService {
 
 	}
 
-	private QuestionType checkQuestionType(String questionType) {
+	private OptionType checkQuestionType(String questionType) {
 		if(questionType==null || questionType.isEmpty()){
 			return null;
 		}
-		 QuestionType state;
-		 state = QuestionType.valueOf(questionType);
+		 OptionType state;
+		 state = OptionType.valueOf(questionType);
 		 return state;
 
 	}

@@ -56,7 +56,8 @@
 									<!-- <form role="form" method="post" action="#"> -->
 									<div class="form-group" id="choose-qType" style="margin: 0">
 										<label for="sel1">Question type</label> <select
-											name="questionType" class="form-control input-sm" id="qType">
+											name="questionType" class="form-control input-sm" id="oType">
+											
 
 										</select>
 									</div>
@@ -93,7 +94,7 @@
 															id="add-option">Add More</button>
 													</div>
 												</li>
-												<li class="list-group-item" style="margin: 0" id="RADIO"
+											<!-- 	<li class="list-group-item" style="margin: 0" id="RADIO"
 													class="roption-box">
 													<div class=" col-md-2">Option:1</div>
 													<div class=" col-md-8">
@@ -109,7 +110,7 @@
 														<button type="button" class="btn btn-default btn-sm"
 															id="add-option">Add More</button>
 													</div>
-												</li>
+												</li> -->
 											</ul>
 										</div>
 
@@ -131,32 +132,11 @@
 					</section>
 				</div>
 
-				<div class=" col-md-3 side-bar" style="margin-top: 50px">
-					<section class="links">
-						<h1 class="section-heading text-highlight">
-							<span class="line" style="color: #777">Quick Links</span>
-						</h1>
-						<div class="section-content">
-							<p>
-								<a href="#"><i class="fa fa-caret-right"></i>E-learning
-									Portal</a>
-							</p>
-							<p>
-								<a href="#"><i class="fa fa-caret-right"></i>Gallery</a>
-							</p>
-							<p>
-								<a href="#"><i class="fa fa-caret-right"></i>Job Vacancies</a>
-							</p>
-							<p>
-								<a href="#"><i class="fa fa-caret-right"></i>Contact</a>
-							</p>
-						</div>
-						<!--//section-content-->
-					</section>
-				</div>
+
 			</div>
 			<section>
-				<div class="row contianer-fluid " style="margin:20px 20px 20px 20px;">
+				<div class="row contianer-fluid "
+					style="margin: 20px 20px 20px 20px;">
 
 					<div class="col-md-12">
 						<div class="row" id="search-and-pageSize">

@@ -2,7 +2,7 @@ package com.sumit.model;
 
 
  
-public enum QuestionType   {
+public enum OptionType   {
  CHECKBOX,
  RADIO,
  TEXT

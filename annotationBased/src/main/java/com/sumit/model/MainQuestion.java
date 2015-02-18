@@ -32,7 +32,14 @@ public class MainQuestion implements Serializable {
 	@GeneratedValue
 	private int id;
 	private String name;
-	
+	OptionType optionType;
+	public OptionType getOptionType() {
+		return optionType;
+	}
+
+	public void setOptionType(OptionType optionType) {
+		this.optionType = optionType;
+	}
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "questionInTestquestion")
 	@Fetch(value = FetchMode.SELECT)
@@ -52,7 +59,7 @@ public class MainQuestion implements Serializable {
 	private List<Options> options = new ArrayList<Options>();
 	
 	
-	QuestionType questionType;
+
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "answerQuestion")
@@ -104,12 +111,6 @@ public class MainQuestion implements Serializable {
 		this.questiontests = questiontests;
 	}*/
 
-	public QuestionType getQuestionType() {
-		return questionType;
-	}
-
-	public void setQuestionType(QuestionType questionType) {
-		this.questionType = questionType;
-	}
+	
 	 
 }

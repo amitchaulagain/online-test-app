@@ -31,7 +31,7 @@ import com.sumit.model.MainQuestion;
 import com.sumit.model.Options;
 import com.sumit.model.QuestionAnswer;
 import com.sumit.model.QuestionJSONDTO;
-import com.sumit.model.QuestionType;
+import com.sumit.model.OptionType;
 import com.sumit.model.Sections;
 import com.sumit.model.TestDTO;
 import com.sumit.model.TestQuestions;
@@ -110,10 +110,10 @@ public class AdminController {
 
 	}
 
-	@RequestMapping(value = "/questionType", method = RequestMethod.GET)
-	public @ResponseBody QuestionType[] questionTypesInJSON() {
-		QuestionType[] allQuestionTypes = QuestionType.values();
-		return allQuestionTypes;
+	@RequestMapping(value = "/allOptionTypes", method = RequestMethod.GET)
+	public @ResponseBody OptionType[] questionTypesInJSON() {
+		OptionType[] allOptionType = OptionType.values();
+		return allOptionType;
 	}
 
 	@RequestMapping(value = "/saveQuestion", method = RequestMethod.POST)

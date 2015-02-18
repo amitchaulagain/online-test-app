@@ -7,6 +7,21 @@ public class QuestionJSONDTO {
 	private MainQuestion mainquestion;
 	private List<Options> options;
 	private List<QuestionAnswer> answers;
+	private String[] listOfAnswers;
+	private String[] listOfOptions;
+
+	public String[] getListOfAnswers() {
+		return listOfAnswers;
+	}
+	public void setListOfAnswers(String[] listOfAnswers) {
+		this.listOfAnswers = listOfAnswers;
+	}
+	public String[] getListOfOptions() {
+		return listOfOptions;
+	}
+	public void setListOfOptions(String[] listOfOptions) {
+		this.listOfOptions = listOfOptions;
+	}
 	public MainQuestion getMainquestion() {
 		return mainquestion;
 	}
