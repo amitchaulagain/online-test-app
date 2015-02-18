@@ -2,25 +2,35 @@
  * 
  */
 var allQuestions = [];
-function findAllQuestionsToAddOnTest() {
-	
+var contianer;
+function findAllQuestions(questionContianer,paginationContianer) {
+
 	$.ajax({
 		type : 'GET',
 		url : "http://localhost:8085/annotationBased/admin/allQuestions",
 		dataType : "json",
 
-		success : renderQuestionsforTest
+		success : renderQuestions,
 	});
 	return allQuestions;
 }
-function renderQuestionsforTest(questions) {
-	
+function renderQuestions(questions,questionContianer,paginationContianer) {
+
 	$.each(questions, function(idx, q) {
-		var options=[];
-		$.each(q.options, function(idx, o){
-			var option ={
-					id:o.Id,
-					name:o.name
+		var answers=[];
+		$.each(q.answers, function(idx, ans){
+			var answer = {
+					ansId : ans.id,
+					ansName:ans.options
+					
+			}
+			answers.push(answer)
+		})
+		var options = [];
+		$.each(q.options, function(idx, o) {
+			var option = {
+				id : o.Id,
+				name : o.name
 			}
 			options.push(option)
 		})
@@ -29,15 +39,28 @@ function renderQuestionsforTest(questions) {
 			qName : q.mainquestion.name,
 			qType : q.mainquestion.questionType,
 			qDate : q.mainquestion.createdDate,
-			qOptions:options
+			qOptions : options
 		}
 		allQuestions.push(oneQuestion);
-
+		
+		
+		
 	})
-
+loadAllQuestions(questionContianer,paginationContianer)
+}
+function loadAllQuestions() {
+	contianer = "allQuestionContianer";
+	var questions = allQuestions;
+		
+		
+		pagi(questions);
+	
+	var show = $("#show option:selected").text();
+	var index = $('#pagination').pagination('getCurrentPage');
+	drawQuestionList(show, index, questions,contianer);
 
 }
-function drawQuestionList(show, index, questions) {
+function drawQuestionList(show, index, questions,contianer) {
 	var count = 0;
 	var questionToDraw = questions;
 	var limitedQuestion;
@@ -48,111 +71,108 @@ function drawQuestionList(show, index, questions) {
 
 		initial = (index - 1) * show;
 		finale = index * show;
-		 limitedQuestion = questionToDraw.slice(initial, finale);
+		limitedQuestion = questionToDraw.slice(initial, finale);
 
 	}
 
 	else {
 		limitedQuestion = questionToDraw.slice(initial, finale);
 	}
-	alert(limitedQuestion.length)
 	$
 			.each(
 					limitedQuestion,
 					function(idx, aQuestion) {
 						count = count + 1;
 						var qHtml = ('<div class="panel panel-default">'
-								+ '<div class="panel-heading" role="tab" id="q'+aQuestion.qId+'" >'
+								+ '<div class="panel-heading" role="tab" id="q'
+								+ aQuestion.qId
+								+ '" >'
 								+ '<div class="row">'
 								+ '<div class="col-lg-1">'
 								+ count
 								+ '</div>'
-								+ '<div class="col-lg-10">'
+								+ '<div class="col-lg-9">'
 								+ '<h4 class="panel-title" >'
-								+ '<a data-toggle="collapse" class="question" data-parent="#accordion"href="#collapse" question-id="'+aQuestion.qId+'" aria-expanded="true"aria-controls="collapseOne">'
+								+ '<a data-toggle="collapse" class="question" data-parent="#accordion"href="#collapse" question-id="'
+								+ aQuestion.qId
+								+ '" aria-expanded="true"aria-controls="collapseOne">'
 								+ aQuestion.qName
 								+ ' </a>'
 								+ '</h4>'
 								+ '</div>'
-								+ '<div class="col-lg-1">'
+								+ '<div class="col-lg-2">'
 								+ '<a id="'
 								+ aQuestion.qId
 								+ '" class="addtotest">'
 								+ '<i class="fa fa-plus-circle" style="color:rgb(34, 241, 34)"></i>'
 								+ ' </a>' + '</div>' + '</div>' + '</div>' + '</div>')
-						$('#allQuestionContianer').append(qHtml)
-						
-						
-						
+						$('#'+contianer).append(qHtml)
+
 						var qBody = ('<div class= "panel panel-body test-container" id="o'
-								+ aQuestion.qId + '" >'
-								 + '<ol></ol></div>')
-								 $('#q'+aQuestion.qId).after(qBody)
-								 $('#o'+aQuestion.qId+' > li').remove();
-						$.each(aQuestion.aOptions,function(idx,option){
-							//alert(option.oName)
-							$('.test-container#o'+aQuestion.qId+' ol').append('<li>'+option.oName+'</li>')
-							
+								+ aQuestion.qId + '" ><div class="row"><div class="clo-md-5">' + '<ol></ol></div>'+'<div class="col-md-7"></div></div></div>')
+						$('#q' + aQuestion.qId).after(qBody)
+						$('#o' + aQuestion.qId + ' > li').remove();
+						$.each(aQuestion.qOptions, function(idx, option) {
+							// alert(option.oName)
+							$('.test-container#o' + aQuestion.qId + ' ol')
+									.append('<li>' + option.name + '</li>')
+
 						})
-						 $('#o'+aQuestion.qId).hide();
-						while(options.length>0){
-							options.pop();
-							
-						}
+						$('#o' + aQuestion.qId).hide();
+						
 					})
 
 }
 
 function createQuestion() {
- var count=0;
-    $.ajax({      
-        type: 'POST',
-        url: "http://localhost:8085/annotationBased/admin/saveQuestion",
-        dataType: "json",
-        contentType:"application/json",
-        data: questionToJSON(),        
-        success:function(){
-        	 $('tbody tr').remove();
-        		var index= $('#pagination').pagination('getCurrentPage');
-        		var show = $("#show option:selected").text();
-        		while(aaData.length>0){
-        		aaData.pop();
-        		}
-        		findAllQuestions()
-        	
-        },
-        error:function(msg){
-        	alert("error while saving question");
-        }
-    });
-   
-   
-	
-	
+	var count = 0;
+	$.ajax({
+		type : 'POST',
+		url : "http://localhost:8085/annotationBased/admin/saveQuestion",
+		dataType : "json",
+		contentType : "application/json",
+		data : questionToJSON(),
+		success : function() {
+			$('tbody tr').remove();
+			var index = $('#pagination').pagination('getCurrentPage');
+			var show = $("#show option:selected").text();
+			while (aaData.length > 0) {
+				aaData.pop();
+			}
+			findAllQuestions()
+
+		},
+		error : function(msg) {
+			alert("error while saving question");
+		},
+		
+	});
+
 }
 
-
-
-
-	jQuery(document).ready(function($) {
-		$('.side-nav').hide()
-		 loadAllQuestions();  
-		$("#qType").on("change",function(){
-			
-			var qType=$('#qType option:selected').val();
-			$('#options .row').hide();
-			$("#"+qType).show();
-				
-		})
-		
-		
-		
-		
+jQuery(document)
+		.ready(
+				function($) {
 					
+						
+						findAllQuestions();
+					
+					$('.side-nav').hide()
+					
+					$("#qType").on("change", function() {
+
+						var qType = $('#qType option:selected').val();
+						$('#options .row').hide();
+						$("#" + qType).show();
+
+					})
+
 					$('#show-allquestion-table').click(function() {
 						$('#question-table').show();
 					})
-					$('#add-option').click(function() {
+					$('#add-option')
+							.click(
+									function() {
 										var n = $('.added-option').length + 2;
 										var box_to_be_added = $('<li class="list-group-item added-option">'
 												+ '<div class=" col-md-2">'
@@ -179,8 +199,8 @@ function createQuestion() {
 											return false;
 										}
 										// box_to_be_added.hide();
-										$('#option-box .list-group-item:last').after(
-												box_to_be_added);
+										$('#option-box .list-group-item:last')
+												.after(box_to_be_added);
 										box_to_be_added.fadeIn('slow');
 										return false;
 
@@ -200,91 +220,69 @@ function createQuestion() {
 								// });
 								return false;
 							});
-					/*able----------------------------------*/
-				
+					/* able---------------------------------- */
 
+					$(Document).on('click', '.question', function() {
+						var qId = $(this).attr('question-id');
 
-					   $(Document).on('click','.question',function(){
-						  var qId= $(this).attr('question-id');
-						 
-						  $('#o'+qId).toggle('fast')
-						 
-						   
-					   })
-					 
+						$('#o' + qId).toggle('fast')
+
+					})
+
 				});
-	
-	
-	function questionToJSON() {
-		
-		var listOfAnswers=[];
-		var listOfOptions=[];
-		var options=$('.txt').toArray()
+
+function questionToJSON() {
+
+	var listOfAnswers = [];
+	var listOfOptions = [];
+	var options = $('.txt').toArray()
 	var Answers = $('.rdo').toArray()
-	
-	$.each(options, function(idx,option){
-	 
-		
-			listOfOptions.push(option.value)
-			
-		
-		
+
+	$.each(options, function(idx, option) {
+
+		listOfOptions.push(option.value)
+
 	})
-	
-	$.each(Answers, function(idx,answer){
-		
-		if(answer.checked==true){
-			listOfAnswers.push(idx+1)
-			
+
+	$.each(Answers, function(idx, answer) {
+
+		if (answer.checked == true) {
+			listOfAnswers.push(idx + 1)
+
 		}
-		
+
 	})
-	
-	
+
 	return JSON.stringify({
-		
-        "questionName": $('#question').val(),
-        "questionType": $('#qtype option:selected').val(),
-        "listOfAnswers": listOfAnswers,
-        "listOfOptions": listOfOptions
 
-    });
-	
-		
-		
-	}
-	
-	
-	
-	function loadAllQuestions(){
-		
-		var questions = findAllQuestionsToAddOnTest();
-		pagi(questions);
-		var show = $("#show option:selected").text();
-		var index = $('#pagination').pagination('getCurrentPage');
-		drawQuestionList(show, index, questions);
-		
-	}
-		
-	function pagi(questions) {
-		alert("ewewe")
-		var show = $("#show option:selected").text();
-		var totalData =questions.length ;
-		
-			$('#pagination').pagination({
-				items : totalData,
-				itemsOnPage : show,
-				cssStyle : 'light-theme',
-					onPageClick: function(pageNumber, event) {
-						$('tbody tr').remove();
-					
-						var show = $("#show option:selected").text();
-						drawQuestionList(show, pageNumber,questions);
-						
-						// Callback triggered when a page is clicked
-						// Page number is given as an optional parameter
-					}	
-		});
-	}
+		"questionName" : $('#question').val(),
+		"questionType" : $('#qtype option:selected').val(),
+		"listOfAnswers" : listOfAnswers,
+		"listOfOptions" : listOfOptions
+
+	});
+
+}
 
 
+
+function pagi(questions) {
+
+	var show = $("#show option:selected").text();
+	var totalData = questions.length;
+
+	$('#pagination').pagination({
+		items : totalData,
+		itemsOnPage : show,
+		cssStyle : 'light-theme',
+		onPageClick : function(pageNumber, event) {
+			var  contianer="allQuestionContianer";
+			$('#'+contianer ).children().remove();
+			var show = $("#show option:selected").text();
+			drawQuestionList(show, pageNumber, questions, contianer);
+
+			// Callback triggered when a page is clicked
+			// Page number is given as an optional parameter
+		}
+	});
+}

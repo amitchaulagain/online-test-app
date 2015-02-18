@@ -33,9 +33,9 @@ function renderAllTests(tests) {
 
 	})
 	aaTest.reverse();
-	pagi()
-	var show = $("#show option:selected").text();
-	var index = $('#pagination').pagination('getCurrentPage');
+	testPagi()
+	var show = $("#showtestperpage option:selected").text();
+	var index = $('#testPagination').pagination('getCurrentPage');
 
 	showTest(show, index, aaTest)
 }
@@ -49,8 +49,6 @@ $(document).ready(function() {
 	// findAllQuestionsToAddOnTest();
 	$('#createDOption').hide();
 	$('#questions').css('display', 'none');
-	allQuestions = findAllQuestionsToAddOnTest();
-
 	$(document).on("click", "#createTest", function(e) {
 		// TODO
 		var step = $(this).attr("data-step");
@@ -92,13 +90,13 @@ $(document).ready(function() {
 		
 		
 	})
-	$('#show').on('change', function() {
+	$('#showtestperpage').on('change', function() {
 
-		var show = $('#show option:selected').val();
-		var index = $('#pagination').pagination('getCurrentPage');
+		var show = $('#showtestperpage option:selected').val();
+		var index = $('#testPagination').pagination('getCurrentPage');
 
 		showTest(show, index, aaTest);
-		pagi();
+		testPagi();
 	});
 	$(document).on("click", ".testTypes", function(e) {
 		 $("#testDate").datepicker();
@@ -214,17 +212,17 @@ function clearTestFormValues() {
 }
 // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::: PAGINATION
 // FUNCTION
-function pagi() {
-	var show = $("#show option:selected").text();
+function testPagi() {
+	var show = $("#showtestperpage option:selected").text();
 	var totalData = aaTest.length;
 	// $(function() {
-	$('#pagination').pagination({
+	$('#testPagination').pagination({
 		items : totalData,
 		itemsOnPage : show,
 		cssStyle : 'light-theme',
 		onPageClick : function(pageNumber, event) {
-			var show = $("#show option:selected").text();
-			var index = $('#pagination').pagination('getCurrentPage');
+			var show = $("#showtestperpage option:selected").text();
+			var index = $('#testPagination').pagination('getCurrentPage');
 			showTest(show, index, aaTest);
 			// Callback triggered when a page is clicked
 			// Page number is given as an optional parameter
@@ -270,11 +268,9 @@ function showTest(show, index, aTest) {
 												+ test.tDuration
 												+ '</td><td width="20px">'
 												// +test.tType+'</td><td>'
-
 												+ '<a class='
 												+ "alert"
 												+ ' href="#'
-
 												+ test.tId
 												+ '" actionToBeDone="view" data-id="'
 												+ test.tId
@@ -296,13 +292,6 @@ function showTest(show, index, aTest) {
 												+ '" >'
 												+ '<i class="fa fa-trash-o" style="color:red"></i>'
 												+ '</a>'
-												+ '<a class='
-												+ "alert"
-												+ ' href="http://localhost:8085/annotationBased/admin/viewTest/'
-
-												+ test.tId
-												+ '" actionToBeDone="viewAllQ">'
-												+ 'View All Q in test</a>'
 												+ '</td></tr>')
 					})
 
@@ -364,7 +353,7 @@ function showViewByTestType(data) {
 	}
 }
 function drawSetTab(setName) {
-
+	$('.active').removeClass('active');
 	var tab = '<li role="presentation" id="tab' + setName
 			+ '"class="active"><a href="#' + setName
 			+ '"aria-controls="home" role="tab" data-toggle="tab">' + setName
@@ -372,17 +361,17 @@ function drawSetTab(setName) {
 			+ '" class="fa fa-times"></i>' + '</a></li>';
 	$('#myTab').append(tab);
 
-	$('.active').removeClass('active');
+	
 	var tabPanel = '<div  role="tabpanel" class="tab-pane fade in active " id="'+setName+'" >'/*
 			
 			 */
 			+ '</div>';
 	$('.tab-content').append(tabPanel);
-	$('.tab-pane').append('<ul id="tab-option" class="nav navbar-nav"></ul>');
-	$('#tab-option').after(
-	'<section id=selectedQuestionList ></section>')
+	$('#'+setName).append('<ul id="tab-option'+setName+'" class="tabnav nav navbar-nav"></ul>');
+	$('#tab-option'+setName).after(
+	'<section class="selectedQuestionList" id="selectedQuestionList" ></section>')
 
-	$('.tab-pane #tab-option')
+	$('.tab-pane #tab-option'+setName)
 			.append(
 					'<li><a id=viewAllQuestionInTab>add Question from question bank<i class="icon icon-paste"></i></a>'
 							+ '</li>'
@@ -392,16 +381,16 @@ function drawSetTab(setName) {
 }
 
 function questionPagi() {
-
+var questions = allQuestions
 	$('#questionPagination').pagination({
-		items : allQuestions.length,
+		items : questions.length,
 		itemsOnPage : $("#showQuestion option:selected").text(),
 		cssStyle : 'light-theme',
 		onPageClick : function(pageNumber, event) {
 			$('#allQuestionContianer > div').remove();
 			var show = $("#showQuestion option:selected").text();
 			var index = $('#questionPagination').pagination('getCurrentPage');
-			drawQuestionList(show, index, allQuestions)
+			drawQuestionPanel(show, index, questions)
 
 		}
 	});
@@ -412,17 +401,14 @@ function showCreateSetPanel() {
 	$('#createTestForm').hide();
 	$('tabPanelPage').show();
 	$('#createSetPanel').load('createSetTab');
-
 }
 
 function showQuestionsToSelectForTest() {
 	$('.row #questions').css('display', 'block');
-
 	questionPagi();
 	var totalData = allQuestions;
-
 	var show = $("#showQuestion option:selected").text();
 	var index = $('#questionPagination').pagination('getCurrentPage');
-	drawQuestionList(show, index, totalData)
+	drawQuestionPanel(show, index, totalData)
 
 }

@@ -7,7 +7,7 @@ label.control-label span {
 }
 
 .body {
-	margin: 0px -18px 0px 0px;
+	margin: 15px 15px 0px 15px;
 	"
 }
 
@@ -355,7 +355,7 @@ a #cancle {
 	border-color: #DDD;
 } */
 
-#tab-option {
+.tabnav {
 	width: 100%;
 	float: right;
 	background-color:#dbd6d6;
@@ -365,12 +365,12 @@ a #cancle {
 /* 	margin: -5px 1px 3px 0px; */
 }
 
-#tab-option li {
+.tabnav li {
 	
 	height:24px;
 }
 
-#tab-option  li a {
+.tabnav  li a {
 	
 	height: 24px;
 	padding-top: 2px;

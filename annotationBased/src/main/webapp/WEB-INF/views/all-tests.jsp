@@ -282,7 +282,7 @@
 						<div class="col-lg-2">
 							<div class="form-group">
 								<label for="sel1">Show:</label> <select
-									class="form-control input-sm" id="show" style="height: 35px"
+									class="form-control input-sm" id="showtestperpage" style="height: 35px"
 									style="margin: 0">
 									<option>3</option>
 									<option>4</option>
@@ -316,7 +316,7 @@
 
 					<div class="row">
 						<div class="col-md-5">
-							<div id="pagination"></div>
+							<div id="testPagination"></div>
 						</div>
 					</div>
 

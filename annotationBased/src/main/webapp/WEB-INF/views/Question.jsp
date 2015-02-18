@@ -17,13 +17,13 @@
 
 		<script type="text/javascript"
 			src="<c:url value="/resources/js/library/bootstrap.min.js"/>"></script>
-<script type="text/javascript"
-				src="<c:url value="/resources/js/library/jquery.simplePagination.js"/>"></script>
-			<script type="text/javascript"
-				src="<c:url value="/resources/js/custom/question.js"/>"></script>
-			<script type="text/javascript"
-				src="<c:url value="/resources/js/custom/animate.js"/>"></script>
-			
+		<script type="text/javascript"
+			src="<c:url value="/resources/js/library/jquery.simplePagination.js"/>"></script>
+		<script type="text/javascript"
+			src="<c:url value="/resources/js/custom/question.js"/>"></script>
+		<script type="text/javascript"
+			src="<c:url value="/resources/js/custom/animate.js"/>"></script>
+
 
 		<!-- DATA TABES SCRIPT -->
 
@@ -93,7 +93,8 @@
 															id="add-option">Add More</button>
 													</div>
 												</li>
-												<li class="list-group-item" style="margin: 0"id="RADIO" class="roption-box">
+												<li class="list-group-item" style="margin: 0" id="RADIO"
+													class="roption-box">
 													<div class=" col-md-2">Option:1</div>
 													<div class=" col-md-8">
 														<div class="input-group">
@@ -154,65 +155,50 @@
 					</section>
 				</div>
 			</div>
+			<section>
+				<div class="row contianer-fluid " style="margin:20px 20px 20px 20px;">
 
-			<div class="row contianer-fluid  ">
+					<div class="col-md-12">
+						<div class="row" id="search-and-pageSize">
 
-				<div class="col-md-11">
-					<div class="row" id="search-and-pageSize">
-						<div class=" col-md-2">
-							<div class="form-group">
-								<label for="sel1">Show:</label> <select
-									class="form-control input-sm" id="show" style="height: 35px"
-									style="margin: 0">
-									<option>5</option>
-									<option>4</option>
-									<option>8</option>
-									<option>20</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="row" id="msg"></div>
-						</div>
-						<div class=" col-md-6" align="right">
-							<div class="form-group">
-								<div class="input-group" style="margin-top: 25px">
-									<input type="text" class="form-control" placeholder="Search"
-										id="search" name="q">
-									<div class="input-group-btn">
-										<a href="#" class="btn btn-primary " style="height: 34;"
-											onclick="searchQuestions()"><i class="fa fa-search"></i>
-										</a>
-
-									</div>
+							<div class=" col-md-2">
+								<div class="form-group">
+									<label for="sel1">Show:</label> <select
+										class="form-control input-sm" id="show" style="height: 35px"
+										style="margin: 0">
+										<option>5</option>
+										<option>4</option>
+										<option>8</option>
+										<option>20</option>
+									</select>
 								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="row" id="msg"></div>
+							</div>
+							<div class=" col-md-6" align="right">
+								<div class="form-group">
+									<div class="input-group" style="margin-top: 25px">
+										<input type="text" class="form-control" placeholder="Search"
+											id="search" name="q">
+										<div class="input-group-btn">
+											<a href="#" class="btn btn-primary " style="height: 34;"
+												onclick="searchQuestions()"><i class="fa fa-search"></i>
+											</a>
 
+										</div>
+									</div>
+
+								</div>
 							</div>
 						</div>
+						<div class="row" id="allQuestionContianer"></div>
 
-						<div id="allQuestionContianer">
-						
-						
-						</div>
+						<div class="row" id="pagination"></div>
 
-						<div id="pagination"></div>
-					</div>
-					<div class="col-md-4">
-						<div class="row" style="margin-left: 20px;">
-							<div class="row" id="clickquestion" style="padding-top: 100px">
-
-							</div>
-						</div>
-						<div></div>
-					</div>
-
-					<div class="row" id="ques"></div>
-					<!--col-md-4  -->
-					<div class="col-md-4" id="ques">
-						<ul id="showquestion" style="color: yellow"></ul>
 					</div>
 				</div>
-			</div>
+			</section>
 	</tiles:putAttribute>
 </tiles:insertDefinition>
 
