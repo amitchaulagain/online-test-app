@@ -2,6 +2,7 @@ package com.sumit.service;
 
 import java.util.List;
 
+import com.sumit.dto.ExaminationAssignDTO;
 import com.sumit.dto.SectionDTO;
 import com.sumit.dto.TestJsonDTO;
 import com.sumit.model.MainQuestion;
@@ -43,11 +44,10 @@ public interface TestService {
 
 	public List<Sections> findAllSectionsByTestId(int testId);
 
-	public void createOrEditGroup(SectionDTO sectionDTO);
+	public void deleteGroup(int groupId);
 
-	public void findStudentsByGroupId(SectionDTO sectionDTO);
 
-	public void deleteGroup(SectionDTO sectionDTO);
+	void findStudentsByGroupId(int groupId);
 
 
 }

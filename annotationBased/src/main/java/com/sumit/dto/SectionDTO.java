@@ -2,6 +2,8 @@ package com.sumit.dto;
 
 public class SectionDTO {
 	int sectionId;
+	Integer testId;
+	String sectionName;
 
 	public int getSectionId() {
 		return sectionId;
@@ -10,9 +12,6 @@ public class SectionDTO {
 	public void setSectionId(int sectionId) {
 		this.sectionId = sectionId;
 	}
-
-	Integer testId;
-	String sectionName;
 
 	public String getSectionName() {
 		return sectionName;

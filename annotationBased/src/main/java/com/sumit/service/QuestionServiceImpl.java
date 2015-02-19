@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sumit.api.IQuestionApi;
 import com.sumit.convert.ConvertUtils;
+import com.sumit.dto.ExaminationAssignDTO;
+import com.sumit.model.Category;
+import com.sumit.model.Group;
 import com.sumit.model.MainQuestion;
 import com.sumit.model.Options;
 import com.sumit.model.QuestionAnswer;
@@ -18,6 +21,7 @@ import com.sumit.model.QuestionJSONDTO;
 import com.sumit.model.OptionType;
 import com.sumit.model.TestDTO;
 import com.sumit.repository.AnsRepository;
+import com.sumit.repository.CategoryRipo;
 import com.sumit.repository.OptionsRepository;
 import com.sumit.repository.QuestionRepository;
 import com.sumit.repository.TestRipository;
@@ -40,6 +44,9 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Resource
 	AnsRepository ansRipo;
+
+	@Resource
+	CategoryRipo categoryRipo;
 
 	@Override
 	public List<MainQuestion> getAllQuestion() {
@@ -67,11 +74,12 @@ public class QuestionServiceImpl implements QuestionService {
 	@Transactional
 	@Override
 	public void save_Question_Option_Answer(QuestionJSONDTO questionJSONDto) {
- 
-		OptionType type = checkQuestionType(questionJSONDto.getMainquestion().getOptionType().toString());
+
+		OptionType type = checkQuestionType(questionJSONDto.getMainquestion()
+				.getOptionType().toString());
 		MainQuestion question = new MainQuestion();
 		question.setName(questionJSONDto.getMainquestion().getName());
-		 question.setOptionType(type);
+		question.setOptionType(type);
 		MainQuestion savedQuestion = questionRipo.save(question);
 		int count = 0;
 		for (String value : questionJSONDto.getListOfOptions()) {
@@ -100,12 +108,12 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	private OptionType checkQuestionType(String questionType) {
-		if(questionType==null || questionType.isEmpty()){
+		if (questionType == null || questionType.isEmpty()) {
 			return null;
 		}
-		 OptionType state;
-		 state = OptionType.valueOf(questionType);
-		 return state;
+		OptionType state;
+		state = OptionType.valueOf(questionType);
+		return state;
 
 	}
 
@@ -113,16 +121,35 @@ public class QuestionServiceImpl implements QuestionService {
 	public Page<MainQuestion> getDeploymentLogs(Integer pageNumber) {
 		return questionApi.getDeploymentLog(pageNumber);
 	}
+
 	@Override
 	public List<MainQuestion> findInQuestions(String parameter) {
-		
-		
+
 		return questionApi.findInQuestion(parameter);
 	}
 
 	@Override
 	public List<TestDTO> getAllTests() {
 		return ConvertUtils.convertToTestDTOs(testRipo.findAll());
+	}
+
+	@Override
+	public void deleteCategory(int categoryId) {
+		Category category= categoryRipo.findOne(categoryId);
+		categoryRipo.delete(category);
+	}
+
+	@Override
+	public void createOrEditCategory(QuestionJSONDTO dto) {
+		Category category = new Category();
+		if (dto.getCategory().getId() != 0) {
+			category = categoryRipo.findOne(dto.getCategory().getId());
+			category.setName(dto.getCategory().getName());
+
+		} else {
+			category.setName(dto.getCategory().getName());
+		}
+		categoryRipo.save(category);
 	}
 
 }

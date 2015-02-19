@@ -23,15 +23,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sumit.dto.QuestionsInTestJSON;
+import com.sumit.dto.ExaminationAssignDTO;
 import com.sumit.dto.SectionDTO;
 import com.sumit.dto.TestJsonDTO;
 import com.sumit.model.DynamicOption;
 import com.sumit.model.MainQuestion;
+import com.sumit.model.OptionType;
 import com.sumit.model.Options;
 import com.sumit.model.QuestionAnswer;
 import com.sumit.model.QuestionJSONDTO;
-import com.sumit.model.OptionType;
 import com.sumit.model.Sections;
 import com.sumit.model.TestDTO;
 import com.sumit.model.TestQuestions;
@@ -44,6 +44,7 @@ import com.sumit.repository.QuestionRepository;
 import com.sumit.repository.TestQuestionRepository;
 import com.sumit.repository.TestRipository;
 import com.sumit.service.AnsService;
+import com.sumit.service.ExaminationService;
 import com.sumit.service.OptionService;
 import com.sumit.service.QuestionService;
 import com.sumit.service.TestService;
@@ -74,7 +75,8 @@ public class AdminController {
 	OptionService optionService;
 	@Autowired
 	AnsService ansService;
-
+	@Autowired
+	ExaminationService examinationService;
 	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
 	public @ResponseBody String userInfo(Principal principal,
 			HttpServletResponse response) {
@@ -249,24 +251,6 @@ public class AdminController {
 		return val;
 	}
 
-//	@RequestMapping(value = "/viewTest/{id}", method = RequestMethod.GET)
-//	public @ResponseBody QuestionsInTestJSON getTestToUpdate(
-//			@PathVariable int id) {
-//		QuestionsInTestJSON dto = new QuestionsInTestJSON();
-//		TestSet test = testService.findTestbyTheirId(id);
-//
-//		List<TestQuestions> testQuestions = tquestionRipo.searchByTestId(test
-//				.getId());
-//		List<MainQuestion> questions = new ArrayList<MainQuestion>();
-//		for (TestQuestions tq : testQuestions) {
-//			questions.add(tq.getQuestionInTestquestion());
-//
-//		}
-//		dto.setTestSet(test);
-//		dto.setQuestions(questions);
-//
-//		return dto;
-//	}
 
 	@RequestMapping(value = "/updateTest/{tId}/{qId}", method = RequestMethod.PUT)
 	@ResponseBody
@@ -435,21 +419,6 @@ public class AdminController {
 
 	}
 
-//	@RequestMapping(value = "/viewTests", method = RequestMethod.GET)
-//	public String getAllTestsView() {
-//
-//		return "all-tests";
-//
-//	}
-
-//	@RequestMapping(value = "/viewTest/{id}", method = RequestMethod.GET)
-//	@ResponseBody
-//	public TestDTO viewTest(@PathVariable int id) {
-//		TestDTO dto = testService.findTestbyId(id);
-//
-//		return dto;
-//
-//	}
 
 	// This request mapping is just to load the test-questions.jsp through
 	// jquery done in allTests.js file
@@ -526,38 +495,38 @@ public class AdminController {
 	
 	@RequestMapping(value = "/saveGroup", method = RequestMethod.POST)
 	@ResponseBody
-	public String saveGroup(@RequestBody SectionDTO sectionDTO)
+	public String saveGroup(@RequestBody ExaminationAssignDTO dto)
 			throws JsonProcessingException {
-		testService.createOrEditGroup(sectionDTO);
+		examinationService.createOrEditGroup(dto);
 		ObjectMapper mapper = new ObjectMapper();
 		String val = mapper.writeValueAsString("Group created");
 		return val;
 	}
 	
-	@RequestMapping(value = "/deleteGroup", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteGroup/{groupId}", method = RequestMethod.POST)
 	@ResponseBody
-	public String deleteGroup(@RequestBody SectionDTO sectionDTO)
+	public String deleteGroup(@PathVariable int groupId)
 			throws JsonProcessingException {
-		testService.deleteGroup(sectionDTO);
+		examinationService.deleteGroup(groupId);
 		ObjectMapper mapper = new ObjectMapper();
 		String val = mapper.writeValueAsString("Group deleted");
 		return val;
 	}
 	
-	@RequestMapping(value = "/viewGroupStudents", method = RequestMethod.POST)
+	@RequestMapping(value = "/viewGroupStudents/{groupId}", method = RequestMethod.POST)
 	@ResponseBody
-	public String viewGroupStudents(@RequestBody SectionDTO sectionDTO)
+	public String viewGroupStudents(@PathVariable int groupId)
 			throws JsonProcessingException {
-		testService.findStudentsByGroupId(sectionDTO);
+		testService.findStudentsByGroupId(groupId);
 		ObjectMapper mapper = new ObjectMapper();
 		String val = mapper.writeValueAsString("Created");
 		return val;
 	}
 	@RequestMapping(value = "/saveExam", method = RequestMethod.POST)
 	@ResponseBody
-	public String saveExam(@RequestBody SectionDTO sectionDTO)
+	public String saveExam(@RequestBody ExaminationAssignDTO dto)
 			throws JsonProcessingException {
-		testService.createOrEditGroup(sectionDTO);
+		examinationService.createOrEditExam(dto);
 		ObjectMapper mapper = new ObjectMapper();
 		String val = mapper.writeValueAsString("Exam created");
 		return val;
@@ -567,7 +536,7 @@ public class AdminController {
 	public String deleteExam(@PathVariable Integer examId)
 			throws JsonProcessingException {
 		
-		testService.delete(examId);
+		examinationService.deleteExam(examId);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String val = mapper.writeValueAsString("Exam deleted");
@@ -595,4 +564,24 @@ public class AdminController {
 
 		return "listofquestion";
 	}
+	@RequestMapping(value = "/saveCategory", method = RequestMethod.POST)
+	@ResponseBody
+	public String saveCategory(@RequestBody QuestionJSONDTO dto)
+			throws JsonProcessingException {
+		questionService.createOrEditCategory(dto);
+		ObjectMapper mapper = new ObjectMapper();
+		String val = mapper.writeValueAsString("Category of question created");
+		return val;
+	}
+	
+	@RequestMapping(value = "/deleteCategory/{categoryId}", method = RequestMethod.POST)
+	@ResponseBody
+	public String deleteCategory(@PathVariable int categoryId)
+			throws JsonProcessingException {
+		questionService.deleteCategory(categoryId);
+		ObjectMapper mapper = new ObjectMapper();
+		String val = mapper.writeValueAsString("Category of question deleted");
+		return val;
+	}
+	
 }

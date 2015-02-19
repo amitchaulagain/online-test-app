@@ -15,6 +15,7 @@ import com.sumit.api.ITestApi;
 import com.sumit.api.QuestionApi;
 import com.sumit.api.TestApi;
 import com.sumit.convert.ConvertUtils;
+import com.sumit.dto.ExaminationAssignDTO;
 import com.sumit.dto.SectionDTO;
 import com.sumit.dto.TestJsonDTO;
 import com.sumit.model.MainQuestion;
@@ -272,20 +273,15 @@ public class TestServiceImpl implements TestService {
 		return null;
 	}
 
+
 	@Override
-	public void createOrEditGroup(SectionDTO sectionDTO) {
-		// TODO Auto-generated method stub
+	public void findStudentsByGroupId(int  groupId) {
+		 
 		
 	}
 
 	@Override
-	public void findStudentsByGroupId(SectionDTO sectionDTO) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteGroup(SectionDTO sectionDTO) {
+	public void deleteGroup(int groupId) {
 		// TODO Auto-generated method stub
 		
 	}
