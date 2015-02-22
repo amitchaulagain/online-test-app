@@ -1,5 +1,6 @@
 package com.sumit.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sumit.api.IUserApi;
+import com.sumit.convert.ConvertUtils;
+import com.sumit.model.Role;
 //import com.sumit.api.UserInfoApi;
 import com.sumit.model.User;
 import com.sumit.model.UserDTO;
 import com.sumit.model.UserInfo;
+import com.sumit.model.UserSupportDTO;
 //import com.sumit.model.UserInfo;
 import com.sumit.repository.UserRepository;
 
@@ -78,5 +82,26 @@ public class UserServiceImpl implements UserService {
 			user.setEnabled(true);
 			userRepository.save(user);
 		}
+	}
+
+	@Override
+	public void createStudent(UserDTO userDTO) {
+		 userApi.createNewStudent(userDTO);
+		 
+		
+	}
+
+	@Override
+	public List<UserDTO> viewAllStudents() {
+		 List<Role> rolestudents=userApi.findAllStudents();
+		 List<UserSupportDTO> usersWithGroup=new ArrayList<UserSupportDTO>();
+		 for (Role role : rolestudents) {
+			 UserSupportDTO userSupportDTO= new UserSupportDTO();
+			 userSupportDTO.setUser(role.getUser());
+			 userSupportDTO.setGroups(userApi.findAllGroupsThatAParticularStudentIsAssociated(role.getUser().getId()));
+			 usersWithGroup.add(userSupportDTO);
+			
+		}
+		return ConvertUtils.convertToUserDTOs(usersWithGroup);
 	}
 }

@@ -11,12 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sumit.convert.ConvertUtils;
 import com.sumit.model.Authorities;
+import com.sumit.model.Group;
 import com.sumit.model.Role;
 import com.sumit.model.User;
 import com.sumit.model.UserDTO;
 import com.sumit.model.UserInfo;
 import com.sumit.model.UserVerification;
 import com.sumit.repository.RoleRepository;
+import com.sumit.repository.StudentGroupRepository;
 import com.sumit.repository.UserInfoRepository;
 import com.sumit.repository.UserRepository;
 import com.sumit.repository.UserVerificationRepository;
@@ -31,6 +33,8 @@ public class UserApi implements IUserApi {
 	UserInfoRepository userInfoRepository;
 	@Resource
 	UserVerificationRepository userVerificationRepository;
+	@Resource
+	StudentGroupRepository studentGroupRepository;
 
 	@Override
 	public List<User> findAllUser() {
@@ -89,7 +93,7 @@ public class UserApi implements IUserApi {
 		userInfo.setEmail(userDTO.getEmail());
 		userInfo.setRegisterDate(new Date());
 		userInfo.setDob(new Date());
-		userInfo.setGender(userDTO.getGender());
+		userInfo.setGender(userDTO.isMale());
 		userInfo.setUser(savedUser);
 		UserInfo savedUserInfo=userInfoRepository.save(userInfo);
 		return ConvertUtils.convertToUserDTO(user,savedRoles,savedUserInfo,savedUv);
@@ -105,6 +109,48 @@ public class UserApi implements IUserApi {
 		
 		User user = userVerificationRepository.findUserByVerificationTokenTest(verificationToken);
 		return user;
+	}
+
+	@Override
+	public void createNewStudent(UserDTO userDTO) {
+		User user = new User();
+		user.setEnabled(false);
+		user.setUsername(userDTO.getEmail());
+		user.setPassword(userDTO.getFirstName()+userDTO.getLastName()+'@'+123);
+		user.setEnabled(true);
+
+		List<Role> userRoles = new ArrayList<Role>();
+		Role role = new Role();
+		role.setRole(Authorities.ROLE_USER.toString());
+		userRoles.add(role);
+		role.setRole(Authorities.ROLE_STUDENT.toString());
+		userRoles.add(role);
+		User savedUser = userRepository.save(user);
+		role.setUser(savedUser);
+		 roleRepo.save(userRoles);
+
+		UserInfo userInfo = new UserInfo();
+		userInfo.setFirstName(userDTO.getFirstName());
+		userInfo.setLastName(userDTO.getLastName());
+		userInfo.setEmail(userDTO.getEmail());
+		userInfo.setRegisterDate(new Date());
+		userInfo.setDob(new Date());
+		userInfo.setGender(userDTO.isMale());
+		userInfo.setUser(savedUser);
+		userInfoRepository.save(userInfo); 
+		
+	}
+
+	@Override
+	public List<Role> findAllStudents() {
+		
+		return  userRepository.findAllStudents();
+	}
+
+	@Override
+	public List<Group> findAllGroupsThatAParticularStudentIsAssociated(int id) {
+		List<Group> groups=studentGroupRepository.findGroupsByStudentId(id);
+		return groups;
 	}
 
 }

@@ -12,6 +12,19 @@ public class UserDTO {
 	private String address;
 	private String country;
 	private String dateOfBirth;
+	private List<Group> associatedGroups;
+
+	public List<Group> getAssociatedGroups() {
+		return associatedGroups;
+	}
+
+	public void setAssociatedGroups(List<Group> associatedGroups) {
+		this.associatedGroups = associatedGroups;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
 
 	public boolean isMale() {
 		return isMale;
@@ -105,13 +118,13 @@ public class UserDTO {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public boolean getGender() {
-		return isMale;
-	}
-
-	public void setGender(boolean isMale) {
-		this.isMale = isMale;
-	}
+//	public boolean getGender() {
+//		return isMale;
+//	}
+//
+//	public void setGender(boolean isMale) {
+//		this.isMale = isMale;
+//	}
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;

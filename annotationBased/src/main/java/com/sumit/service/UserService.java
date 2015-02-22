@@ -22,6 +22,10 @@ public interface UserService {
 
 	public void setVerifiedUser(String verificationToken);
 
+	public void createStudent(UserDTO userDTO);
+
+	public List<UserDTO> viewAllStudents();
+
 	
 	
 }

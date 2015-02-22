@@ -46,8 +46,4 @@ public interface TestService {
 
 	public void deleteGroup(int groupId);
 
-
-	void findStudentsByGroupId(int groupId);
-
-
 }

@@ -1,13 +1,17 @@
 package com.sumit.api;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
 import com.sumit.dto.ExaminationAssignDTO;
 import com.sumit.model.Exam;
+import com.sumit.model.Examination;
 import com.sumit.model.Group;
 import com.sumit.repository.ExamRepository;
+import com.sumit.repository.ExaminationRepository;
 import com.sumit.repository.GroupRepository;
 
 
@@ -18,6 +22,8 @@ public class ExaminationApi implements IExaminationApi {
 	
 	@Resource
 	ExamRepository examRepository;
+	@Resource
+	ExaminationRepository examinationRepository;
 	
 	@Override
 	public void createOrEditGroup(ExaminationAssignDTO dto) {
@@ -59,6 +65,17 @@ public class ExaminationApi implements IExaminationApi {
 	public void deleteExam(Integer examId) {
 		Exam exam = examRepository.findOne(examId);
 		examRepository.delete(exam);
+	}
+
+	@Override
+	public List<Exam> findAllExaminations() {
+		return examRepository.findAll();
+	}
+
+	@Override
+	public List<Examination> findGroupsByExaminationId(int id) {
+		 
+		return examinationRepository.findGroupsByExaminationId(id);
 	}
 	 
 

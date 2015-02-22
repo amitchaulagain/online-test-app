@@ -16,6 +16,29 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "examination")
 public class Examination implements Serializable {
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+
+	public Exam getExam() {
+		return exam;
+	}
+
+	public void setExam(Exam exam) {
+		this.exam = exam;
+	}
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -23,21 +46,13 @@ public class Examination implements Serializable {
 	private int id;
 	public Examination() {
 	}
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "group_id")
 	private Group group;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "test_id")
-	private TestSet test;
-
-	public TestSet getTest() {
-		return test;
-	}
-
-	public void setTest(TestSet test) {
-		this.test = test;
-	}
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "exam_id")
+	private Exam exam;
 	
 	 
 }

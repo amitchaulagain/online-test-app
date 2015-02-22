@@ -142,25 +142,25 @@
 					class="fa fa-fw fa-bar-chart-o"></i> Create User</a></li>
 			<li><a href="<c:url value='/admin/viewTests' />"><i
 					class="fa fa-fw fa-table"></i> View Tests</a></li>
-					<li><a href="<c:url value='/admin/experiment' />"><i
-					class="fa fa-fw fa-bar-chart-o"></i>experiment</a></li>
+					<li><a href="<c:url value='/admin/examination' />"><i
+					class="fa fa-fw fa-bar-chart-o"></i>Examination</a></li>
 			<li><a href="<c:url value='/admin/viewAllTests' />"><i
 					class="fa fa-fw fa-table"></i> Create Test</a></li>
 			<li><a href="<c:url value='/admin/setQuestion' />"><i
 					class="fa fa-fw fa-edit"></i> Create Question</a></li>
+					<li><a href="javascript:;" data-toggle="collapse"
+				data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Examination
+					  <i class="fa fa-fw fa-caret-down"></i></a>
+				<ul id="demo" class="collapse">
+					<li><a href="<c:url value='/admin/examination' />">All Exams</a></li>
+					<li><a href="<c:url value='/admin/students' />">All Students</a></li>
+					<li><a href="<c:url value='/admin/groups' />">All Groups</a></li>
+				</ul></li>
 			<li><a href="<c:url value='/admin/dashboard' />"><i
 					class="fa fa-fw fa-desktop"></i> Test Results</a></li>
 			<li><a href="<c:url value='/admin/testRequests' />"><i
 					class="fa fa-fw fa-wrench"></i> Test Requests</a></li>
-			<li><a href="javascript:;" data-toggle="collapse"
-				data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Report
-					Generation <i class="fa fa-fw fa-caret-down"></i></a>
-				<ul id="demo" class="collapse">
-					<li><a href="<c:url value='/admin/dashboard' />">PDF
-							(Student Wise Result)</a></li>
-					<li><a href="<c:url value='/admin/dashboard' />">Excel(Test
-							Wise Result)</a></li>
-				</ul></li>
+			
 			<li><a href="blank-page.html"><i class="fa fa-fw fa-file"></i>
 					Group</a></li>
 			<li><a href="blank-page.html"><i class="fa fa-fw fa-file"></i>

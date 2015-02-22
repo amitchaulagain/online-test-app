@@ -24,9 +24,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sumit.dto.ExaminationAssignDTO;
+import com.sumit.dto.ExaminationDTO;
 import com.sumit.dto.SectionDTO;
 import com.sumit.dto.TestJsonDTO;
 import com.sumit.model.DynamicOption;
+import com.sumit.model.Group;
 import com.sumit.model.MainQuestion;
 import com.sumit.model.OptionType;
 import com.sumit.model.Options;
@@ -37,6 +39,7 @@ import com.sumit.model.TestDTO;
 import com.sumit.model.TestQuestions;
 import com.sumit.model.TestRequestDTO;
 import com.sumit.model.TestSet;
+import com.sumit.model.UserDTO;
 import com.sumit.repository.AnsRepository;
 import com.sumit.repository.DynamicOptionRepository;
 import com.sumit.repository.OptionsRepository;
@@ -48,6 +51,7 @@ import com.sumit.service.ExaminationService;
 import com.sumit.service.OptionService;
 import com.sumit.service.QuestionService;
 import com.sumit.service.TestService;
+import com.sumit.service.UserService;
 
 //import com.sumit.service.UserInfoService;
 
@@ -77,6 +81,8 @@ public class AdminController {
 	AnsService ansService;
 	@Autowired
 	ExaminationService examinationService;
+	@Autowired
+	UserService userService;
 	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
 	public @ResponseBody String userInfo(Principal principal,
 			HttpServletResponse response) {
@@ -277,10 +283,26 @@ public class AdminController {
 
 	}
 
-	@RequestMapping(value = "/experiment", method = RequestMethod.GET)
-	public ModelAndView getQuestionsInTest() {
+	@RequestMapping(value = "/examination", method = RequestMethod.GET)
+	public ModelAndView getExaminationPage() {
 
-		ModelAndView mav = new ModelAndView("TestQuestion");
+		ModelAndView mav = new ModelAndView("examination");
+
+		return mav;
+
+	}
+	@RequestMapping(value = "/students", method = RequestMethod.GET)
+	public ModelAndView getStudentPage() {
+
+		ModelAndView mav = new ModelAndView("all-students");
+
+		return mav;
+
+	}
+	@RequestMapping(value = "/groups", method = RequestMethod.GET)
+	public ModelAndView getGroupPage() {
+
+		ModelAndView mav = new ModelAndView("all-groups");
 
 		return mav;
 
@@ -502,6 +524,12 @@ public class AdminController {
 		String val = mapper.writeValueAsString("Group created");
 		return val;
 	}
+	@RequestMapping(value = "/viewAllGroups", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Group> viewAllGroup() throws JsonProcessingException {
+		 List<Group> allGroups=examinationService.findAllGroups();
+		return allGroups;
+	}
 	
 	@RequestMapping(value = "/deleteGroup/{groupId}", method = RequestMethod.POST)
 	@ResponseBody
@@ -513,14 +541,13 @@ public class AdminController {
 		return val;
 	}
 	
-	@RequestMapping(value = "/viewGroupStudents/{groupId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/viewGroupStudents/{groupId}", method = RequestMethod.GET)
 	@ResponseBody
-	public String viewGroupStudents(@PathVariable int groupId)
+	public List<UserDTO> viewGroupStudents(@PathVariable int groupId)
 			throws JsonProcessingException {
-		testService.findStudentsByGroupId(groupId);
-		ObjectMapper mapper = new ObjectMapper();
-		String val = mapper.writeValueAsString("Created");
-		return val;
+		List<UserDTO> studentDTOs=examinationService.findStudentsByGroupId(groupId);
+		
+		return studentDTOs;
 	}
 	@RequestMapping(value = "/saveExam", method = RequestMethod.POST)
 	@ResponseBody
@@ -530,6 +557,13 @@ public class AdminController {
 		ObjectMapper mapper = new ObjectMapper();
 		String val = mapper.writeValueAsString("Exam created");
 		return val;
+	}
+	@RequestMapping(value = "/allExaminations", method = RequestMethod.GET)
+	@ResponseBody
+	public List<ExaminationDTO> showAllExaminations()
+			throws JsonProcessingException {
+		List<ExaminationDTO> ss = examinationService.findAllExaminations();
+		return ss;
 	}
 	@RequestMapping(value = "/deleteExam/{examId}", method = RequestMethod.GET)
 	@ResponseBody
@@ -574,14 +608,41 @@ public class AdminController {
 		return val;
 	}
 	
-	@RequestMapping(value = "/deleteCategory/{categoryId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveStudent", method = RequestMethod.POST)
 	@ResponseBody
-	public String deleteCategory(@PathVariable int categoryId)
+	public String createStudent(UserDTO userDTO)
 			throws JsonProcessingException {
-		questionService.deleteCategory(categoryId);
+		userService.createStudent(userDTO);
 		ObjectMapper mapper = new ObjectMapper();
-		String val = mapper.writeValueAsString("Category of question deleted");
+		String val = mapper.writeValueAsString("Student created");
 		return val;
 	}
+	@RequestMapping(value = "/viewAllStudents", method = RequestMethod.GET)
+	@ResponseBody
+	public List<UserDTO>  viewAllStudents(UserDTO userDTO)
+			throws JsonProcessingException {
+		List<UserDTO> userDTOs=userService.viewAllStudents();
+		return userDTOs;
+	}
+	
+	@RequestMapping(value = "/addStudentsToGroup", method = RequestMethod.GET)
+	@ResponseBody
+	public String addStudentsToGroup(ExaminationAssignDTO dto)
+			throws JsonProcessingException {
+		examinationService.addStudentsToGroup(dto);
+		ObjectMapper mapper = new ObjectMapper();
+		String val = mapper.writeValueAsString("Group created");
+		return val;
+	}
+	@RequestMapping(value = "deleteStudentsFromGroup/{groupId}/{studentId}", method = RequestMethod.GET)
+	@ResponseBody
+	public String deleteStudentsFromGroup(@PathVariable int groupId,@PathVariable int studentId)
+			throws JsonProcessingException {
+		examinationService.deleteStudentsFromGroup(groupId,studentId);
+		ObjectMapper mapper = new ObjectMapper();
+		String val = mapper.writeValueAsString("Group deleted");
+		return val;
+	}
+	
 	
 }

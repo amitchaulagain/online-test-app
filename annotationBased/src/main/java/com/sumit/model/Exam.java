@@ -7,9 +7,14 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "exam")
@@ -24,6 +29,18 @@ public class Exam implements Serializable {
 	private String name;
 	
 	private Date examinationTime;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "test_id")
+	private TestSet test;
+
+	public TestSet getTest() {
+		return test;
+	}
+
+	public void setTest(TestSet test) {
+		this.test = test;
+	}
 	
 	public Date getExaminationTime() {
 		return examinationTime;

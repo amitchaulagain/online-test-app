@@ -3,7 +3,9 @@ package com.sumit.convert;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sumit.dto.ExaminationDTO;
 import com.sumit.dto.TestJsonDTO;
+import com.sumit.model.Exam;
 import com.sumit.model.Role;
 import com.sumit.model.TestDTO;
 import com.sumit.model.TestRequest;
@@ -12,6 +14,7 @@ import com.sumit.model.TestSet;
 import com.sumit.model.User;
 import com.sumit.model.UserDTO;
 import com.sumit.model.UserInfo;
+import com.sumit.model.UserSupportDTO;
 import com.sumit.model.UserVerification;
 
 public   class ConvertUtils {
@@ -28,7 +31,7 @@ public   class ConvertUtils {
 		userDTO.setPhoneNumber(userInfo.getPhoneNumber());
 		userDTO.setVerificationToken(uv.getVerificationToken());
 		userDTO.setDateOfBirth(userInfo.getDob().toString());
-		userDTO.setGender(userInfo.getGender());
+		userDTO.setMale(userInfo.getGender());
 		return userDTO;
 	}
 
@@ -88,5 +91,73 @@ public   class ConvertUtils {
 	 
 		return null;
 	}
+
+	public static List<ExaminationDTO> convertToExaminationDTOs(List<Exam> exams) {
+		List<ExaminationDTO> dtos= new ArrayList<ExaminationDTO>();
+		for (Exam ex : exams) {
+			 
+					 
+			dtos.add(ConvertUtils.convertToExaminationDTO(ex));
+		}
+		return dtos;
+	}
+
+	private static ExaminationDTO convertToExaminationDTO(Exam exam) {
+		ExaminationDTO dto = new ExaminationDTO();
+		dto.setExam(exam);
+		return dto;
+	}
+
+	public static List<UserDTO> convertToUserDTOsss(List<User> students) {
+			List<UserDTO> dtos= new ArrayList<UserDTO>();
+			for (User user : students) {
+				dtos.add(ConvertUtils.convertToUserDTO(user));
+			}
+			return dtos;
+	}
+
+	private static UserDTO convertToUserDTO(User user) {
+		UserDTO userDTO= new UserDTO();
+		userDTO.setUsername(user.getUsername());
+		userDTO.setPassword(user.getPassword());
+		userDTO.setFirstName(user.getUserInfo().getFirstName());
+		userDTO.setLastName(user.getUserInfo().getLastName());
+		userDTO.setAddress(user.getUserInfo().getAddress());
+		userDTO.setCountry(user.getUserInfo().getCountry());
+		userDTO.setEmail(user.getUserInfo().getEmail());
+		userDTO.setPhoneNumber(user.getUserInfo().getPhoneNumber());
+		userDTO.setDateOfBirth(user.getUserInfo().getDob().toString());
+		userDTO.setMale(user.getUserInfo().isMale());
+		return userDTO;
+	}
+
+	public static List<UserDTO> convertToUserDTOs(List<UserSupportDTO> userGroups) {
+		List<UserDTO> dtos= new ArrayList<UserDTO>();
+		for (UserSupportDTO userSupport : userGroups) {
+			dtos.add(ConvertUtils.convertUserSupportDTOToUserDTO(userSupport));
+		}
+		return dtos;
+	}
+
+	private static UserDTO convertUserSupportDTOToUserDTO(UserSupportDTO userSupport) {
+		UserDTO userDTO= new UserDTO();
+		userDTO.setUsername(userSupport.getUser().getUsername());
+		userDTO.setPassword(userSupport.getUser().getPassword());
+		userDTO.setFirstName(userSupport.getUser().getUserInfo().getFirstName());
+		userDTO.setLastName(userSupport.getUser().getUserInfo().getLastName());
+		userDTO.setAddress(userSupport.getUser().getUserInfo().getAddress());
+		userDTO.setCountry(userSupport.getUser().getUserInfo().getCountry());
+		userDTO.setEmail(userSupport.getUser().getUserInfo().getEmail());
+		userDTO.setPhoneNumber(userSupport.getUser().getUserInfo().getPhoneNumber());
+		userDTO.setDateOfBirth(userSupport.getUser().getUserInfo().getDob().toString());
+		userDTO.setMale(userSupport.getUser().getUserInfo().isMale());
+		userDTO.setAssociatedGroups(userSupport.getGroups());
+		return userDTO;
+	}
+
+	 
+
+	 
+
 
 }

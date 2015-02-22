@@ -2,10 +2,12 @@ package com.sumit.dto;
 
 import com.sumit.model.Exam;
 import com.sumit.model.Group;
+import com.sumit.model.User;
 
 public class ExaminationAssignDTO {
 	private Exam exam;
 	private Group group;
+	private User student;
 	private int testId;
 	private Integer[] listOfStudents;
 
@@ -39,5 +41,12 @@ public class ExaminationAssignDTO {
 
 	public void setListOfStudents(Integer[] listOfStudents) {
 		this.listOfStudents = listOfStudents;
+	}
+	public User getStudent() {
+		return student;
+	}
+
+	public void setStudent(User student) {
+		this.student = student;
 	}
 }
