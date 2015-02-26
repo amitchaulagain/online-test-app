@@ -29,6 +29,8 @@ public interface IUserApi {
 
 	public List<Group> findAllGroupsThatAParticularStudentIsAssociated(int id);
 
+	public List<User> searchStudent(String value);
+
 
 	
 

@@ -158,10 +158,8 @@ admin
 									</div>
 									<div class="row">
 										<div class="col-md-4">
-=======
 									<form role="form"  >
 										<div id="testOneInfo">
->>>>>>> 471a1b7604378995b340408d8b69660152b91161
 											<div class="form-group ">
 												<label for="fullmark" style="color: #777">Full Mark</label>
 												<input type="text" id="fullmark"

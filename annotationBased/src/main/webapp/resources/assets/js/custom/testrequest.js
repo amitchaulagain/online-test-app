@@ -23,7 +23,7 @@ jQuery(document)
 						 
 					});
 					
-					$('.btn').click(function() {
+					$('#submit').click(function() {
 						   buttonStatus=$(this).children().attr("status");
 						   findAllTestRequests(buttonStatus);
 					});

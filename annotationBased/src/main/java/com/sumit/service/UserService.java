@@ -26,6 +26,10 @@ public interface UserService {
 
 	public List<UserDTO> viewAllStudents();
 
+	public UserDTO findStudentByTheirId(int id);
+
+	public List<User> searchStudent(String value);
+
 	
 	
 }

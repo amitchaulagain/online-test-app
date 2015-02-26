@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sumit.convert.ConvertUtils;
 import com.sumit.dto.ExaminationAssignDTO;
 import com.sumit.dto.ExaminationDTO;
 import com.sumit.dto.SectionDTO;
@@ -39,6 +40,7 @@ import com.sumit.model.TestDTO;
 import com.sumit.model.TestQuestions;
 import com.sumit.model.TestRequestDTO;
 import com.sumit.model.TestSet;
+import com.sumit.model.User;
 import com.sumit.model.UserDTO;
 import com.sumit.repository.AnsRepository;
 import com.sumit.repository.DynamicOptionRepository;
@@ -610,7 +612,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/saveStudent", method = RequestMethod.POST)
 	@ResponseBody
-	public String createStudent(UserDTO userDTO)
+	public String createStudent(@RequestBody UserDTO userDTO)
 			throws JsonProcessingException {
 		userService.createStudent(userDTO);
 		ObjectMapper mapper = new ObjectMapper();
@@ -625,9 +627,9 @@ public class AdminController {
 		return userDTOs;
 	}
 	
-	@RequestMapping(value = "/addStudentsToGroup", method = RequestMethod.GET)
+	@RequestMapping(value = "/addStudentsToGroup", method = RequestMethod.POST)
 	@ResponseBody
-	public String addStudentsToGroup(ExaminationAssignDTO dto)
+	public String addStudentsToGroup(@RequestBody ExaminationAssignDTO dto)
 			throws JsonProcessingException {
 		examinationService.addStudentsToGroup(dto);
 		ObjectMapper mapper = new ObjectMapper();
@@ -643,6 +645,19 @@ public class AdminController {
 		String val = mapper.writeValueAsString("Group deleted");
 		return val;
 	}
-	
+	@RequestMapping(value = "/viewStudent/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public UserDTO createStudent(@PathVariable int id)
+			throws JsonProcessingException {
+		UserDTO dto=userService.findStudentByTheirId(id);
+		 return dto;
+	}
+	@RequestMapping(value = "/searchStudent/{value}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<UserDTO> searchStudent(@PathVariable String value)
+			throws JsonProcessingException {
+		List<User> students=userService.searchStudent(value);
+		return ConvertUtils.convertToUserDTOsss(students);
+	}
 	
 }

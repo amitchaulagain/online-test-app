@@ -28,7 +28,7 @@ public class ExaminationApi implements IExaminationApi {
 	@Override
 	public void createOrEditGroup(ExaminationAssignDTO dto) {
 		Group group = new Group();
-		 if(dto.getExam().getId()!=0){
+		 if(dto.getGroup().getId()!=0){
 			group=groupRepository.findOne(dto.getGroup().getId());
 			 group.setName(dto.getGroup().getName());
 			  

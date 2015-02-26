@@ -113,31 +113,48 @@ public class UserApi implements IUserApi {
 
 	@Override
 	public void createNewStudent(UserDTO userDTO) {
-		User user = new User();
-		user.setEnabled(false);
-		user.setUsername(userDTO.getEmail());
-		user.setPassword(userDTO.getFirstName()+userDTO.getLastName()+'@'+123);
-		user.setEnabled(true);
+		if(userDTO.getStudentId()==0){
+			User user = new User();
+			user.setEnabled(false);
+			user.setUsername(userDTO.getEmail());
+			user.setPassword(userDTO.getFirstName()+userDTO.getLastName()+'@'+123);
+			user.setEnabled(true);
 
-		List<Role> userRoles = new ArrayList<Role>();
-		Role role = new Role();
-		role.setRole(Authorities.ROLE_USER.toString());
-		userRoles.add(role);
-		role.setRole(Authorities.ROLE_STUDENT.toString());
-		userRoles.add(role);
-		User savedUser = userRepository.save(user);
-		role.setUser(savedUser);
-		 roleRepo.save(userRoles);
+			List<Role> userRoles = new ArrayList<Role>();
+			Role role = new Role();
+			role.setRole(Authorities.ROLE_USER.toString());
+			userRoles.add(role);
+			role.setRole(Authorities.ROLE_STUDENT.toString());
+			userRoles.add(role);
+			User savedUser = userRepository.save(user);
+			role.setUser(savedUser);
+			 roleRepo.save(userRoles);
 
-		UserInfo userInfo = new UserInfo();
-		userInfo.setFirstName(userDTO.getFirstName());
-		userInfo.setLastName(userDTO.getLastName());
-		userInfo.setEmail(userDTO.getEmail());
-		userInfo.setRegisterDate(new Date());
-		userInfo.setDob(new Date());
-		userInfo.setGender(userDTO.isMale());
-		userInfo.setUser(savedUser);
-		userInfoRepository.save(userInfo); 
+			UserInfo userInfo = new UserInfo();
+			userInfo.setFirstName(userDTO.getFirstName());
+			userInfo.setLastName(userDTO.getLastName());
+			userInfo.setEmail(userDTO.getEmail());
+			userInfo.setRegisterDate(new Date());
+			userInfo.setDob(new Date());
+			userInfo.setGender(userDTO.isMale());
+			userInfo.setAddress(userDTO.getAddress());
+			userInfo.setCountry(userDTO.getCountry());
+			userInfo.setUser(savedUser);
+			userInfoRepository.save(userInfo); 
+		}
+		else{
+			UserInfo userInfo =userInfoRepository.findUserInfoByUserId(userDTO.getStudentId());
+			userInfo.setFirstName(userDTO.getFirstName());
+			userInfo.setLastName(userDTO.getLastName());
+			userInfo.setEmail(userDTO.getEmail());
+			userInfo.setRegisterDate(new Date());
+			userInfo.setDob(new Date());
+			userInfo.setGender(userDTO.isMale());
+			userInfo.setAddress(userDTO.getAddress());
+			userInfo.setCountry(userDTO.getCountry());
+			userInfoRepository.save(userInfo); 
+
+		}
 		
 	}
 
@@ -151,6 +168,12 @@ public class UserApi implements IUserApi {
 	public List<Group> findAllGroupsThatAParticularStudentIsAssociated(int id) {
 		List<Group> groups=studentGroupRepository.findGroupsByStudentId(id);
 		return groups;
+	}
+
+	@Override
+	public List<User> searchStudent(String value) {
+		 
+		return userRepository.searchStudentByFirstNameLastNameAndEmail(value);
 	}
 
 }

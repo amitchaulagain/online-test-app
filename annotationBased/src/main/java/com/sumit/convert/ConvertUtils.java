@@ -21,6 +21,7 @@ public   class ConvertUtils {
 
 	public static UserDTO convertToUserDTO(User user,List<Role> savedRoles,UserInfo userInfo, UserVerification uv ) {
 		UserDTO userDTO= new UserDTO();
+		userDTO.setStudentId(user.getId());
 		userDTO.setUsername(user.getUsername());
 		userDTO.setRoles(savedRoles);
 		userDTO.setFirstName(userInfo.getFirstName());
@@ -29,7 +30,9 @@ public   class ConvertUtils {
 		userDTO.setCountry(userInfo.getCountry());
 		userDTO.setEmail(userInfo.getEmail());
 		userDTO.setPhoneNumber(userInfo.getPhoneNumber());
-		userDTO.setVerificationToken(uv.getVerificationToken());
+		if(uv!=null){
+			userDTO.setVerificationToken(uv.getVerificationToken());
+		}
 		userDTO.setDateOfBirth(userInfo.getDob().toString());
 		userDTO.setMale(userInfo.getGender());
 		return userDTO;
@@ -118,6 +121,7 @@ public   class ConvertUtils {
 
 	private static UserDTO convertToUserDTO(User user) {
 		UserDTO userDTO= new UserDTO();
+		userDTO.setStudentId(user.getId());
 		userDTO.setUsername(user.getUsername());
 		userDTO.setPassword(user.getPassword());
 		userDTO.setFirstName(user.getUserInfo().getFirstName());
@@ -141,6 +145,7 @@ public   class ConvertUtils {
 
 	private static UserDTO convertUserSupportDTOToUserDTO(UserSupportDTO userSupport) {
 		UserDTO userDTO= new UserDTO();
+		userDTO.setStudentId(userSupport.getUser().getId());
 		userDTO.setUsername(userSupport.getUser().getUsername());
 		userDTO.setPassword(userSupport.getUser().getPassword());
 		userDTO.setFirstName(userSupport.getUser().getUserInfo().getFirstName());

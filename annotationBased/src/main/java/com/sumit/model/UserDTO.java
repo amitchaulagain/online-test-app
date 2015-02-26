@@ -3,6 +3,7 @@ package com.sumit.model;
 import java.util.List;
 
 public class UserDTO {
+	private int studentId;
 	private String username;
 	private String password;
 	private String firstName;
@@ -133,5 +134,12 @@ public class UserDTO {
 
 	public List<Role> getRole() {
 		return roles;
+	}
+	public int getStudentId() {
+		return studentId;
+	}
+	
+	public void setStudentId(int studentId) {
+		this.studentId = studentId;
 	}
 }

@@ -104,4 +104,17 @@ public class UserServiceImpl implements UserService {
 		}
 		return ConvertUtils.convertToUserDTOs(usersWithGroup);
 	}
+
+	@Override
+	public UserDTO findStudentByTheirId(int id) {
+		 User user=userRepository.findOne(id);
+		return ConvertUtils.convertToUserDTO(user, null, user.getUserInfo(), null);
+	}
+
+	@Override
+	public List<User> searchStudent(String value) {
+		return userApi.searchStudent(value);
+	}
+
+	 
 }
