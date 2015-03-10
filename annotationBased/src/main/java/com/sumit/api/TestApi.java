@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.sumit.Utility.AuthenticationUtil;
 import com.sumit.model.Sections;
+import com.sumit.model.Sets;
 import com.sumit.model.TestQuestions;
 import com.sumit.model.TestRequest;
 import com.sumit.model.TestRequestDTO;
@@ -16,6 +17,7 @@ import com.sumit.model.TestRequestStatus;
 import com.sumit.model.TestSet;
 import com.sumit.model.User;
 import com.sumit.repository.SectionsRepository;
+import com.sumit.repository.SetsRepository;
 import com.sumit.repository.TestQuestionRepository;
 import com.sumit.repository.TestRequestRepository;
 import com.sumit.repository.TestRipository;
@@ -30,6 +32,8 @@ public class TestApi implements ITestApi {
 	TestRequestRepository testRequestRepository;
 	@Resource
 	SectionsRepository sectionsRipo;
+	@Resource
+	SetsRepository setsRepository;
 
 	@Override
 	public List<TestSet> listOfAllTest() {
@@ -116,6 +120,13 @@ public class TestApi implements ITestApi {
 	public Sections findSectionById(Integer sectionId) {
 		return sectionsRipo.findOne(sectionId);
 	}
+
+	@Override
+	public List<Sets> findAllSetsBySpecificTestId(int testId) {
+		 
+		return setsRepository.findAllSetsByTestId(testId);
+	}
+
 
 
 }

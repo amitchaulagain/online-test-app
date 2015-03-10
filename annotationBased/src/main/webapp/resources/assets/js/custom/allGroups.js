@@ -33,10 +33,18 @@ $(document).ready(function() {
 	});
 	$(document).on("click", "#clickHere", function(e) {
 
-	 
 		$('#allStudents').show();
-		showAllStudentInformation();
+		 
+		var searchText=$(this).val();
+		showAllStudentInformation(searchText)
 	});
+	
+	$(document).on("keyup", "#search", function(e) {
+
+		var searchText=$(this).val();
+		showAllStudentInformation(searchText)
+	});
+	
 	$('#showGroupPerPage').on('change', function() {
 
 		var show = $('#showGroupPerPage option:selected').val();
@@ -51,7 +59,7 @@ $(document).ready(function() {
 		var index = $('#groupStudentsPagination').pagination('getCurrentPage');
 
 		showGroupStudents(show, index, aaGroupStudents);
-		groupStudentsPagi()();
+		groupStudentsPagi();
 	});
 	$(document).on("click", ".alert", function(e) {
 		todo = $(this).attr("actionToBeDone");
@@ -137,8 +145,7 @@ function showGroup(show, index, groups) {
 		limitedGroup = groups.slice(initial, finale);
 	}
 	$('#showGroup tr td').remove();
-	$.each(limitedGroup,
-					function(idx, group) {
+	$.each(limitedGroup,function(idx, group) {
 						$('#showGroup')
 								.append(
 										'<tr><td>'
@@ -336,15 +343,17 @@ function showGroupStudents(show, index, students) {
 
 
 }
-function showAllStudentInformation() {
+function showAllStudentInformation(searchText) {
+ 
 	$.ajax({
-		type : 'GET',
-		url : "http://localhost:8085/annotationBased/admin/viewAllStudents",
+		type : 'POST',
+		url : "http://localhost:8085/annotationBased/admin/searchStudent",
 		dataType : "json",
-
-		success : renderStudentInformation
-	});
-
+		contentType : "application/json",
+		accept : "application/json",
+		data : searchStringToJSON(searchText),
+		success :  renderStudentInformation
+	})
 }
 function renderStudentInformation(allStudents) {
 	while (aaStudent.length > 0) {
@@ -437,7 +446,7 @@ function addStudentToGroup(studentId){
 		accept : "application/json",
 		data : valueToJSON(studentId),
 		success : function(msg) {
-			alert("hero");
+			refreshGroupStudentsView();
 		},
 		error : function(msg) {
 			alert("error while saving group");
@@ -446,7 +455,7 @@ function addStudentToGroup(studentId){
 
 }
 function refreshGroupStudentsView(){
-	
+	showAllStudentInformationByGroupId(groupId);
 
 }
 function valueToJSON(studentId){
@@ -457,5 +466,11 @@ function valueToJSON(studentId){
 		student :{
 			"id":studentId
 		}
+	})
+}
+
+function searchStringToJSON(searchText){
+	return JSON.stringify({
+	"searchString" : searchText
 	})
 }

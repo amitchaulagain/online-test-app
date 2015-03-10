@@ -13,9 +13,11 @@ import com.sumit.api.ITestApi;
 import com.sumit.convert.ConvertUtils;
 import com.sumit.dto.ExaminationAssignDTO;
 import com.sumit.dto.ExaminationDTO;
+import com.sumit.dto.SeatPlanningDTO;
 import com.sumit.model.Exam;
 import com.sumit.model.Examination;
 import com.sumit.model.Group;
+import com.sumit.model.StudentExaminationInfo;
 import com.sumit.model.StudentGroup;
 import com.sumit.model.TestSet;
 import com.sumit.model.User;
@@ -29,17 +31,18 @@ public class ExaminationServiceImpl implements ExaminationService {
 
 	@Autowired
 	IExaminationApi examinationApi;
-	
+
 	@Resource
 	GroupRepository groupRepository;
-	
+
 	@Resource
 	UserRepository studentRepository;
 	@Resource
-	StudentGroupRepository  studentGroupRepository;
-	
+	StudentGroupRepository studentGroupRepository;
+
 	@Autowired
 	ITestApi testApi;
+
 	@Override
 	public void createOrEditGroup(ExaminationAssignDTO dto) {
 		examinationApi.createOrEditGroup(dto);
@@ -53,8 +56,8 @@ public class ExaminationServiceImpl implements ExaminationService {
 	}
 
 	@Override
-	public void createOrEditExam(ExaminationAssignDTO dto) {
-		examinationApi.createOrEditExam(dto);
+	public Exam createOrEditExam(ExaminationAssignDTO dto) {
+		return examinationApi.createOrEditExam(dto);
 
 	}
 
@@ -76,11 +79,11 @@ public class ExaminationServiceImpl implements ExaminationService {
 
 		for (Exam exam : exams) {
 			ExaminationDTO dto = new ExaminationDTO();
-			
+
 			List<Examination> allExaminations = examinationApi
 					.findGroupsByExaminationId(exam.getId());
 			dto.setExam(exam);
-//			dto.setTest(exam.getTest());
+			// dto.setTest(exam.getTest());
 			List<Group> groups = new ArrayList<Group>();
 			for (Examination examination : allExaminations) {
 				if (examination.getGroup() != null) {
@@ -96,42 +99,44 @@ public class ExaminationServiceImpl implements ExaminationService {
 
 	@Override
 	public void addStudentsToGroup(ExaminationAssignDTO dto) {
-		StudentGroup sg= new StudentGroup();
-		Group group=groupRepository.findOne(dto.getGroup().getId());
-//		for (int studentId : dto.getListOfStudents()) {
-//			User student=studentRepository.findOne(studentId);
-//			sg.setGroup(group);
-//			sg.setStudent(student);
-//			studentGroupRepository.save(sg);
-//		}
-		 
-			User student=studentRepository.findOne(dto.getStudent().getId());
-			sg.setGroup(group);
-			sg.setStudent(student);
-			studentGroupRepository.save(sg);
-		
+		StudentGroup sg = new StudentGroup();
+		Group group = groupRepository.findOne(dto.getGroup().getId());
+		// for (int studentId : dto.getListOfStudents()) {
+		// User student=studentRepository.findOne(studentId);
+		// sg.setGroup(group);
+		// sg.setStudent(student);
+		// studentGroupRepository.save(sg);
+		// }
+
+		User student = studentRepository.findOne(dto.getStudent().getId());
+		sg.setGroup(group);
+		sg.setStudent(student);
+		studentGroupRepository.save(sg);
+
 	}
-//	@Override
-//	public void addStudentsToGroup(ExaminationAssignDTO dto) {
-//		StudentGroup sg= new StudentGroup();
-//		Group group=groupRepository.findOne(dto.getGroup().getId());
-////		for (int studentId : dto.getListOfStudents()) {
-////			User student=studentRepository.findOne(studentId);
-////			sg.setGroup(group);
-////			sg.setStudent(student);
-////			studentGroupRepository.save(sg);
-////		}
-//		 
-//			User student=studentRepository.findOne(dto.getStudent().getId());
-//			sg.setGroup(group);
-//			sg.setStudent(student);
-//			studentGroupRepository.save(sg);
-//		
-//	}
+
+	// @Override
+	// public void addStudentsToGroup(ExaminationAssignDTO dto) {
+	// StudentGroup sg= new StudentGroup();
+	// Group group=groupRepository.findOne(dto.getGroup().getId());
+	// // for (int studentId : dto.getListOfStudents()) {
+	// // User student=studentRepository.findOne(studentId);
+	// // sg.setGroup(group);
+	// // sg.setStudent(student);
+	// // studentGroupRepository.save(sg);
+	// // }
+	//
+	// User student=studentRepository.findOne(dto.getStudent().getId());
+	// sg.setGroup(group);
+	// sg.setStudent(student);
+	// studentGroupRepository.save(sg);
+	//
+	// }
 
 	@Override
 	public void deleteStudentsFromGroup(int groupId, int studentId) {
-		StudentGroup sg=studentGroupRepository.findSStudentGroupByGroupIdAndStudentId(groupId,studentId);
+		StudentGroup sg = studentGroupRepository
+				.findSStudentGroupByGroupIdAndStudentId(groupId, studentId);
 		studentGroupRepository.delete(sg);
 	}
 
@@ -142,11 +147,53 @@ public class ExaminationServiceImpl implements ExaminationService {
 
 	@Override
 	public List<UserDTO> findStudentsByGroupId(int groupId) {
-		List<User> groupStudents=groupRepository.findStudentsByGroupId(groupId);
+		List<User> groupStudents = groupRepository
+				.findStudentsByGroupId(groupId);
 		return ConvertUtils.convertToUserDTOsss(groupStudents);
 	}
 
-	 
-	
+	@Override
+	public ExaminationAssignDTO findExaminationByExamId(int examId) {
+		ExaminationAssignDTO dto = new ExaminationAssignDTO();
+		Exam exam = examinationApi.findExamByExamId(examId);
+		List<Group> assignedGroups = examinationApi
+				.findAssignedGroupsByExamId(examId);
+		dto.setExam(exam);
+		dto.setAssignedGroups(assignedGroups);
+		return dto;
+	}
+
+	@Override
+	public void addGroupToExamination(int examId, int groupId) {
+		Exam exam = examinationApi.findExamByExamId(examId);
+		// exam.setAssigned(false);
+		examinationApi.assignStudentToExaminationWithSeatPlan(exam);
+		Group group = examinationApi.findGroupByGroupId(groupId);
+		examinationApi.saveGroupToExamination(exam, group);
+
+	}
+
+	@Override
+	public void removeGroupFromExamination(int examId, int groupId) {
+		Exam exam = examinationApi.findExamByExamId(examId);
+
+		examinationApi.assignStudentToExaminationWithSeatPlan(exam);
+		examinationApi.removeGroupFromExamination(examId, groupId);
+
+	}
+
+	@Override
+	public List<SeatPlanningDTO> getSeatPlanByExamId(int examId) {
+		List<StudentExaminationInfo> infos = examinationApi
+				.findSeatPlanInformation(examId);
+		return ConvertUtils.convertToSeatPlanningDTO(infos);
+	}
+
+	@Override
+	public Exam assignExam(ExaminationAssignDTO dto) {
+		Exam exam = examinationApi.assignStudentToExaminationWithSeatPlan(dto
+				.getExam());
+		return exam;
+	}
 
 }

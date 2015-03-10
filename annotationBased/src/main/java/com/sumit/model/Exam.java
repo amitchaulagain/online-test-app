@@ -14,8 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "exam")
 public class Exam implements Serializable {
@@ -29,10 +27,20 @@ public class Exam implements Serializable {
 	private String name;
 	
 	private Date examinationTime;
+	
+	private boolean isAssigned;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "test_id")
 	private TestSet test;
+
+	public boolean getIsAssigned() {
+		return isAssigned;
+	}
+
+	public void setAssigned(boolean isAssigned) {
+		this.isAssigned = isAssigned;
+	}
 
 	public TestSet getTest() {
 		return test;

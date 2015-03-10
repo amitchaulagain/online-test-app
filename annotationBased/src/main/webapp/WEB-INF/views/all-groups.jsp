@@ -167,9 +167,8 @@
 									<option>6</option>
 								</select>
 							</div>
-
-
 						</div>
+						
 						<div class="col-lg-6" style="float: right">
 							 
 							<button id="clickHere" class="btn btn-primary btn-sm">Click here to add students on this group</button>
@@ -219,7 +218,12 @@
 								</select>
 							</div>
 
-
+						</div>
+						<div class="col-lg-4" style="float: right">
+							<div class="form-group ">
+								<label for="name" style="color: #777"></label> <input
+									type="text" id="search" class="form-control input-sm"   />
+							</div>
 						</div>
 					</div>
 					<div class="">

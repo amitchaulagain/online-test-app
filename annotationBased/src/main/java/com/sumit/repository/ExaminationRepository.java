@@ -12,4 +12,10 @@ public interface ExaminationRepository extends JpaRepository<Examination, Intege
 	@Query("select e from Examination e where e.exam.id=?1")
 	List<Examination> findGroupsByExaminationId(int id);
 
+	@Query("select e.group from Examination e where e.exam.id=?1")
+	List<Group> findGroupsByExamId(int examId);
+	
+	@Query("select e from Examination e where e.exam.id=?1 AND e.group.id=?2")
+	Examination findExaminationByExamIdAndGroupId(int examId, int groupId);
+
 }

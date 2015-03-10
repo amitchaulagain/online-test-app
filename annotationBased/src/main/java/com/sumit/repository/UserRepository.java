@@ -18,8 +18,14 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("select r from Role r where r.role='ROLE_STUDENT'")
 	List<Role> findAllStudents();
 
-	@Query("select u from User u where u.userInfo.firstName LIKE :searchParameter% OR u.userInfo.lastName LIKE :searchParameter%  OR u.userInfo.email LIKE :searchParameter%")
+//	@Query("select u from User u where u.userInfo.firstName LIKE :searchParameter% OR u.userInfo.lastName LIKE :searchParameter%  OR u.userInfo.email LIKE :searchParameter%")
+//	List<User> searchStudentByFirstNameLastNameAndEmail(@Param("searchParameter") String searchParameter );
+
+	@Query("select u from Role r INNER JOIN r.user u where r.role='ROLE_STUDENT' AND ( "
+			+ "u.userInfo.firstName LIKE :searchParameter% OR u.userInfo.lastName LIKE :searchParameter% "
+			+ " OR u.userInfo.email LIKE :searchParameter% )")
 	List<User> searchStudentByFirstNameLastNameAndEmail(@Param("searchParameter") String searchParameter );
+
 
 
 

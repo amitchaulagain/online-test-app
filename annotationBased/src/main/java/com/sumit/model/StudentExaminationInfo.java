@@ -24,16 +24,42 @@ public class StudentExaminationInfo implements Serializable {
 	public StudentExaminationInfo() {
 	}
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "examination_id")
-	private Examination examination;
+	@JoinColumn(name = "exam_id")
+	private Exam  exam ;
 	
-	public Examination getExamination() {
-		return examination;
+	public Exam getExam() {
+		return exam;
 	}
 
-	public void setExamination(Examination examination) {
-		this.examination = examination;
+	public void setExam(Exam exam) {
+		this.exam = exam;
 	}
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "student_id")
+	private User student;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "set_id")
+	private Sets set;
+	
+	private String seatNumber;
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public User getStudent() {
+		return student;
+	}
+
+	public void setStudent(User student) {
+		this.student = student;
+	}
+
 
 	public Sets getSet() {
 		return set;
@@ -42,11 +68,6 @@ public class StudentExaminationInfo implements Serializable {
 	public void setSet(Sets set) {
 		this.set = set;
 	}
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "set_id")
-	private Sets set;
-
-	 private String seatNumber;
 
 	public String getSeatNumber() {
 		return seatNumber;

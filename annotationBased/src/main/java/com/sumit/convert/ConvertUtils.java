@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sumit.dto.ExaminationDTO;
+import com.sumit.dto.SeatPlanningDTO;
 import com.sumit.dto.TestJsonDTO;
 import com.sumit.model.Exam;
 import com.sumit.model.Role;
+import com.sumit.model.Sets;
+import com.sumit.model.StudentExaminationInfo;
 import com.sumit.model.TestDTO;
 import com.sumit.model.TestRequest;
 import com.sumit.model.TestRequestDTO;
@@ -124,14 +127,17 @@ public   class ConvertUtils {
 		userDTO.setStudentId(user.getId());
 		userDTO.setUsername(user.getUsername());
 		userDTO.setPassword(user.getPassword());
-		userDTO.setFirstName(user.getUserInfo().getFirstName());
-		userDTO.setLastName(user.getUserInfo().getLastName());
-		userDTO.setAddress(user.getUserInfo().getAddress());
-		userDTO.setCountry(user.getUserInfo().getCountry());
-		userDTO.setEmail(user.getUserInfo().getEmail());
-		userDTO.setPhoneNumber(user.getUserInfo().getPhoneNumber());
-		userDTO.setDateOfBirth(user.getUserInfo().getDob().toString());
-		userDTO.setMale(user.getUserInfo().isMale());
+		if(user.getUserInfo()!=null){
+			
+			userDTO.setFirstName(user.getUserInfo().getFirstName());
+			userDTO.setLastName(user.getUserInfo().getLastName());
+			userDTO.setAddress(user.getUserInfo().getAddress());
+			userDTO.setCountry(user.getUserInfo().getCountry());
+			userDTO.setEmail(user.getUserInfo().getEmail());
+			userDTO.setPhoneNumber(user.getUserInfo().getPhoneNumber());
+			userDTO.setDateOfBirth(user.getUserInfo().getDob().toString());
+			userDTO.setMale(user.getUserInfo().isMale());
+		}
 		return userDTO;
 	}
 
@@ -158,6 +164,34 @@ public   class ConvertUtils {
 		userDTO.setMale(userSupport.getUser().getUserInfo().isMale());
 		userDTO.setAssociatedGroups(userSupport.getGroups());
 		return userDTO;
+	}
+
+	public static List<SeatPlanningDTO> convertToSeatPlanningDTO(
+			List<StudentExaminationInfo> infos) {
+		List<SeatPlanningDTO> dtos= new ArrayList<SeatPlanningDTO>();
+		for (StudentExaminationInfo sei : infos) {
+			dtos.add(ConvertUtils.convertToUserDTO(sei));
+		}
+		return dtos;
+		 
+	}
+
+	private static SeatPlanningDTO convertToUserDTO(StudentExaminationInfo sei) {
+		 SeatPlanningDTO dto= new SeatPlanningDTO();
+		 UserDTO userDTO=convertToUserDTO(sei.getStudent());
+		 
+		 dto.setStudent(userDTO);
+		 dto.setSeatNumber(sei.getSeatNumber());
+		 if(sei.getSet()!=null){
+			 dto.setSet(sei.getSet());
+		 }
+		 else{
+			 Sets set= new Sets();
+			 set.setName("Single Set TYPE");
+			 dto.setSet(set);
+		 }
+		 
+		return dto;
 	}
 
 	 

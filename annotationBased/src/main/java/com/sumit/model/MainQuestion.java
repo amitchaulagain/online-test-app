@@ -42,7 +42,7 @@ public class MainQuestion implements Serializable {
 		this.optionType = optionType;
 	}
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "questionInTestquestion")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "questionInTestquestion")
 	@Fetch(value = FetchMode.SELECT)
 	private List<TestQuestions> testQuestionInQuestion;
 	
