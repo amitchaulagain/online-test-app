@@ -108,10 +108,10 @@ public class ExaminationApi implements IExaminationApi {
 		}
 	}
 
-	private void removeSeatPlan(int id) {
+	private void removeSeatPlan(int examId) {
 		studentExaminationInfoRepository
 				.delete(studentExaminationInfoRepository
-						.findStudentExaminationInfoByExamId(id));
+						.findStudentExaminationInfoByExamId(examId));
 
 	}
 
@@ -212,6 +212,12 @@ public class ExaminationApi implements IExaminationApi {
 
 		return studentExaminationInfoRepository
 				.findStudentExaminationInfoByExamId(examId);
+	}
+
+	@Override
+	public Examination getExaminationByExamIdAndGroupId(int examId,int groupId) {
+		// TODO Auto-generated method stub
+		return examinationRepository.findExaminationByExamIdAndGroupId(examId, groupId);
 	}
 
 }

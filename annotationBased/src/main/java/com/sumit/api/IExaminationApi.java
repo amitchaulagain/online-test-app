@@ -39,6 +39,8 @@ public interface IExaminationApi {
 	List<StudentExaminationInfo> findSeatPlanInformation(int examId);
 
 	Exam assignStudentToExaminationWithSeatPlan(Exam exam);
+
+	Examination getExaminationByExamIdAndGroupId(int examId, int groupId);
 	
 
 }

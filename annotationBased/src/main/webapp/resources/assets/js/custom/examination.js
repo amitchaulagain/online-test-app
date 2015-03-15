@@ -71,7 +71,7 @@ $(document)
 										var isAssigned;
 										if (this.checked) {
 											isAssigned = true;
-											if (confirm("Are you sure, you would like to assign this exam ?") == true) {
+											if (confirm("Are you sure, you would like to assign this exam ?")) {
 												assignExam(examId, isAssigned);
 											} else {
 												findAllExaminations()

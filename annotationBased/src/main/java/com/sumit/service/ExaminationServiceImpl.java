@@ -1,13 +1,18 @@
 package com.sumit.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sumit.Utility.ClientException;
+import com.sumit.Utility.ClientUtil;
 import com.sumit.api.IExaminationApi;
 import com.sumit.api.ITestApi;
 import com.sumit.convert.ConvertUtils;
@@ -169,7 +174,22 @@ public class ExaminationServiceImpl implements ExaminationService {
 		// exam.setAssigned(false);
 		examinationApi.assignStudentToExaminationWithSeatPlan(exam);
 		Group group = examinationApi.findGroupByGroupId(groupId);
-		examinationApi.saveGroupToExamination(exam, group);
+		Map<String,String> kk=new HashMap<String,String>();
+		if (examinationApi.getExaminationByExamIdAndGroupId(examId, groupId) != null) {
+
+			try {
+				throw new ClientException("Cannot add !!!!! Group already added");
+			} catch (ClientException e) {
+				kk.put("msg",e.getMessage());
+				ClientUtil.setMap(kk);
+				System.out.println("Cannot add !!!!! Group already added");
+				e.printStackTrace();
+			}
+		} else {
+			examinationApi.saveGroupToExamination(exam, group);
+			kk.put("msg", "Group added successfully");
+			ClientUtil.setMap(kk);
+		}
 
 	}
 

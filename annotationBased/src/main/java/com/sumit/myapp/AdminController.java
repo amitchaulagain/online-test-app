@@ -23,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sumit.Utility.BuildTestInJSON;
+import com.sumit.Utility.ClientUtil;
 import com.sumit.convert.ConvertUtils;
 import com.sumit.dto.ExaminationAssignDTO;
 import com.sumit.dto.ExaminationDTO;
@@ -39,6 +41,7 @@ import com.sumit.model.Options;
 import com.sumit.model.QuestionAnswer;
 import com.sumit.model.QuestionJSONDTO;
 import com.sumit.model.Sections;
+import com.sumit.model.Sets;
 import com.sumit.model.TestDTO;
 import com.sumit.model.TestQuestions;
 import com.sumit.model.TestRequestDTO;
@@ -49,6 +52,7 @@ import com.sumit.repository.AnsRepository;
 import com.sumit.repository.DynamicOptionRepository;
 import com.sumit.repository.OptionsRepository;
 import com.sumit.repository.QuestionRepository;
+import com.sumit.repository.SetsRepository;
 import com.sumit.repository.TestQuestionRepository;
 import com.sumit.repository.TestRipository;
 import com.sumit.service.AnsService;
@@ -74,6 +78,8 @@ public class AdminController {
 	OptionsRepository optionRipo;
 	@Resource
 	AnsRepository ansRipo;
+	@Resource
+	SetsRepository setsRipo;
 	@Resource
 	TestRipository testRipo;
 	@Autowired
@@ -694,7 +700,7 @@ public class AdminController {
 			throws JsonProcessingException {
 		examinationService.addGroupToExamination(examId,groupId);
 		ObjectMapper mapper = new ObjectMapper();
-		String val = mapper.writeValueAsString("Group added");
+		String val = mapper.writeValueAsString(ClientUtil.getMap().get("msg"));
 		return val;
 
 	}
@@ -727,4 +733,6 @@ public class AdminController {
 		return val;
 	}
 
+
+ 
 }
