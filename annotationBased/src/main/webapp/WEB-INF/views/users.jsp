@@ -136,7 +136,7 @@
 <body>
 	<h1 id='banner'>System Records</h1>
 	
-	<div id='jqgrid'>
+	<div id='jqgrid' style="width: 100%; height: 800px">
 		<table id='grid'></table>
 		<div id='pager'></div>
 	</div>
