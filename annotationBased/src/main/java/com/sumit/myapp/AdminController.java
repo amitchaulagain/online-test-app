@@ -732,6 +732,11 @@ public class AdminController {
 		String val = mapper.writeValueAsString(exam.getId() );
 		return val;
 	}
+	@RequestMapping(value = "/hello", method = RequestMethod.GET)
+	  
+	public String hello() {
+		return "users";
+	}
 
 
  

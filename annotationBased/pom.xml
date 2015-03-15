@@ -7,7 +7,10 @@
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>annotationBased</name>
-
+	
+<!-- <jasper.version>4.5.0</jasper.version> -->
+<!--   	<commons.digester.version>2.1</commons.digester.version> -->
+<!--   	<commons.collections.version>3.2.1</commons.collections.version> -->
 
 	<build>
 		<finalName>annotationBased</finalName>
@@ -65,11 +68,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>com.ohadr</groupId>
-			<artifactId>authentication-flows</artifactId>
-			<version>1.1.4</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.ohadr</groupId> -->
+<!-- 			<artifactId>authentication-flows</artifactId> -->
+<!-- 			<version>2.4</version> -->
+<!-- 		</dependency> -->
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -167,7 +170,51 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.3.3</version>
 		</dependency>
-
+		
+<!-- 			JASPER REPORT -->
+<dependency>
+		<groupId>net.sf.jasperreports</groupId>
+		<artifactId>jasperreports</artifactId>
+		<version>4.5.0</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
+    	<exclusions>
+    		<exclusion>
+    			<artifactId>commons-collections</artifactId>
+    			<groupId>commons-collections</groupId>
+    		</exclusion>
+    		<exclusion>
+    			<artifactId>commons-beanutils</artifactId>
+    			<groupId>commons-beanutils</groupId>
+    		</exclusion>
+    		<exclusion>
+    			<artifactId>commons-digester</artifactId>
+    			<groupId>commons-digester</groupId>
+    		</exclusion>
+    		<exclusion>
+    			<artifactId>commons-logging</artifactId>
+    			<groupId>commons-logging</groupId>
+    		</exclusion>
+    	</exclusions>
+	</dependency>
+	
+	<!-- Dependency required by Jasper -->
+	<dependency>
+    	<groupId>commons-digester</groupId>
+    	<artifactId>commons-digester</artifactId>
+    	<version>2.1</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
+    </dependency>
+    
+    <!-- Dependency required by Jasper -->
+    <dependency>
+    	<groupId>commons-collections</groupId>
+    	<artifactId>commons-collections</artifactId>
+    	<version>3.2.1</version>
+    	<type>jar</type>
+    	<scope>compile</scope>
+    </dependency>
 	</dependencies>
 
 
