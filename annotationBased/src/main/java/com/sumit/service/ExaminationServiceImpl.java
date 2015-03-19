@@ -9,6 +9,8 @@ import javax.annotation.Resource;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.sumit.Utility.ClientException;
@@ -24,11 +26,15 @@ import com.sumit.model.Examination;
 import com.sumit.model.Group;
 import com.sumit.model.StudentExaminationInfo;
 import com.sumit.model.StudentGroup;
+import com.sumit.model.StudentResultInfo;
 import com.sumit.model.TestSet;
 import com.sumit.model.User;
 import com.sumit.model.UserDTO;
+import com.sumit.repository.ExaminationRepository;
 import com.sumit.repository.GroupRepository;
+import com.sumit.repository.StudentExaminationInfoRepository;
 import com.sumit.repository.StudentGroupRepository;
+import com.sumit.repository.StudentResultRepository;
 import com.sumit.repository.UserRepository;
 
 @Service
@@ -36,6 +42,12 @@ public class ExaminationServiceImpl implements ExaminationService {
 
 	@Autowired
 	IExaminationApi examinationApi;
+	
+	@Resource
+	ExaminationRepository examinationRepository;
+	
+	@Resource
+	StudentExaminationInfoRepository studentExaminationInfoRepository;
 
 	@Resource
 	GroupRepository groupRepository;
@@ -44,7 +56,8 @@ public class ExaminationServiceImpl implements ExaminationService {
 	UserRepository studentRepository;
 	@Resource
 	StudentGroupRepository studentGroupRepository;
-
+	@Resource
+	StudentResultRepository studentResultRepository;
 	@Autowired
 	ITestApi testApi;
 
@@ -214,6 +227,28 @@ public class ExaminationServiceImpl implements ExaminationService {
 		Exam exam = examinationApi.assignStudentToExaminationWithSeatPlan(dto
 				.getExam());
 		return exam;
+	}
+
+	@Override
+	public Page<StudentExaminationInfo> getSeatPlansByExamId(Integer examId,
+			Pageable pageRequest) {
+		return studentExaminationInfoRepository.getAllSeatPlanInfoByExamId(examId,pageRequest);
+	}
+
+	@Override
+	public Page<StudentResultInfo> getExaminationResultByExamId(Integer examId,
+			Pageable pageRequest) {
+		 
+		return studentResultRepository.findAllResultByExamId(examId, pageRequest);
+	}
+	@Override
+	public List<StudentExaminationInfo> getAllSeatPlansByExamId(Integer examId) {
+		return studentExaminationInfoRepository.getAllSeatPlanInfoByExamId(examId);
+	}
+	@Override
+	public List<StudentResultInfo> getAllExaminationResultByExamId(Integer examId) {
+		 
+		return studentResultRepository.findAllResultByExamId(examId);
 	}
 
 }

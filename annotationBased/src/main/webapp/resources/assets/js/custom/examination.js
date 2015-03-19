@@ -133,7 +133,20 @@ $(document)
 															"green");
 
 										} else if (todo == "update") {
+											//TODO
+											var examId = $(this).attr("data-id");
+											var cat={name:"pussy" ,color:"white"};
+											
+//											var testObject = { 'one': 1, 'two': 2, 'three': 3 };
 
+											// Put the object into storage
+											localStorage.setItem('testObject', JSON.stringify(cat));
+											 var tt=JSON.parse(localStorage.getItem('testObject'));
+											 alert(tt.name);
+											
+											localStorage.setItem("hero", examId);
+											window.location.href = "http://localhost:8085/annotationBased/admin/examinationSeatPlan";
+											
 											alert("doing update");
 											// $( "#page-wrapper" ).hide();
 										} else if (todo == "delete") {

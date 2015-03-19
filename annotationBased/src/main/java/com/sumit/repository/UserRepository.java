@@ -27,7 +27,15 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	List<User> searchStudentByFirstNameLastNameAndEmail(@Param("searchParameter") String searchParameter );
 
 
-
+//User findByUsername(String username);
+	
+//	Page<User> findByUsernameLike(String username, Pageable pageable);
+//	Page<User> findByFirstNameLike(String firstName, Pageable pageable);
+//	Page<User> findByLastNameLike(String lastName, Pageable pageable);
+//	Page<User> findByFirstNameLikeAndLastNameLike(String firstName, String lastName, Pageable pageable);
+	
+//	@Query("select u from user u where u.role.role = :role")
+//	Page<User> findByRole(@Param("role") Integer role, Pageable pageable);
 
 
 }

@@ -8,6 +8,8 @@ public class UserDto implements Serializable {
 	private String firstName;
 	private String lastName;
 	private String username;
+	private String address;
+	private String emailAddress;
 	private Integer role;
 	
 	 
@@ -41,4 +43,17 @@ public class UserDto implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+	 
 }

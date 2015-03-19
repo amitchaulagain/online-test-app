@@ -128,7 +128,7 @@ public class UserApi implements IUserApi {
 			userRoles.add(role);
 			User savedUser = userRepository.save(user);
 			role.setUser(savedUser);
-			 roleRepo.save(userRoles);
+			roleRepo.save(userRoles);
 
 			UserInfo userInfo = new UserInfo();
 			userInfo.setFirstName(userDTO.getFirstName());

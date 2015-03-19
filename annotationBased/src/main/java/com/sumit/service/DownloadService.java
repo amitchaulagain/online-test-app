@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -30,6 +31,7 @@ public class DownloadService {
 	
 	@Autowired
 	private TokenService tokenService;
+	
 	
 	public void download(String type, String token, HttpServletResponse response) {
 		 
@@ -86,5 +88,40 @@ public class DownloadService {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public void download(String type, String token,
+			HttpServletResponse response, JRDataSource usersData,String title, String TEMPLATE) {
+		try {
+			// 1. Add report parameters
+			HashMap<String, Object> params = new HashMap<String, Object>(); 
+			params.put("Title", title);
+			 
+			// 2.  Retrieve template
+			InputStream reportStream = this.getClass().getResourceAsStream(TEMPLATE); 
+			 
+			// 3. Convert template to JasperDesign
+			JasperDesign jd = JRXmlLoader.load(reportStream);
+			 
+			// 4. Compile design to JasperReport
+			JasperReport jr = JasperCompileManager.compileReport(jd);
+			 
+			// 5. Create the JasperPrint object
+			// Make sure to pass the JasperReport, report parameters, and data source
+			JasperPrint jp = JasperFillManager.fillReport(jr, params, usersData);
+			 
+			// 6. Create an output byte stream where data will be written
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			 
+			// 7. Export report
+			exporter.export(type, jp, response, baos);
+			 
+			// 8. Write to reponse stream
+			write(token, response, baos);
+		
+		} catch (JRException jre) {
+			throw new RuntimeException(jre);
+		}
+		
 	}
 }

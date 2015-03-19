@@ -25,7 +25,7 @@ public class StudentResultInfo implements Serializable {
 	public StudentResultInfo() {
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "studentexaminationinfo_id")
 	private StudentExaminationInfo studentExaminationInfo;
 	private String position;
@@ -63,6 +63,9 @@ public class StudentResultInfo implements Serializable {
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public boolean getStatus() {
+		return status;
 	}
 
 

@@ -10,7 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.krams.response.JqgridResponse;
+import org.krams.util.ResultDTO;
+import org.krams.util.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,17 +24,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sumit.Utility.BuildTestInJSON;
 import com.sumit.Utility.ClientUtil;
 import com.sumit.convert.ConvertUtils;
 import com.sumit.dto.ExaminationAssignDTO;
 import com.sumit.dto.ExaminationDTO;
 import com.sumit.dto.RandomDTO;
+import com.sumit.dto.SeatPlan;
 import com.sumit.dto.SeatPlanningDTO;
 import com.sumit.dto.SectionDTO;
 import com.sumit.dto.TestJsonDTO;
@@ -41,7 +48,8 @@ import com.sumit.model.Options;
 import com.sumit.model.QuestionAnswer;
 import com.sumit.model.QuestionJSONDTO;
 import com.sumit.model.Sections;
-import com.sumit.model.Sets;
+import com.sumit.model.StudentExaminationInfo;
+import com.sumit.model.StudentResultInfo;
 import com.sumit.model.TestDTO;
 import com.sumit.model.TestQuestions;
 import com.sumit.model.TestRequestDTO;
@@ -737,7 +745,63 @@ public class AdminController {
 	public String hello() {
 		return "users";
 	}
+	@RequestMapping(value = "/examinationSeatPlan", method = RequestMethod.GET)
+	  
+	public String getExaminationSeatPlanPage() {
+		return "examination-seat-plan";
+	}
+	
+	
+	@RequestMapping(value = "/allRecords", produces = "application/json")
+	public @ResponseBody JqgridResponse<SeatPlan> records( 
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "rows", required = false) Integer rows,
+			@RequestParam(value = "examId", required = false) Integer examId) {
+		
+		Pageable pageRequest = new PageRequest(page - 1, rows);
+		
+		examinationService.getSeatPlanByExamId(examId);
+		
+		Page<StudentExaminationInfo> infos = examinationService.getSeatPlansByExamId(examId,pageRequest);
+		List<SeatPlan> seatPlans = UserMapper.mapToSeatPlan(infos.getContent());
+		
+		JqgridResponse<SeatPlan> response = new JqgridResponse<SeatPlan>();
+		response.setRows(seatPlans);
+		response.setRecords(Long.valueOf(infos.getTotalElements()).toString());
+		response.setTotal(Integer.valueOf(infos.getTotalPages()).toString());
+		response.setPage(Integer.valueOf(infos.getNumber() + 1).toString());
+		
+		return response;
+	}
+	@RequestMapping(value = "/showResult", method = RequestMethod.GET)
+	  
+	public String getResultsPage() {
+		return "examination-result";
+	}
+	@RequestMapping(value = "/results", method = RequestMethod.GET)
+	  
+	public String getAnotherResultsPage() {
+		return "results";
+	}
+	@RequestMapping(value = "/exam/result", produces = "application/json")
+	public @ResponseBody JqgridResponse<ResultDTO> getExaminationResult( 
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "rows", required = false) Integer rows,
+			@RequestParam(value = "examId", required = false) Integer examId) {
 
+		Pageable pageRequest = new PageRequest(page - 1, rows);
+		
 
- 
+		Page<StudentResultInfo> infos = examinationService.getExaminationResultByExamId(examId,pageRequest);
+//		Exam exam=examinationService.findExaminationByExamId(examId);
+		List<ResultDTO> resultDatas = UserMapper.mapToResultDTO(infos.getContent());
+
+		JqgridResponse<ResultDTO> response = new JqgridResponse<ResultDTO>();
+		response.setRows(resultDatas);
+		response.setRecords(Long.valueOf(infos.getTotalElements()).toString());
+		response.setTotal(Integer.valueOf(infos.getTotalPages()).toString());
+		response.setPage(Integer.valueOf(infos.getNumber() + 1).toString());
+
+		return response;
+	}
 }

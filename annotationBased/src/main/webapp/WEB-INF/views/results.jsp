@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<c:url value="/users/records" var="recordsUrl"/>
-<c:url value="/users/download" var="downloadUrl"/>
+<c:url value="/admin/exam/result" var="resultUrl"/>
+<c:url value="/users/downloadResult" var="downloadUrl"/>
 <c:url value="/users/download/token" var="downloadTokenUrl"/>
 <c:url value="/users/download/progress" var="downloadProgressUrl"/>
 <c:url value="/users/create" var="addUrl"/>
@@ -25,30 +25,39 @@
 	<script type='text/javascript'>
 	$(function() {
 		
-		alert(localStorage.getItem("hero"));
+		var examKoId=(localStorage.getItem("hero"));
+		alert(examKoId);
+// Retrieve the object from storage
+		var retrievedObject = localStorage.getItem('testObject');
+
+		var datas= JSON.parse(retrievedObject);
 		
+		$.each(datas, function(key, value){
+			    alert(key + ' = ' + value);
+			});
+
 		
 		$("#grid").jqGrid({
-		   	url:'${recordsUrl}',
+		   	url:'${resultUrl}',
 			datatype: 'json',
 			mtype: 'GET',
-		   	colNames:['Id', 'Username', 'Password', 'First Name','Last Name','Email', 'Address', 'Role'],
+		   	colNames:['Id', 'Name', 'obtained Score', 'Status','Remarks', 'Position'],
 		   	colModel:[
 		   		{name:'id',index:'id', width:55, editable:false, editoptions:{readonly:true, size:10}, hidden:true},
-		   		{name:'username',index:'username', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
-		   		{name:'password',index:'password', width:100, editable:true, editrules:{required:false}, editoptions:{size:10}, edittype:'password', hidden:true},
-		   		{name:'firstName',index:'firstName', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
-		   		{name:'lastName',index:'lastName', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
-		   		{name:'emailAddress',index:'emailAddress', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
-		   		{name:'address',index:'address', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
+		   		{name:'name',index:'name', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
+		   		{name:'obtainedScore',index:'email', width:100, editable:true, editrules:{required:false}, editoptions:{size:10}, edittype:'password', hidden:false},
+		   		{name:'status',index:'username', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
+		   		{name:'remarks',index:'seatNumber', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
+		   		{name:'position',index:'assignedSet', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
+// 		   		{name:'address',index:'address', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
 		   		
-		   		{name:'role',index:'role', width:50, editable:true, editrules:{required:true}, 
-		   			edittype:"select", formatter:'select', stype: 'select', 
-		   			editoptions:{value:"1:Admin;2:Regular"},
-		   			formatoptions:{value:"1:Admin;2:Regular"}, 
-		   			searchoptions: {sopt:['eq'], value:":;1:Admin;2:Regular"}}
+// 		   		{name:'role',index:'role', width:50, editable:true, editrules:{required:true}, 
+// 		   			edittype:"select", formatter:'select', stype: 'select', 
+// 		   			editoptions:{value:"1:Admin;2:Regular"},
+// 		   			formatoptions:{value:"1:Admin;2:Regular"}, 
+// 		   			searchoptions: {sopt:['eq'], value:":;1:Admin;2:Regular"}}
 		   	],
-		   	postData: {},
+		   	postData: {examId:examKoId},
 			rowNum:10,
 		   	rowList:[10,20,40,60],
 		   	height: 240,
@@ -74,44 +83,9 @@
 		});
 
 		$("#grid").jqGrid('navGrid','#pager',
-				{edit:false, add:false, del:false, search:true},
-				{}, {}, {}, 
-				{ 	// search
-					sopt:['cn', 'eq', 'ne', 'lt', 'gt', 'bw', 'ew'],
-					closeOnEscape: true, 
-					multipleSearch: true, 
-					closeAfterSearch: true
-				}
+				{edit:false, add:false, del:false, search:false} 
 		);
-		$("#grid").navButtonAdd('#pager',
-				{ 	caption:"Add", 
-					buttonicon:"ui-icon-plus", 
-					onClickButton: addRow,
-					position: "last", 
-					title:"", 
-					cursor: "pointer"
-				} 
-		);
-		
-		$("#grid").navButtonAdd('#pager',
-				{ 	caption:"Edit", 
-					buttonicon:"ui-icon-pencil", 
-					onClickButton: editRow,
-					position: "last", 
-					title:"", 
-					cursor: "pointer"
-				} 
-		);
-		
-		$("#grid").navButtonAdd('#pager',
-			{ 	caption:"Delete", 
-				buttonicon:"ui-icon-trash", 
-				onClickButton: deleteRow,
-				position: "last", 
-				title:"", 
-				cursor: "pointer"
-			} 
-		);
+	 
  
 		
 		$("#grid").navButtonAdd('#pager',
@@ -158,7 +132,8 @@
 					});
 			
 			// Start download
-			window.location = '${downloadUrl}'+'?token='+token+'&type='+type;
+			var examKoId=(localStorage.getItem("hero"));
+			window.location = '${downloadUrl}'+'?token='+token+'&type='+type+'&examId='+examKoId;
 
 			// Check periodically if download has started
 			var frequency = 1000;

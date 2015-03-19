@@ -156,8 +156,8 @@
 					<li><a href="<c:url value='/admin/students' />">All Students</a></li>
 					<li><a href="<c:url value='/admin/groups' />">All Groups</a></li>
 				</ul></li>
-			<li><a href="<c:url value='/admin/dashboard' />"><i
-					class="fa fa-fw fa-desktop"></i> Test Results</a></li>
+			<li><a href="<c:url value='/admin/showResult' />"><i
+					class="fa fa-fw fa-desktop"></i>  Examination Results</a></li>
 			<li><a href="<c:url value='/admin/testRequests' />"><i
 					class="fa fa-fw fa-wrench"></i> Test Requests</a></li>
 			
