@@ -114,9 +114,7 @@ $(document)
 
 					});
 					$(document)
-							.on(
-									"click",
-									".alert",
+							.on("click",".alert",
 									function(e) {
 										todo = $(this).attr("actionToBeDone");
 
@@ -134,7 +132,7 @@ $(document)
 
 										} else if (todo == "update") {
 											//TODO
-											var examId = $(this).attr("data-id");
+											  examId = $(this).attr("data-id");
 											var cat={name:"pussy" ,color:"white"};
 											
 //											var testObject = { 'one': 1, 'two': 2, 'three': 3 };

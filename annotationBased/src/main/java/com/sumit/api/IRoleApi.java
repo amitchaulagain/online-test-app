@@ -10,8 +10,6 @@ public interface IRoleApi {
 
 	public List<Role> findAllRole();
 
-	
-	
 	int countNumberOfDatas();
 
 	public List<Role> findRollBy(User user);

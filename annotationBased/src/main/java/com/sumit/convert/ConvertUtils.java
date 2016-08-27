@@ -138,6 +138,10 @@ public   class ConvertUtils {
 			userDTO.setDateOfBirth(user.getUserInfo().getDob().toString());
 			userDTO.setMale(user.getUserInfo().isMale());
 		}
+		if(user.getUserRole()!=null){
+			userDTO.setRoles(user.getUserRole());
+		}
+		
 		return userDTO;
 	}
 

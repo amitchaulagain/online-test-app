@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sumit.Utility.ClientException;
 import com.sumit.Utility.ClientUtil;
@@ -32,6 +33,7 @@ import com.sumit.model.User;
 import com.sumit.model.UserDTO;
 import com.sumit.repository.ExaminationRepository;
 import com.sumit.repository.GroupRepository;
+import com.sumit.repository.RoleRepository;
 import com.sumit.repository.StudentExaminationInfoRepository;
 import com.sumit.repository.StudentGroupRepository;
 import com.sumit.repository.StudentResultRepository;
@@ -60,6 +62,9 @@ public class ExaminationServiceImpl implements ExaminationService {
 	StudentResultRepository studentResultRepository;
 	@Autowired
 	ITestApi testApi;
+	//TODO
+	@Resource
+	RoleRepository roleRipo;
 
 	@Override
 	public void createOrEditGroup(ExaminationAssignDTO dto) {
@@ -167,6 +172,9 @@ public class ExaminationServiceImpl implements ExaminationService {
 	public List<UserDTO> findStudentsByGroupId(int groupId) {
 		List<User> groupStudents = groupRepository
 				.findStudentsByGroupId(groupId);
+		for (User user : groupStudents) {
+			user.setUserRole(roleRipo.findRollByUserName(user.getId()));
+		}
 		return ConvertUtils.convertToUserDTOsss(groupStudents);
 	}
 
@@ -249,6 +257,13 @@ public class ExaminationServiceImpl implements ExaminationService {
 	public List<StudentResultInfo> getAllExaminationResultByExamId(Integer examId) {
 		 
 		return studentResultRepository.findAllResultByExamId(examId);
+	}
+
+	@Override
+	public StudentResultInfo findStudentResultInformation(
+			int studentResultInfoId) {
+		 
+		return studentResultRepository.findOne(studentResultInfoId);
 	}
 
 }

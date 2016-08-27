@@ -22,9 +22,6 @@ public class StudentResultInfo implements Serializable {
 	@Column(name = "id")
 	private int id;
 
-	public StudentResultInfo() {
-	}
-
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "studentexaminationinfo_id")
 	private StudentExaminationInfo studentExaminationInfo;
@@ -32,7 +29,16 @@ public class StudentResultInfo implements Serializable {
 	private Boolean status;
 	private String remarks;
 
-	private String obtainedScore;
+	private int obtainedScore;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public StudentResultInfo() {
+	}
 	public StudentExaminationInfo getStudentExaminationInfo() {
 		return studentExaminationInfo;
 	}
@@ -40,10 +46,10 @@ public class StudentResultInfo implements Serializable {
 			StudentExaminationInfo studentExaminationInfo) {
 		this.studentExaminationInfo = studentExaminationInfo;
 	}
-	public String getObtainedScore() {
+	public int getObtainedScore() {
 		return obtainedScore;
 	}
-	public void setObtainedScore(String obtainedScore) {
+	public void setObtainedScore(int obtainedScore) {
 		this.obtainedScore = obtainedScore;
 	}
 	public String getPosition() {
@@ -67,6 +73,6 @@ public class StudentResultInfo implements Serializable {
 	public boolean getStatus() {
 		return status;
 	}
-
+	
 
 }

@@ -7,6 +7,9 @@
 <c:url value="/users/create" var="addUrl"/>
 <c:url value="/users/update" var="editUrl"/>
 <c:url value="/users/delete" var="deleteUrl"/>
+<c:url value="/users/downloadStudentResult" var="downloadStudentPdfResultUrl"/>
+
+downloadStudentPdfResultUrl
 
 <html>
 <head>
@@ -26,22 +29,22 @@
 	$(function() {
 		
 		var examKoId=(localStorage.getItem("hero"));
-		alert(examKoId);
+// 		alert(examKoId);
 // Retrieve the object from storage
-		var retrievedObject = localStorage.getItem('testObject');
+// 		var retrievedObject = localStorage.getItem('testObject');
 
-		var datas= JSON.parse(retrievedObject);
+// 		var datas= JSON.parse(retrievedObject);
 		
-		$.each(datas, function(key, value){
-			    alert(key + ' = ' + value);
-			});
+// 		$.each(datas, function(key, value){
+// 			    alert(key + ' = ' + value);
+// 			});
 
 		
 		$("#grid").jqGrid({
 		   	url:'${resultUrl}',
 			datatype: 'json',
 			mtype: 'GET',
-		   	colNames:['Id', 'Name', 'obtained Score', 'Status','Remarks', 'Position'],
+		   	colNames:['Id', 'Name', 'obtained Score', 'Status','Remarks', 'Position','Action'],
 		   	colModel:[
 		   		{name:'id',index:'id', width:55, editable:false, editoptions:{readonly:true, size:10}, hidden:true},
 		   		{name:'name',index:'name', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
@@ -49,7 +52,15 @@
 		   		{name:'status',index:'username', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
 		   		{name:'remarks',index:'seatNumber', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
 		   		{name:'position',index:'assignedSet', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
-// 		   		{name:'address',index:'address', width:100, editable:true, editrules:{required:true}, editoptions:{size:10}},
+		   		{ name: 'action', align: 'center', width: 50, sortable: false
+                    , title: false, fixed: true, search: false
+                    , formatter: function (cellvalue, options, rowObject) {
+                     var studentResultInfoId=rowObject.studentResultInfoId;
+                     var stImageLinks = '<a href="#" onclick="downloadThis('+studentResultInfoId+')">Download</a> ';  
+                     return stImageLinks;
+                       }
+                                  
+}
 		   		
 // 		   		{name:'role',index:'role', width:50, editable:true, editrules:{required:true}, 
 // 		   			edittype:"select", formatter:'select', stype: 'select', 
@@ -79,7 +90,17 @@
 		        repeatitems: false,
 		        cell: "cell",
 		        id: "id"
-		    }
+		    },
+		    onCellSelect: function(rowid, index, contents, event)   {    
+		    	   var cm = $("#grid").jqGrid('getGridParam','colModel');                          
+		    	   if(cm[index].name == "action")
+		    	   {
+		    		   alert("jkjkjk");
+// 		    		   $(this).html('<span>u r herooo</span>');
+// 		    		   alert( fnName(rowid));
+		    	      
+		    	   }
+		    	}
 		});
 
 		$("#grid").jqGrid('navGrid','#pager',
@@ -261,6 +282,45 @@
 					});
 		}
 	}
+	
+	function downloadThis(studentResultInfoId){
+		$.get('${downloadTokenUrl}', function(response) {
+			// Store token
+			var token = response.message[0];
+			
+			// Show progress dialog
+			$('#msgbox').text('Processing download...');
+			$('#msgbox').dialog( 
+					{	title: 'Download',
+						modal: true,
+						buttons: {"Close": function()  {
+							$(this).dialog("close");} 
+						}
+					});
+			
+			var DOWNLOAD_TYPE='pdf';
+			// Start download
+			var examKoId=(localStorage.getItem("hero"));
+			window.location = '${downloadStudentPdfResultUrl}'+'?token='+token+'&type='+DOWNLOAD_TYPE+'&studentResultInfoId='+studentResultInfoId;
+
+			// Check periodically if download has started
+			var frequency = 1000;
+			var timer = setInterval(function() {
+				$.get('${downloadProgressUrl}', {token: token}, 
+						function(response) {
+							// If token is not returned, download has started
+							// Close progress dialog if started
+							if (response.message[0] != token) {
+								$('#msgbox').dialog('close');
+								clearInterval(timer);
+							}
+					});
+			}, frequency);
+			
+		});
+
+	}
+	
 	
 	function deleteRow() {
 		// Get the currently selected row

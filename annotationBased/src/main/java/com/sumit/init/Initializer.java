@@ -21,13 +21,13 @@ public class Initializer implements WebApplicationInitializer  {
 		ctx.register(WebAppConfig.class);
 		servletContext.addListener(new ContextLoaderListener(ctx));
 
+		servletContext.addFilter("simpleCorsFilter", "com.sumit.init.SimpleCORSFilter");
 		ctx.setServletContext(servletContext);
-
 		Dynamic servlet = servletContext.addServlet(DISPATCHER_SERVLET_NAME,
+
 				new DispatcherServlet(ctx));
 		servlet.addMapping("/");
 		servlet.setLoadOnStartup(1);
-		 //servletContext.addFilter("simpleCorsFilter", "com.spr.sumit.SimpleCORSFilter");
 		 
 	}
 }

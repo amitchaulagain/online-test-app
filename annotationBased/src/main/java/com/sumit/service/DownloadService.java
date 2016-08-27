@@ -91,11 +91,10 @@ public class DownloadService {
 	}
 
 	public void download(String type, String token,
-			HttpServletResponse response, JRDataSource usersData,String title, String TEMPLATE) {
+			HttpServletResponse response, JRDataSource usersData,HashMap<String, Object> params , String TEMPLATE) {
 		try {
 			// 1. Add report parameters
-			HashMap<String, Object> params = new HashMap<String, Object>(); 
-			params.put("Title", title);
+		 
 			 
 			// 2.  Retrieve template
 			InputStream reportStream = this.getClass().getResourceAsStream(TEMPLATE); 

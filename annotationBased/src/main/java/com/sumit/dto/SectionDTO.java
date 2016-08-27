@@ -1,6 +1,8 @@
 package com.sumit.dto;
 
-public class SectionDTO {
+import java.io.Serializable;
+
+public class SectionDTO implements Serializable {
 	int sectionId;
 	Integer testId;
 	String sectionName;

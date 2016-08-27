@@ -1,5 +1,6 @@
 package com.sumit.myapp;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +39,7 @@ public class ReportsController {
 	
 	public static final String SEAT_PLAN_TEMPLATE = "/seatPlan.jrxml";
 	public static final String STUDENT_RESULT_TEMPLATE = "/result.jrxml";
+	public static final String SINGLE_STUDENT_RESULT_TEMPLATE = "/studentresult.jrxml";
 	public static final String STUDENT_TEMPLATE = "/users.jrxml";
 
 	@Autowired
@@ -53,7 +55,7 @@ public class ReportsController {
 	private UserService userService;
 
 	@Autowired
-	private JasperDatasourceService datasource;
+	private JasperDatasourceService datasourceService;
 
 	@RequestMapping
 	public String getUsersPage() {
@@ -99,31 +101,32 @@ public class ReportsController {
 	@RequestMapping(value = "/downloadUsers")
 	public void downloadUsers(@RequestParam String type,
 			@RequestParam String token, HttpServletResponse response) {
-		JRDataSource usersData = datasource.getDataSource();
-		String title = "User Report";
-		downloadService.download(type, token, response, usersData, title,STUDENT_TEMPLATE);
+		JRDataSource usersData = datasourceService.getDataSource();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		downloadService.download(type, token, response, usersData, params,STUDENT_TEMPLATE);
 	}
 
 	@RequestMapping(value = "/downloadSeatPlan")
 	public void downloadSeatPlanning(@RequestParam String type,
 			@RequestParam String token, @RequestParam int examId,
 			HttpServletResponse response) {
-		JRDataSource seatPlanDataz = datasource
+		JRDataSource seatPlanDataz = datasourceService
 				.getSeatPlanningDataSource(examId);
-		String title = "Seat Plan Report";
+		HashMap<String, Object> params = new HashMap<String, Object>();
 		
-		downloadService.download(type, token, response, seatPlanDataz, title,SEAT_PLAN_TEMPLATE);
+		downloadService.download(type, token, response, seatPlanDataz, params,SEAT_PLAN_TEMPLATE);
 	}
 
 	@RequestMapping(value = "/downloadResult")
 	public void downloadResultOfSpecificExam(@RequestParam String type,
 			@RequestParam String token, @RequestParam int examId,
 			HttpServletResponse response) {
-		JRDataSource studentResultzz = datasource.getExaminationResultDataSource(examId);
+		JRDataSource studentResultzz = datasourceService.getExaminationResultDataSource(examId);
 				 
-		String title = "Student Performance Report";
-		
-		downloadService.download(type, token, response, studentResultzz, title,STUDENT_RESULT_TEMPLATE);
+		// 1. Add report parameters
+		HashMap<String, Object> params = new HashMap<String, Object>();
+	
+		downloadService.download(type, token, response, studentResultzz, params,STUDENT_RESULT_TEMPLATE);
 	}
 	// @RequestMapping(value="/records", produces="application/json")
 	// public @ResponseBody JqgridResponse<UserDto> records(
@@ -234,5 +237,20 @@ public class ReportsController {
 		// Boolean result = service.delete(existingUser);
 		return new StatusResponse(true);
 	}
+	
+	@RequestMapping(value = "/downloadStudentResult")
+	public void downloadResultOfSpecificExamOfSpecificStudent(@RequestParam String type,
+			@RequestParam String token, @RequestParam int studentResultInfoId,
+			HttpServletResponse response) {
+		JRDataSource studentResultzz = datasourceService.getStudentResult(studentResultInfoId);
+				 
+		HashMap<String, Object> params = datasourceService.loadDataForPDF(studentResultInfoId);
+		
+		
+		
+		
+		downloadService.download(type, token, response, studentResultzz, params,SINGLE_STUDENT_RESULT_TEMPLATE);
+	}
+	
 
 }

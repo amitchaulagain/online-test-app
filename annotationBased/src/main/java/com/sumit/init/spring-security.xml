@@ -8,6 +8,7 @@
 
 	<!-- We will be defining all security related configurations in this file -->
 	<http pattern="/common/**" security="none" />
+	<http pattern="/nonSecured/**" security="none" />
 	<http pattern="/auth/login" security="none" />
 
 	<http pattern="/resources/**" security="none" />

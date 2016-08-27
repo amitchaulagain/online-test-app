@@ -70,17 +70,18 @@ public class UserMapper {
 		return dtos;
 	}
 
-	private static ResultDTO map(StudentResultInfo sei) {
+	public static ResultDTO map(StudentResultInfo sri) {
 		ResultDTO dto = new ResultDTO();
-		dto.setName(sei.getStudentExaminationInfo().getStudent().getUserInfo()
+		dto.setStudentResultInfoId(sri.getId());
+		dto.setName(sri.getStudentExaminationInfo().getStudent().getUserInfo()
 				.getFirstName()
 				+ "  "
-				+ sei.getStudentExaminationInfo().getStudent().getUserInfo()
+				+ sri.getStudentExaminationInfo().getStudent().getUserInfo()
 						.getLastName());
-		dto.setObtainedScore(sei.getObtainedScore());
-		dto.setPosition(sei.getPosition());
-		dto.setRemarks(sei.getRemarks());
-		if (sei.getStatus()) {
+		dto.setObtainedScore(sri.getObtainedScore());
+		dto.setPosition(sri.getPosition());
+		dto.setRemarks(sri.getRemarks());
+		if (sri.getStatus()) {
 
 			dto.setStatus("PASSED");
 		} else {

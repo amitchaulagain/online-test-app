@@ -2,6 +2,7 @@ package com.sumit.service;
 
 import java.util.List;
 
+import org.krams.util.ResultDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,6 +13,7 @@ import com.sumit.model.Exam;
 import com.sumit.model.Group;
 import com.sumit.model.StudentExaminationInfo;
 import com.sumit.model.StudentResultInfo;
+import com.sumit.model.User;
 import com.sumit.model.UserDTO;
 
 
@@ -55,6 +57,8 @@ public interface ExaminationService {
 	List<StudentExaminationInfo> getAllSeatPlansByExamId(Integer examId);
 
 	List<StudentResultInfo> getAllExaminationResultByExamId(Integer examId);
+
+	StudentResultInfo findStudentResultInformation(int studentResultInfoId);
 
 
 }

@@ -14,7 +14,7 @@
 		</conditionalStyle>
 	</style>
 	<field name="name" class="java.lang.String"/>
-	<field name="obtainedScore" class="java.lang.String"/>
+	<field name="obtainedScore" class="java.lang.Integer"/>
 	<field name="assignedSet" class="java.lang.String"/>
 	<field name="position" class="java.lang.String"/>
 	<field name="remarks" class="java.lang.String"/>
@@ -103,12 +103,12 @@
 			<staticText>
 				<reportElement x="439" y="0" width="100" height="20"/>
 				<textElement/>
-				<text><![CDATA[Position]></text>
+				<text><![CDATA[Position]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="588" y="0" width="100" height="20"/>
 				<textElement/>
-				<text><![CDATA[Remarks]></text>
+				<text><![CDATA[Remarks]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="700" y="0" width="100" height="20"/>

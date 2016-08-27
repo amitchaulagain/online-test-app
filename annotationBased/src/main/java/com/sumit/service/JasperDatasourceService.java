@@ -1,9 +1,12 @@
 package com.sumit.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.xmlbeans.impl.xb.xsdschema.impl.ListDocumentImpl.ListImpl;
@@ -65,5 +68,36 @@ public class JasperDatasourceService {
 //		Exam exam=examinationService.findExaminationByExamId(examId);
 		List<ResultDTO> dtos = UserMapper.mapToResultDTO(resultInfos);
 		return new JRBeanCollectionDataSource(dtos);
+	}
+
+	public JRDataSource getStudentResult(int studentResultInfoId) {
+		List<ResultDTO> dtos = new ArrayList<ResultDTO>();
+		ResultDTO dto= new ResultDTO();
+		dto.setStudentName("Amit Chaulagain");
+		dto.setObtainedScore(23);
+		dto.setPosition("1st");
+		dto.setStatus("PASS");
+		dto.setRemarks("Well Done");
+		dto.setFullMark(222);
+		dto.setPassMark(55);
+		dto.setEmail("a@hotmail.com");
+		dto.setHighScore(888);
+		dtos.add(dto);
+		return new JRBeanCollectionDataSource(dtos);
+	}
+
+	public HashMap<String, Object> loadDataForPDF(int studentResultInfoId) {
+		ResultDTO dto =UserMapper.map(examinationService.findStudentResultInformation(studentResultInfoId));
+		HashMap<String, Object> hashMap= new HashMap<String, Object>();
+		hashMap.put("name", dto.getName());
+		hashMap.put("email", dto.getEmail());
+		hashMap.put("fullMark", dto.getFullMark());
+		hashMap.put("passMark", dto.getPassMark());
+		hashMap.put("obtainedScore", dto.getPassMark());
+		hashMap.put("position", dto.getPosition());
+		hashMap.put("status", dto.getStatus());
+		hashMap.put("remarks", dto.getRemarks());
+		
+		return hashMap;
 	}
 }
